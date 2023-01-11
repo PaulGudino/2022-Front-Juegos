@@ -73,15 +73,11 @@
                     <mat-list-item >{{client.user_client_modify}}</mat-list-item>
                 </div>
             </div>
-            <div class="container_botones">
-                <app-button-primary (click)="toList()"
-                    title="Salir"
-                ></app-button-primary>
-            </div>
+            
         </div>
         <div class="history">
             <div class="history_head">
-                <h2>Historial de Partidas</h2>
+                <h2>Total de Partidas {{len_match}}</h2>
                 <div class="filter">
                    <mat-select
                       class="green-primary"
@@ -153,14 +149,14 @@
                             <mat-list-item>{{info.value.game_date}}</mat-list-item>
                         </div>
                         <div class="datos">
-                            <mat-label>Encargado que imprimió el ticket</mat-label>
+                            <mat-label>Encargado que creó el ticket</mat-label>
                             <br>
                             <mat-list-item >{{info.value.user_register_ticket}}</mat-list-item>
                         </div>
                     </div>
                     <div class="container">
                         <div class="datos">
-                            <mat-label>Código QR</mat-label>
+                            <mat-label>Código del ticket</mat-label>
                             <br>
                             <mat-list-item>{{info.value.qr}}</mat-list-item>
                         </div>
@@ -177,8 +173,48 @@
             </div>
         </div>
         <div class="summary">
-            <div>Hola</div>
+            <div class="summary_head">
+                <h1 class="summary_title">Total de Partidas Ganadas</h1>
+                <h2 class="summary_values">{{winner_client}}</h2>
+                <h1 class="summary_title">Total de Partidas Perdidas</h1>
+                <h2 class="summary_values">{{loser_client}}</h2>
+                <h1 class="summary_title">Tickets aún disponibles </h1>
+                <h2 class="summary_values">{{len_ticket_available}}</h2>
+            </div>
+            <div class="available_ticket">
+                <div *ngFor="let info of ticket_client_avilable | keyvalue">
+                    <div class="container">
+                        <div class="datos ticket_border">
+                            <mat-label>Código del ticket</mat-label>
+                            <br>
+                            <mat-list-item>{{info.value.qr_code_digits}}</mat-list-item>
+                            <br>
+                            <button
+                                mat-icon-button
+                                color="primary"
+                                matTooltip="Visualizar"
+                                (click)="viewInformation(info.value.id)"
+                            >
+                                <mat-icon class="color-white"> remove_red_eye </mat-icon>
+                            </button>
+                            <button
+                                mat-icon-button
+                                color="primary"
+                                matTooltip="Imprimir"
+                                (click)="printTicket(info.value.id)"
+                            >
+                                <mat-icon class="color-white"> print </mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="container_botones">
+        <app-button-primary (click)="toList()"
+            title="Salir"
+        ></app-button-primary>
     </div>
     
     

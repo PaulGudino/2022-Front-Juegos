@@ -28,7 +28,7 @@ export class UsuariosComponent implements OnInit {
   filter_default = '?ordering=-created';
 
   Titulo = 'Usuarios';
-  displayedColumns: string[] = ['cedula', 'names', 'surnames', 'email', 'phone', 'sex', 'rol', 'Acciones']
+  displayedColumns: string[] = ['cedula', 'names', 'surnames', 'phone', 'sex', 'rol', 'Acciones']
   dataSource !: MatTableDataSource<Usuarios>;
   user_id = Number(sessionStorage.getItem('user_id'));
 

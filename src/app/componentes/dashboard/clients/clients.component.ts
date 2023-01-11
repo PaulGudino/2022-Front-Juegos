@@ -33,7 +33,7 @@ export class ClientsComponent implements OnInit{
   permissions : any = [];
 
   displayedColumns : string[] = [
-    'id',
+    // 'id',
     'cedula',
     'names',
     'surnames',
