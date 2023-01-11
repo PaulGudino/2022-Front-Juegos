@@ -38,12 +38,12 @@ export class ScanViewComponent implements OnInit {
 		if (this.keyController.getCode() != "") {
 			// let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
 			let validateTicket = this.gameLogic.verifyTicket("803607536")
-			console.log(validateTicket)
 			if (await validateTicket) {
 				console.log("dentro del if" + validateTicket)
 
 				this.router.navigate(["/juego/play"])
 				sessionStorage.setItem("juego_play", "juego_play")
+				this.gameLogic.playGame()
 			} else {
 				let game_message = [
 					"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",

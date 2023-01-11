@@ -15,6 +15,10 @@ import { ProbabilityService } from "src/app/servicios/probability/probability/pr
 export class GameLogicService {
 	ticket: any
 	match: any = {}
+	attempts: number = 0
+	winnersLimit: number = 0
+	winProb: number = 0
+	public winner: boolean = false
 
 	constructor(
 		private ticketService: TicketService,
@@ -68,27 +72,41 @@ export class GameLogicService {
 		}
 	}
 	/**
-	 * template method with all the logic to follow step by step and return the category of the
-	 * award winned or string lose in case the client lose
+	 * template method with all the logic to follow step by step and return true if the client win the game
 	 * @public
 	 */
 	async playGame() {
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 
-		//Second check if there's any award conditioned if true then the client must win
-		let awards: any = this.getAwardConditionToday()
-		if (awards && awards.length > 0) {
-			let awardConditioned = awards[0]
-			let award: any = this.winnedAward(awardConditioned)
-			this.createMatch(true, true, this.ticket.id, award.id)
-			this.wonAwardCondition(award.id, awardConditioned.id)
-		} else {
-			//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
-			let result = await this.getPrize()
-
-			//Fourth check if theres any award available in the category
+		//Second Check limitWinners
+		if (await this.checkLimitWinners()) {
+			console.log("not surpass winners limit")
 		}
+
+		// //Second check if there's any award conditioned if true then the client must win
+		// let awards: any = this.getAwardConditionToday()
+		// if (awards && awards.length > 0) {
+		// 	let awardConditioned = awards[0]
+		// 	let award: any = this.winnedAward(awardConditioned)
+		// 	this.createMatch(true, true, this.ticket.id, award.id)
+		// 	this.wonAwardCondition(award.id, awardConditioned.id)
+		// 	this.changeStateTicket(this.ticket.id)
+		// 	this.setWinnerState(true)
+		// } else {
+		// 	//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
+		// 	let awards = await this.getPrize()
+		// 	let award = awards[0]
+		// 	debugger
+		// 	this.changeStateTicket(this.ticket.id)
+		// 	if (award == "lose") {
+		// 		this.setWinnerState(false)
+		// 	}
+		// 	this.createMatch(true, true, this.ticket.id, award.id)
+		// 	this.changeStateTicket(this.ticket.id)
+		// 	this.wonAward(award.id)
+		// 	this.setWinnerState(true)
+		// }
 	}
 
 	/**
@@ -159,18 +177,21 @@ export class GameLogicService {
 
 	/**
 	 * retorna un string en caso que el usuario haya ganado, el string que devuelve es la categoria del
-	 * premio que gano, en caso de perder retorna el string lose
+	 * premio que gano, en caso de perder retorna el string lose, en caso de que gane pero no haya ningun
+	 * premio retorno lose
 	 * @public
 	 */
-	async getPrize(): Promise<string> {
+	async getPrize(): Promise<any> {
 		let min: number = 0
 		let max: number = 100
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let win_prob: number
-		let result: string = "lose"
+		let category: string = ""
 
 		this.probabilityService.getProbabilites().subscribe((data) => {
-			win_prob = data
+			win_prob = data.percent_win
+			this.attempts = data.attempts_limit
+			this.winnersLimit = data.winners_limit
 
 			if (rd_number <= win_prob) {
 				// Winner
@@ -178,32 +199,71 @@ export class GameLogicService {
 
 				if (rd_number <= 60) {
 					//console.log("Common prize");
-					result = "Common prize"
-					return result
+					category = "Common prize"
 				} else if (rd_number <= 85) {
 					//console.log("Rare prize");
-					result = "Rare prize"
-					return result
+					category = "Rare prize"
 				} else if (rd_number <= 95) {
 					//console.log("Epic prize");
-					result = "Epic prize"
-					return result
+					category = "Epic prize"
 				} else if (rd_number <= 100) {
 					//console.log("Lengendary prize");
-					result = "Lengendary prize"
-					return result
+					category = "Lengendary prize"
+				}
+
+				let validAward: any = this.getAwardsCategory(category)
+
+				if (validAward.length > 0) {
+					return validAward[0]
 				} else {
-					return result
+					return ["lose"]
 				}
 			} else {
-				return result
+				return ["lose"]
 			}
 
 			// Loser
 		})
-
-		return result
 	}
+
+	/**
+	 * function check if there is an available award for an specific category
+	 * and return an array of awards
+	 * @private
+	 */
+	private async getAwardsCategory(category: string) {
+		let awards: any = await lastValueFrom(this.awardSrv.getFilterAward("?is_active=true"))
+		let categoryAwards: any = awards.filter((award: any) => award.category == category)
+		return categoryAwards
+	}
+	/**
+	 * void function who check if the limitWinners it's not exceeded
+	 * @private
+	 */
+	private async checkLimitWinners() {
+		let probabilitiesData: any = await lastValueFrom(this.probabilityService.getProbabilites())
+		this.winProb = probabilitiesData.percent_win
+		this.attempts = probabilitiesData.attempts_limit
+		this.winnersLimit = probabilitiesData.winners_limit
+
+		let today = new Date()
+		let current_day = this.gameDataSrv.DateFormat(today).split("T")[0]
+
+		let matchesToday: any = await this.getWinnMatchesToday(current_day)
+		if (matchesToday.length >= this.winnersLimit) {
+			this.setWinnerState(false)
+			return false
+		} else {
+			return true
+		}
+	}
+
+	async getWinnMatchesToday(current_day: string) {
+		let filter_match = "?win_match=true&start_date__date__range=" + current_day + "%2C" + current_day
+		let matchesToday = await lastValueFrom(this.matchService.getMatchFilter(filter_match))
+		return matchesToday
+	}
+
 	/**
 	 * void function who post a new match
 	 * @private
@@ -217,5 +277,13 @@ export class GameLogicService {
 		}
 		this.match = body
 		this.matchService.postMatch(body)
+	}
+	/**
+	 * void function who set the state of winner of the client
+	 * @private
+	 */
+
+	setWinnerState(state: boolean) {
+		this.winner = state
 	}
 }
