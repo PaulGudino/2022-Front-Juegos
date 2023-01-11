@@ -24,10 +24,10 @@ export class CreateAwardsComponent implements OnInit {
   imagen !: File;
 
   Categorias = [
-    {id: 'L', name: 'Legendaria'},
-    {id: 'E', name: 'Epica'},
-    {id: 'R', name: 'Rara'},
-    {id: 'C', name: 'Común'},
+    {id: 'Legendaria', name: 'Legendaria'},
+    {id: 'Épica', name: 'Épica'},
+    {id: 'Rara', name: 'Rara'},
+    {id: 'Común', name: 'Común'},
   ]
   Juegos = [
     {id:'1', name: 'Tragamonedas'},

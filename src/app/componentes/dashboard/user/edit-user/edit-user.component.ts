@@ -25,6 +25,12 @@ function autocompleteObjectValidator(): ValidatorFn {
 })
 export class EditarUsuariosComponent implements OnInit {
 
+  listSex = [
+    {id: 'Masculino', name: 'Masculino'},
+    {id: 'Femenino', name: 'Femenino'},
+    {id: 'Otro', name: 'Otro'}
+  ];
+
   form: FormGroup;
   roles: Roles[] = [];
   filteredOptions!: Observable<Roles[]>;

@@ -143,7 +143,7 @@ export class BottomPublicityComponent implements OnInit {
    chargePublicity() {
       this.publicity.getPublicityBottomList().subscribe((data) => {
          this.dashPublicity.loadBottomData(data);
-         this.publicity.getPublicityConfigTop().subscribe((config) => {
+         this.publicity.getPublicityConfigBottom().subscribe((config) => {
             this.transitionTime = config.time_display;
          });
       });

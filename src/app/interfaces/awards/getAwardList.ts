@@ -13,6 +13,5 @@ export interface getAwardList{
     user_modify: string;
     category: string;
     game: string;
-    is_past: boolean,
     total_awards: number
 }

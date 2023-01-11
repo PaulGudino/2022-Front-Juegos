@@ -14,6 +14,12 @@ import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/pu
 })
 export class EditClientComponent implements OnInit {
 
+  listSex = [
+    {id: 'Masculino', name: 'Masculino'},
+    {id: 'Femenino', name: 'Femenino'},
+    {id: 'Otro', name: 'Otro'}
+  ];
+
   singularName : string = 'cliente'
   pluralName : string = 'Clientes'
   actionName : string = 'editar'

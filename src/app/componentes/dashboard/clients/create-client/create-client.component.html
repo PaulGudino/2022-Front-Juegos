@@ -78,8 +78,7 @@
                 <mat-form-field >
                     <label>Sexo</label>
                     <mat-select formControlName="sex" mat-select>
-                        <mat-option value="Femenino">Femenino</mat-option>
-                        <mat-option value="Masculino">Masculino</mat-option>
+                        <mat-option *ngFor="let sex of listSex" value={{sex.id}}>{{sex.name}}</mat-option>
                     </mat-select>
                     <mat-hint>Seleccione una opción</mat-hint>
                     <mat-error *ngIf="formGroup.controls['sex'].hasError('required')">

@@ -4,6 +4,5 @@ export interface GamePutDate{
    name: string,
    end_date: string;
    modification_date: string;
-   game: string;
    is_active: string;
  }

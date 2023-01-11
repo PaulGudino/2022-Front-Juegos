@@ -31,9 +31,9 @@ export class CrearUsuariosComponent implements OnInit {
   filteredOptions!: Observable<Roles[]>;
   ocultar = true;
   listSex = [
-    {id: 'M', name: 'Masculino'},
-    {id: 'F', name: 'Femenino'},
-    {id: 'O', name: 'Otro'}
+    {id: 'Masculino', name: 'Masculino'},
+    {id: 'Femenino', name: 'Femenino'},
+    {id: 'Otro', name: 'Otro'}
   ];
 
   constructor(
