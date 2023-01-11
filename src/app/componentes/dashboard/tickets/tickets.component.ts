@@ -92,7 +92,7 @@ export class TicketsComponent implements OnInit{
   }
 
   async delete(id : number) {
-    await this.canDelete();
+    this.permissions = await this.Permisos('Eliminar Ticket');
     if (this.permissions.length > 0) {
       this.showDeleteDialog();
       this.confirmDialog.confirmed().subscribe(confirmed => {
@@ -114,6 +114,15 @@ export class TicketsComponent implements OnInit{
     }
   }
 
+  async print(id:string){
+    let promise = await this.Permisos('Imprimir Ticket')
+    if (promise.length > 0){
+        alert('Imprimiendo Ticket '+id)
+    }else{
+      this.snackBar.mensaje('No tienes permisos para Imprimir Ticket');
+    }
+  }
+
   showDeleteDialog() {
       const DIALOGINFO = {
         title : this.actionName.toUpperCase() + ' ' + this.singularName.toUpperCase(),
@@ -126,12 +135,20 @@ export class TicketsComponent implements OnInit{
 
   }
 
-  async canDelete() {
+  // async canDelete() {
+  //   let rolId = Number(sessionStorage.getItem('rol_id'));
+  //   let permiso = await lastValueFrom(this.permissionsAPI.getPermisosbyName('Eliminar Ticket'));
+  //   let permissionId = Number(permiso[0].id);
+  //   const promise = await lastValueFrom(this.permissionsAPI.getPermisosbyRolandPermission(rolId, permissionId));
+  //   this.permissions = promise;
+  // }
+
+  async Permisos(name:string){
     let rolId = Number(sessionStorage.getItem('rol_id'));
-    let permiso = await lastValueFrom(this.permissionsAPI.getPermisosbyName('Eliminar Ticket'));
+    let permiso = await lastValueFrom(this.permissionsAPI.getPermisosbyName(name));
     let permissionId = Number(permiso[0].id);
     const promise = await lastValueFrom(this.permissionsAPI.getPermisosbyRolandPermission(rolId, permissionId));
-    this.permissions = promise;
+    return promise;
   }
 
   toCreation() {

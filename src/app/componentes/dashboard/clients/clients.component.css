@@ -103,3 +103,6 @@ table {
 .buscador:focus::placeholder {
   color: var(--color-fondo-principal);
 }
+th{
+  width: 20%;
+}

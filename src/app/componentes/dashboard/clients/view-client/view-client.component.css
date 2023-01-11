@@ -5,7 +5,7 @@
     flex-direction: column;
 }
 mat-label{
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: var(--color-principal);
 }
 .card{
@@ -19,6 +19,8 @@ mat-label{
     height: 800px;
     display: flex;
     flex-direction: column;
+    border-color:var(--color-principal) ;
+    border-style: none solid none solid;
 }
 .history_content{
     display: flex;
@@ -27,14 +29,13 @@ mat-label{
     justify-content: space-evenly;
 	overflow-y: scroll;
 	overflow-x: hidden;
-    border-color:var(--color-principal) ;
-    border-style: none solid none solid;
+    
 }
 .summary{
     width: 33%;
-    border-radius: 10px;
-    background: green;
-    color: white;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
 }
 .datos{
     width: 100%;
@@ -44,7 +45,7 @@ mat-label{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 25px;
+    margin: 50px;
 }
 .container_card{
     display: flex;
@@ -67,7 +68,7 @@ mat-label{
     border-color:var(--color-principal) ;
     border-style: none none solid none;
 }
-h2{
+h2, .summary_title{
     color: var(--color-principal);
     text-align: center;
 }
@@ -76,6 +77,7 @@ h2{
     margin-bottom: 25px;
 }
 .filter {
+    margin: 0 30px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -83,3 +85,33 @@ h2{
     border: var(--color-principal) 1px solid;
     border-radius: 25px;
   }
+.summary_head{
+    padding-top: 50px;
+}
+.summary_values{
+    color: #fff;
+    text-align: center;
+    font-size: 4em;
+}
+.available_ticket{
+    display: flex;
+    flex-direction: column;
+	flex-flow: wrap;
+    justify-content: space-evenly;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.ticket_border{
+    padding: 15px;
+    border-color:var(--color-principal) ;
+    border-style: dashed ;
+}
+/* .mat-list-item{
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #000;
+    display: block;
+    padding: 7px;
+    border-radius: 10px;
+    margin-top: 5px;
+} */
