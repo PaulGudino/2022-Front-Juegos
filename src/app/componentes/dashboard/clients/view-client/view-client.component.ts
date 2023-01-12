@@ -129,12 +129,7 @@ export class ViewClientComponent implements OnInit {
     
   }
   async viewInformation(id:any){
-    let promise = await this.Permisos('Ver Ticket')
-    if (promise.length > 0){
-      this.router.navigate(['/dashboard/tickets/vizualizar/'+ id]);
-    }else{
-      this.snackSrv.mensaje('No tienes permisos para Ver Ticket');
-    }
+    this.router.navigate(['/dashboard/tickets/vizualizar/'+ id]);
   }
   async printTicket(id:string){
     let promise = await this.Permisos('Imprimir Ticket')
