@@ -96,14 +96,15 @@
          <ng-container matColumnDef="sex">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Sexo</th>
             <td mat-cell *matCellDef="let fila">
-               <div *ngIf="fila.sex == 'M'; else mujer">
+               <div *ngIf="fila.sex == 'Masculino'">
                   <mat-icon class="green-primary">male</mat-icon>
                </div>
-               <ng-template #mujer>
-                  <div>
-                     <mat-icon class="green-primary">female</mat-icon>
-                  </div>
-               </ng-template>
+               <div *ngIf="fila.sex == 'Femenino'">
+                  <mat-icon class="green-primary">female</mat-icon>
+               </div>
+               <div *ngIf="fila.sex == 'Otro'">
+                  <mat-icon class="green-primary">transgender</mat-icon>
+               </div>
             </td>
          </ng-container>
    
