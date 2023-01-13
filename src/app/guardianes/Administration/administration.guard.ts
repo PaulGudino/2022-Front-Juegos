@@ -17,7 +17,7 @@ export class AdministrationGuard implements CanActivate {
     if (sessionStorage.getItem('rol_id') == '1') {
       return true;
     } else {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/juego/seleccion']);
       return false;
     }
   }

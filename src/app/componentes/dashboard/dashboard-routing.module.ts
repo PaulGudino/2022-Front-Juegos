@@ -103,19 +103,19 @@ const routes: Routes = [
          {
             path: 'clientes/crear',
             component: CreateClientComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Crear Cliente' },
          },
          {
             path: 'clientes/vizualizar/:id',
             component: ViewClientComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Ver Cliente' },
          },
          {
             path: 'clientes/editar/:id',
             component: EditClientComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Editar Cliente' },
          },
 
@@ -123,7 +123,7 @@ const routes: Routes = [
          {
             path: 'tickets/configuracion',
             component: TicketConfigurationComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Editar Diseño del Ticket' },
          },
          {
@@ -134,13 +134,13 @@ const routes: Routes = [
          {
             path: 'tickets/crear',
             component: CreateTicketComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Crear Ticket' },
          },
          {
             path: 'tickets/vizualizar/:id',
             component: ViewTicketComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Ver Ticket' },
          },
 
@@ -153,25 +153,25 @@ const routes: Routes = [
          {
             path: 'premios/crear',
             component: CreateAwardsComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Crear Premio' },
          },
          {
             path: 'premios/visualizar/:id',
             component: ViewAwardsComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Ver Premio' },
          },
          {
             path: 'premios/editar/:id',
             component: EditAwardsComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Editar Premio' },
          },
          {
             path: 'probabilidades',
             component: ProbabilidadesComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Probabilidades del juego' },
          },
 
@@ -184,19 +184,19 @@ const routes: Routes = [
          {
             path: 'premios/condicion/crear',
             component: CreateAwardsConditionComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Crear Condición de Premio' },
          },
          {
             path: 'premios/condicion/visualizar/:id',
             component: ViewAwardsConditionComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Ver Condición de Premio' },
          },
          {
             path: 'premios/condicion/editar/:id',
             component: EditAwardsConditionComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Editar Condición de Premio' },
          },
 
@@ -207,7 +207,7 @@ const routes: Routes = [
          },
          { 
             path: 'juego/fecha', component: GameDateComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Fecha del Juego' }  
          },
          { 
@@ -216,43 +216,43 @@ const routes: Routes = [
          },
          { 
             path: 'juego/publicidad', component: PublicityComponent ,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Publicidad del Juego' } 
          },
          { 
             path: 'juego/publicidad/top', component: TopPublicityComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Publicidad del Juego' }  
          },
          {
             path: 'juego/publicidad/bottom',
             component: BottomPublicityComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Publicidad del Juego' } 
          },
          { 
             path: 'juego/salvapantallas', component: SaveScreenComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Salvapantallas del Juego' }  
          },
          { 
             path: 'juego/scan', component: ScanCodeComponent ,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Presentación de Escaneo del Juego' } 
          },
          { 
             path: 'juego/diseno', component: DesignComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Diseño del Juego' } 
          },
          { 
             path: 'juego/diseno/ganador', component: WinnerDesignComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Presentación de Ganadores del Juego' }  
          },
          { 
             path: 'juego/diseno/publicity', component: PublicityGameComponent,
-            canActivate: [PermissionsGuard, InicioGuard],
+            canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Diseño del Juego' }  
          },
       ],
