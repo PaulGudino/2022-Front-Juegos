@@ -76,6 +76,7 @@ export class GameLogicService {
 	 * @public
 	 */
 	async playGame() {
+
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 

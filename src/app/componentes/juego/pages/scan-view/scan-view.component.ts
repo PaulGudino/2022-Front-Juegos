@@ -37,7 +37,7 @@ export class ScanViewComponent implements OnInit {
 		console.log("code:" + this.keyController.getCode())
 		if (this.keyController.getCode() != "") {
 			// let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
-			let validateTicket = this.gameLogic.verifyTicket("803607536")
+			let validateTicket = this.gameLogic.verifyTicket("1234567")
 			if (await validateTicket) {
 				console.log("dentro del if" + validateTicket)
 

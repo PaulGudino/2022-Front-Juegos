@@ -37,13 +37,14 @@ export class JuegoComponent implements OnInit {
       private AuthSrv: AuthService,
       private GameSrv: GameService,
       private confirmDialog : ConfirmDialogService,
-      // private Gamelogic : GameLogicService
+      private Gamelogic : GameLogicService
    ) {}
 
 
    async ngOnInit(): Promise<void> {
       // let today = new Date();
       // console.log(today)
+      // this.Gamelogic.changeStateTicket(1)
       await this.auth()
       this.validateSlot()
       sessionStorage.removeItem('juego_scan');
