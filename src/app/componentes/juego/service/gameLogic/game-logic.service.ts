@@ -38,7 +38,9 @@ export class GameLogicService {
 	 * @public
 	 */
 	public async verifyTicket(qrCodeDigits: string) {
+		console.log('Dentro de verifyTicket', qrCodeDigits)
 		const promise = await lastValueFrom(this.ticketService.getFilter("?&state=Disponible&qr_code_digits=" + qrCodeDigits))
+		console.log('Dentro de verifyTicket', promise)
 		if (promise.length > 0) {
 			this.ticket = promise[0]
 			let ticket_created
@@ -202,7 +204,7 @@ export class GameLogicService {
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let category: string = ""
 
-		debugger
+		// debugger
 		if (rd_number <= this.winProb) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
