@@ -1,102 +1,117 @@
-<div class="container-fullscreen p-0 m-0" contenteditable="true" (window:beforeunload)="doSomething()">
-   <app-publicity
-      [publicityList]="publicity.getTopPublicityList()"
-   ></app-publicity>
-   <div class="container-menu">
-      <app-logo
-         [urlImage]="styles.get_image_logo_game()"
-         [isBackground]="true"
-         height="12rem"
-      ></app-logo>
-      <div class="scan-shadow"></div>
-      <div class="scan_menu-container">
-         <div class="menu-container_img-container">
-            <app-logo
-               [urlImage]="styles.get_image_logo_game()"
-               height="6rem"
-               [isHome]="false"
-            ></app-logo>
-         </div>
-         <p
-            class="info-game__text"
-            [ngStyle]="{
-               color: 'styles.color_text'
-            }"
-         >
-            A JUGAR!!!
-         </p>
-         <div
-            class="information-game-container"
-            [ngPlural]="availableSpin"
-            [ngStyle]="{
-               color: 'styles.get_color_text()'
-            }"
-         >
-            <ng-template ngPluralCase="=0">
-               <p class="info-game__text">
-                  No te quedan más Giros!
-               </p></ng-template
-            >
-            <ng-template class="info-game__text" ngPluralCase="=1">
-               <p class="info-game__text">
-                  Disponible 1 Giro más!
-               </p></ng-template
-            >
-            <ng-template class="info-game__text" ngPluralCase="other">
-               <p class="info-game__text">
-                  Disponible {{ availableSpin }} Giros más!
-               </p></ng-template
-            >
-         </div>
-         <div class="spinner__container">
-            <figure class="award-box-container">
-               <img
-                  class="awards-box"
-                  [src]="styles.get_image_machine_game()"
-                  alt="cajon-premios"
-               />
-            </figure>
-            <div class="awards-container">
-               <div class="awards-column" #col1>
-                  <figure
-                     *ngFor="let name of theme.publicityGameList"
-                     class="award-image-container"
-                  >
-                     <img [src]="name.image" alt="publicityLogo" />
-                  </figure>
-               </div>
-               <div class="awards-column" #col2>
-                  <figure
-                     *ngFor="let image of theme.publicityGameListCol2"
-                     class="award-image-container"
-                  >
-                     <img [src]="image.image" alt="publicityLogo" />
-                  </figure>
-               </div>
-               <div class="awards-column" #col3>
-                  <figure
-                     *ngFor="let name of theme.publicityGameListCol3"
-                     class="award-image-container"
-                  >
-                     <img [src]="name.image" alt="publicityLogo" />
-                  </figure>
-               </div>
-            </div>
-            <!-- <div class="hide-top"></div>
+<div
+	class="container-fullscreen p-0 m-0"
+	contenteditable="true"
+	(window:beforeunload)="doSomething()">
+	<app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
+	<div class="container-menu">
+		<app-logo
+			[urlImage]="styles.get_image_logo_game()"
+			[isBackground]="true"
+			height="12rem"></app-logo>
+		<div class="scan-shadow"></div>
+		<div class="scan_menu-container">
+			<div class="menu-container_img-container">
+				<app-logo
+					[urlImage]="styles.get_image_logo_game()"
+					height="6rem"
+					[isHome]="false"></app-logo>
+			</div>
+			<p
+				class="info-game__text"
+				[ngStyle]="{
+					color: 'styles.color_text'
+				}">
+				A JUGAR!!!
+			</p>
+			<div
+				class="information-game-container"
+				[ngPlural]="gameLogicService.attempts"
+				[ngStyle]="{
+					color: 'styles.get_color_text()'
+				}">
+				<ng-template ngPluralCase="=0"> <p class="info-game__text">No te quedan más Giros!</p></ng-template>
+				<ng-template
+					class="info-game__text"
+					ngPluralCase="=1">
+					<p class="info-game__text">Disponible 1 Giro más!</p></ng-template
+				>
+				<ng-template
+					class="info-game__text"
+					ngPluralCase="other">
+					<p class="info-game__text">
+						Disponible {{ gameLogicService.attempts }} Giros
+						más!
+					</p></ng-template
+				>
+			</div>
+			<div class="spinner__container">
+				<figure class="award-box-container">
+					<img
+						class="awards-box"
+						[src]="styles.get_image_machine_game()"
+						alt="cajon-premios" />
+				</figure>
+				<div class="awards-container">
+					<div
+						class="awards-column"
+						#col1>
+						<figure
+							*ngFor="
+								let name of theme.publicityGameList
+							"
+							class="award-image-container">
+							<img
+								[src]="
+									name.image
+								"
+								alt="publicityLogo" />
+						</figure>
+					</div>
+					<div
+						class="awards-column"
+						#col2>
+						<figure
+							*ngFor="
+								let image of theme.publicityGameListCol2
+							"
+							class="award-image-container">
+							<img
+								[src]="
+									image.image
+								"
+								alt="publicityLogo" />
+						</figure>
+					</div>
+					<div
+						class="awards-column"
+						#col3>
+						<figure
+							*ngFor="
+								let name of theme.publicityGameListCol3
+							"
+							class="award-image-container">
+							<img
+								[src]="
+									name.image
+								"
+								alt="publicityLogo" />
+						</figure>
+					</div>
+				</div>
+				<!-- <div class="hide-top"></div>
             <div class="hide-bottom"></div> -->
-         </div>
-         <app-generic-button
-            title="Girar"
-            fontSize="1rem"
-            styledPadding="0.5rem 2rem"
-            class="mb-2"
-            (click)="animation.startGame(col1, col2, col3)"
-         ></app-generic-button>
-      </div>
-   </div>
+			</div>
+			<app-generic-button
+				[disabled]="animation.disabledPlayButton"
+				title="Girar"
+				fontSize="1rem"
+				styledPadding="0.5rem 2rem"
+				class="mb-2"
+				(click)="animation.startGame(col1, col2, col3)"></app-generic-button>
+		</div>
+	</div>
 
-   <app-publicity
-      [publicityList]="publicity.getBottomPublicityList()"
-      [isTop]="false"
-   ></app-publicity>
+	<app-publicity
+		[publicityList]="publicity.getBottomPublicityList()"
+		[isTop]="false"></app-publicity>
 </div>

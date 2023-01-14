@@ -79,11 +79,8 @@ export class GameLogicService {
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 
-		debugger
-
 		//Second Check limitWinners
 		if (!(await this.checkLimitWinners())) {
-			console.log("not surpass winners limit")
 			//Third check if there's any award conditioned if true then the client must win
 			let awardsConditioned: any = await this.getAwardConditionToday()
 			if (awardsConditioned && awardsConditioned.length > 0) {
@@ -92,14 +89,13 @@ export class GameLogicService {
 				this.winCase(award.id, awardConditioned.id, true)
 			} else {
 				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
-				let awards = await this.getPrize2()
-				debugger
+				let awards = await this.getPrize()
 				if (awards) {
 					let award = awards[0]
 					this.winCase(award.id, null, false)
 				} else {
 					this.changeStateTicket(this.ticket.id)
-					this.createMatch("false", "false", this.ticket.id, "null")
+					this.createMatch("false", "false", this.ticket.id, null)
 
 					this.setWinnerState(false)
 				}
@@ -193,7 +189,7 @@ export class GameLogicService {
 	}
 
 	/**
-	 * retorna un string en caso que el usuario haya ganado, el string que devuelve es la categoria del
+	 * retorna un premio en caso que el usuario haya ganado, el string que devuelve es la categoria del
 	 * premio que gano, en caso de perder retorna el string lose, en caso de que gane pero no haya ningun
 	 * premio retorno lose
 	 * @public
@@ -202,95 +198,41 @@ export class GameLogicService {
 		let min: number = 0
 		let max: number = 100
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
-		let win_prob: number
 		let category: string = ""
 
-		this.probabilityService.getProbabilites().subscribe((data) => {
-			win_prob = data.percent_win
-			this.attempts = data.attempts_limit
-			this.winnersLimit = data.winners_limit
+		debugger
+		if (rd_number <= this.winProb) {
+			// Winner
+			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 
-			if (rd_number <= win_prob) {
-				// Winner
-				rd_number = Math.floor(Math.random() * (max - min + 1)) + min
+			if (rd_number <= 60) {
+				//console.log("Common prize");
+				// category = "Common prize"
+				category = "Común"
+			} else if (rd_number <= 85) {
+				//console.log("Rare prize");
+				// category = "Rare prize"
+				category = "Rara"
+			} else if (rd_number <= 95) {
+				//console.log("Epic prize");
+				// category = "Epic prize"
+				category = "Épica"
+			} else if (rd_number <= 100) {
+				//console.log("Lengendary prize");
+				// category = "Lengendary prize"
+				category = "Legendaria"
+			}
 
-				if (rd_number <= 60) {
-					//console.log("Common prize");
-					// category = "Common prize"
-					category = "Común"
-				} else if (rd_number <= 85) {
-					//console.log("Rare prize");
-					// category = "Rare prize"
-					category = "Rara"
-				} else if (rd_number <= 95) {
-					//console.log("Epic prize");
-					// category = "Epic prize"
-					category = "Épica"
-				} else if (rd_number <= 100) {
-					//console.log("Lengendary prize");
-					// category = "Lengendary prize"
-					category = "Legendaria"
-				}
+			let validAward: any = await this.getAwardsCategory(category)
 
-				let validAward: any = this.getAwardsCategory(category)
-
-				if (validAward.length > 0) {
-					return validAward[0]
-				} else {
-					return null
-				}
+			if (validAward.length > 0) {
+				return validAward
 			} else {
 				return null
 			}
-
-			// Loser
-		})
-	}
-	/**
-	 * retorna un string en caso que el usuario haya ganado, el string que devuelve es la categoria del
-	 * premio que gano, en caso de perder retorna el string lose, en caso de que gane pero no haya ningun
-	 * premio retorno lose
-	 * @public
-	 */
-	async getPrize2(): Promise<any> {
-		let min: number = 0
-		let max: number = 100
-		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
-		let category: string = ""
-
-		// if (rd_number <= this.winProb) {
-		// Winner
-		// rd_number = Math.floor(Math.random() * (max - min + 1)) + min
-		rd_number = 100
-
-		if (rd_number <= 60) {
-			//console.log("Common prize");
-			// category = "Common prize"
-			category = "Común"
-		} else if (rd_number <= 85) {
-			//console.log("Rare prize");
-			// category = "Rare prize"
-			category = "Rara"
-		} else if (rd_number <= 95) {
-			//console.log("Epic prize");
-			// category = "Epic prize"
-			category = "Épica"
-		} else if (rd_number <= 100) {
-			//console.log("Lengendary prize");
-			// category = "Lengendary prize"
-			category = "Legendaria"
-		}
-
-		let validAward: any = await this.getAwardsCategory(category)
-
-		if (validAward.length > 0) {
-			return validAward
 		} else {
 			return null
 		}
-		// } else {
-		// 	return null
-		// }
 
 		// Loser
 	}
@@ -349,7 +291,6 @@ export class GameLogicService {
 			win_match: winMatch,
 			delivered: awardDelivered,
 		}
-		debugger
 		this.match = body
 		this.matchService.postMatch(body)
 	}
@@ -360,5 +301,9 @@ export class GameLogicService {
 
 	setWinnerState(state: boolean) {
 		this.winner = state
+	}
+
+	public decreaseAttemptCount() {
+		this.attempts--
 	}
 }
