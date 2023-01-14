@@ -82,28 +82,29 @@ export class GameLogicService {
 
 		//Second Check limitWinners
 		if (!(await this.checkLimitWinners())) {
-			console.log("not surpass winners limit")
 			//Third check if there's any award conditioned if true then the client must win
-			let awards: any = await this.getAwardConditionToday()
-			if (awards && awards.length > 0) {
-				let awardConditioned = awards[0]
+			let awardsConditioned: any = await this.getAwardConditionToday()
+			if (awardsConditioned && awardsConditioned.length > 0) {
+				let awardConditioned = awardsConditioned[0]
 				let award: any = this.winnedAward(awardConditioned)
 				this.winCase(award.id, awardConditioned.id, true)
 				console.log(this.winner)
 			} else {
 				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
-				console.log("Else")
-				let awards = await this.getPrize2()
-				debugger
+				let awards = await this.getPrize()
 				if (awards) {
 					let award = awards[0]
 					this.winCase(award.id, null, false)
 				} else {
 					this.changeStateTicket(this.ticket.id)
+					this.createMatch("false", "false", this.ticket.id, null)
+
 					this.setWinnerState(false)
 				}
 			}
 		} else {
+			this.changeStateTicket(this.ticket.id)
+			this.createMatch("false", "false", this.ticket.id, null)
 			this.setWinnerState(false)
 		}
 	}
@@ -113,7 +114,7 @@ export class GameLogicService {
 	 * @private
 	 */
 	private winCase(awardId: any, awardConditionedId: any, conditionedWin: boolean) {
-		this.createMatch(true, true, this.ticket, awardId)
+		this.createMatch("true", "true", this.ticket.id, awardId)
 		this.changeStateTicket(this.ticket.id)
 		this.setWinnerState(true)
 		if (conditionedWin) {
@@ -190,67 +191,12 @@ export class GameLogicService {
 	}
 
 	/**
-	 * retorna un string en caso que el usuario haya ganado, el string que devuelve es la categoria del
+	 * retorna un premio en caso que el usuario haya ganado, el string que devuelve es la categoria del
 	 * premio que gano, en caso de perder retorna el string lose, en caso de que gane pero no haya ningun
 	 * premio retorno lose
 	 * @public
 	 */
 	async getPrize(): Promise<any> {
-		let min: number = 0
-		let max: number = 100
-		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
-		let win_prob: number
-		let category: string = ""
-
-		this.probabilityService.getProbabilites().subscribe((data) => {
-			win_prob = data.percent_win
-			this.attempts = data.attempts_limit
-			this.winnersLimit = data.winners_limit
-
-			debugger
-			if (rd_number <= win_prob) {
-				// Winner
-				rd_number = Math.floor(Math.random() * (max - min + 1)) + min
-
-				if (rd_number <= 60) {
-					//console.log("Common prize");
-					// category = "Common prize"
-					category = "Común"
-				} else if (rd_number <= 85) {
-					//console.log("Rare prize");
-					// category = "Rare prize"
-					category = "Rara"
-				} else if (rd_number <= 95) {
-					//console.log("Epic prize");
-					// category = "Epic prize"
-					category = "Épica"
-				} else if (rd_number <= 100) {
-					//console.log("Lengendary prize");
-					// category = "Lengendary prize"
-					category = "Legendaria"
-				}
-
-				let validAward: any = this.getAwardsCategory(category)
-
-				if (validAward.length > 0) {
-					return validAward[0]
-				} else {
-					return null
-				}
-			} else {
-				return null
-			}
-
-			// Loser
-		})
-	}
-	/**
-	 * retorna un string en caso que el usuario haya ganado, el string que devuelve es la categoria del
-	 * premio que gano, en caso de perder retorna el string lose, en caso de que gane pero no haya ningun
-	 * premio retorno lose
-	 * @public
-	 */
-	async getPrize2(): Promise<any> {
 		let min: number = 0
 		let max: number = 100
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
@@ -282,7 +228,7 @@ export class GameLogicService {
 			let validAward: any = await this.getAwardsCategory(category)
 
 			if (validAward.length > 0) {
-				return validAward[0]
+				return validAward
 			} else {
 				return null
 			}
@@ -340,7 +286,7 @@ export class GameLogicService {
 	 * void function who post a new match
 	 * @private
 	 */
-	private createMatch(winMatch: boolean, awardDelivered: boolean, idTicket: string, idAward: string) {
+	private createMatch(winMatch: string, awardDelivered: string, idTicket: string, idAward: any) {
 		let body = {
 			ticket: idTicket,
 			award: idAward,
@@ -357,5 +303,9 @@ export class GameLogicService {
 
 	setWinnerState(state: boolean) {
 		this.winner = state
+	}
+
+	public decreaseAttemptCount() {
+		this.attempts--
 	}
 }

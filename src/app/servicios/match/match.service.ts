@@ -11,7 +11,9 @@ export class MatchService {
 	url = this.puente.geturl()
 
 	postMatch(data: any) {
-		return this.http.post(this.url + "api/match/", data)
+		return this.http.post(this.url + "api/match/", data).subscribe((data) => {
+			console.log(data)
+		})
 	}
 	getMatchFilter(filter: string) {
 		return this.http.get(this.url + "api/matchfilter/" + filter)
