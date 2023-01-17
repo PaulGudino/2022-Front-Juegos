@@ -10,23 +10,20 @@ import { ThemeService } from "../../service/theme/theme.service"
 import { PublicityGameService } from "src/app/servicios/publicityGame/publicity-game.service"
 import { PublicityGame } from "src/app/interfaces/publicityGame/PublicityGame"
 
-import { Audio } from 'src/app/interfaces/audio/Audio';
-import { AudioService } from 'src/app/servicios/audio/audio.service';
-
+import { Audio } from "src/app/interfaces/audio/Audio"
+import { AudioService } from "src/app/servicios/audio/audio.service"
 
 @Component({
 	selector: "app-play-view",
 	templateUrl: "./play-view.component.html",
 	styleUrls: ["./play-view.component.css"],
 })
-
-
 export class PlayViewComponent implements OnInit {
 	informationText: string = "A JUGAR!"
-	slot_music = false;
+	slot_music = false
 
-	audio = new Audio();
-	audioArray: Audio[] = [];
+	audio = new Audio()
+	audioArray: Audio[] = []
 
 	probability: any = {
 		// id: 1,
@@ -46,31 +43,28 @@ export class PlayViewComponent implements OnInit {
 		public theme: ThemeService,
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
-		private audioService: AudioService,
-	) { }
+		private audioService: AudioService
+	) {}
 
 	async ngAfterViewInit(): Promise<void> {
 		// this.audio.loop;
-		this.audio.play();
+		this.audio.play()
 	}
 
-
 	ngOnInit(): void {
-
 		this.audioService.getAll().subscribe((data) => {
-			this.audioArray = data;
-			this.audio.src = this.audioArray[0].audio;
+			this.audioArray = data
+			this.audio.src = this.audioArray[0].audio
 			// console.log(this.audio.src);
-		});
-
+		})
 	}
 	doSomething() {
 		sessionStorage.removeItem("juego_play")
 	}
-	music(){
+	music() {
 		this.slot_music = true
 		setTimeout(() => {
 			this.slot_music = false
-		}, 7000);
+		}, 7000)
 	}
 }

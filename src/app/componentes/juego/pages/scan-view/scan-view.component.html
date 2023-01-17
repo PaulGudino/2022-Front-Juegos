@@ -13,7 +13,7 @@
 			<div class="menu-container_img-container">
 				<app-logo
 					[urlImage]="styles.get_image_logo_game()"
-					height="14rem"
+					height="22rem"
 					[isHome]="false"></app-logo>
 			</div>
 			<div
@@ -27,7 +27,7 @@
 			<div
 				class="menu-info"
 				*ngIf="!scanState">
-				<h2 class="scan_title">Ingrese el codigo</h2>
+				<h2 class="scan_title">Ingrese el código</h2>
 			</div>
 
 			<figure
@@ -49,8 +49,8 @@
 			<app-generic-button
 				(click)="continueToGame()"
 				title="Continuar"
-				fontSize="1.8rem"
-				styledPadding="1.5rem 2.6rem"
+				[fontSize]="'2.8rem'"
+				[styledPadding]="'2.4rem 6.6rem'"
 				class="mb-2"></app-generic-button>
 		</div>
 	</div>

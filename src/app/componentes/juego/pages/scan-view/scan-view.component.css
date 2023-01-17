@@ -25,16 +25,16 @@
   display:flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.4rem;
+  gap: 3rem;
   z-index: 3;
 }
 .scan_title{
   margin: 0;
-  font-size: 2rem;
+  font-size: 3.8rem;
 }
 .menu-container_img-container{
-   width: 23rem;
-   height: 10rem;
+   width: 39rem;
+   height: 19rem;
    min-height: 4rem;
    margin: 0 1rem 1rem 0;
 }
@@ -43,27 +43,31 @@
    flex-direction: column;
    align-items: center;
    color: white;
-   font-size: 2.2rem;
+   font-size: 3.8rem;
+   gap: 2.4rem;
 }
 .menu-container_img{
   border-radius:25px;
 }
 .explication-text{
   padding:0 2rem;
+  line-height: initial;
+  text-align: center;
+  width: 83%;
 }
 .menu-container_scan-img-container{
-   min-height: 12rem;
-   width: 12rem;
+   min-height: 16rem;
+   width: 19rem;
 }
 .menu__input{
-   border: 3px solid red;
-    outline: none;
-    border-radius: 13px;
-    background-color: black;
-    color: white;
-    padding: 0.5rem 0.5rem;
-    width: 16rem;
-   font-size: 2rem;
+   border: 5px solid red;
+   outline: none;
+   border-radius: 33px;
+   background-color: black;
+   color: white;
+   padding: 1rem 0.5rem;
+   width: 37rem;
+   font-size: 2.8rem;
 }
 p,figure{
    margin: 0;

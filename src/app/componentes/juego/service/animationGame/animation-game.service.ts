@@ -9,13 +9,15 @@ export class AnimationGameService {
 	columna2 = [5, 6, 7, 8, 9, 10, 1, 2, 3, 4]
 	columna3 = [3, 4, 5, 6, 7, 8, 9, 10, 1, 2]
 
-	widthImage: number = 210 //heigth image + gap
+	widthImage: number = 270 //heigth image + gap
 	animationCountCol1 = 5
 	disabledPlayButton: boolean = false
 
 	constructor(private gameLogicService: GameLogicService) {}
 
 	startGame(refCol1: any, refCol2: any, refCol3: any) {
+		this.gameLogicService.winFirstTime = false
+
 		if (this.gameLogicService.attempts > 0) {
 			//Logic return true if win
 			this.disabledPlayButton = true
@@ -121,6 +123,7 @@ export class AnimationGameService {
 
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
+						this.gameLogicService.winFirstTime = true
 						clearInterval(intervalId)
 					}
 				}, 1030)

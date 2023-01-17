@@ -2,12 +2,14 @@
    position: relative;
    width: 100%;
    height: 70vh;
+
    overflow-y: hidden;
+   overflow-x: hidden;
 }
 .home-image_container {
   position: relative;
-  height: 143%;
-  width: 100%;
+  height: 100%;
+  width: 124vh;
   background-color:#3b3b3b;
 }
 .home-logo__container{

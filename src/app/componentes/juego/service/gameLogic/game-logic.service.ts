@@ -19,6 +19,7 @@ export class GameLogicService {
 	winnersLimit: number = 0
 	winProb: number = 0
 	public winner: boolean = false
+	public winFirstTime: boolean = false
 
 	constructor(
 		private ticketService: TicketService,
@@ -38,9 +39,9 @@ export class GameLogicService {
 	 * @public
 	 */
 	public async verifyTicket(qrCodeDigits: string) {
-		console.log('Dentro de verifyTicket', qrCodeDigits)
+		console.log("Dentro de verifyTicket", qrCodeDigits)
 		const promise = await lastValueFrom(this.ticketService.getFilter("?&state=Disponible&qr_code_digits=" + qrCodeDigits))
-		console.log('Dentro de verifyTicket', promise)
+		console.log("Dentro de verifyTicket", promise)
 		if (promise.length > 0) {
 			this.ticket = promise[0]
 			let ticket_created
@@ -78,7 +79,6 @@ export class GameLogicService {
 	 * @public
 	 */
 	async playGame() {
-
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 
