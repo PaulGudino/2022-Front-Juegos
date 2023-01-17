@@ -108,7 +108,7 @@
                             <mat-label>Premio Ganado</mat-label>
                             <br>
                             <div *ngIf="info.value.win_match; else loser">
-                                <mat-list-item>{{info.value.win_award}}</mat-list-item>
+                                <mat-list-item>{{info.value.win_award}} -- Categoría: {{info.value.win_award_category}} </mat-list-item>
                             </div>
                             <ng-template #loser>
                                 <mat-list-item>No ha ganado</mat-list-item>
@@ -118,7 +118,7 @@
                             <mat-label>Premio Entregado</mat-label>
                             <br>
                             <div *ngIf="info.value.delivered_award; else loser_award">
-                                <mat-list-item>{{info.value.win_award}} Si</mat-list-item>
+                                <mat-list-item>Si</mat-list-item>
                             </div>
                             <ng-template #loser_award>
                                 <mat-list-item>No</mat-list-item>

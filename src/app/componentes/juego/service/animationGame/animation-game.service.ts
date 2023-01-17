@@ -171,7 +171,7 @@ export class AnimationGameService {
 			this.gameLogicService.setWinnerState(false)
 			this.gameLogicService.decreaseAttemptCount()
 		} else {
-			alert("out of attempts")
+			window.location.reload();
 		}
 	}
 }

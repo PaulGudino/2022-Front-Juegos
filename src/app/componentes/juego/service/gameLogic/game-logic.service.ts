@@ -116,7 +116,7 @@ export class GameLogicService {
 	 * @private
 	 */
 	private winCase(awardId: any, awardConditionedId: any, conditionedWin: boolean) {
-		this.createMatch("true", "true", this.ticket.id, awardId)
+		this.createMatch("true", "false", this.ticket.id, awardId)
 		this.changeStateTicket(this.ticket.id)
 		this.setWinnerState(true)
 		if (conditionedWin) {
