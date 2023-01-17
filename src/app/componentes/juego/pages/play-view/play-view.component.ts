@@ -23,6 +23,7 @@ import { AudioService } from 'src/app/servicios/audio/audio.service';
 
 export class PlayViewComponent implements OnInit {
 	informationText: string = "A JUGAR!"
+	slot_music = false;
 
 	audio = new Audio();
 	audioArray: Audio[] = [];
@@ -65,5 +66,11 @@ export class PlayViewComponent implements OnInit {
 	}
 	doSomething() {
 		sessionStorage.removeItem("juego_play")
+	}
+	music(){
+		this.slot_music = true
+		setTimeout(() => {
+			this.slot_music = false
+		}, 7000);
 	}
 }
