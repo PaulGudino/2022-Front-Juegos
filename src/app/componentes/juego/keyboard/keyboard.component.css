@@ -1,14 +1,16 @@
 .btn{
-  background-color: gray;
+  background-color: white;
   border-radius: 15px;
-  padding: 0.3rem 0.4rem;
+  padding: 0.3rem 0.2rem;
+  font-size: 1.8rem;
 }
 .keyboard-container{
   display: flex;
   flex-direction: column;
-  gap:0.8rem;
-  width:11rem;
+  gap:1rem;
+  width:18rem;
+  font-size: 1.6rem;
 }
 .keyboard-row{
-  gap:0.5rem
+  gap:1.6rem
 }

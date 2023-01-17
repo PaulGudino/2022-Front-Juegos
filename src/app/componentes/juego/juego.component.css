@@ -2,10 +2,11 @@
    position: relative;
    width: 100%;
    height: 70vh;
+   overflow-y: hidden;
 }
 .home-image_container {
   position: relative;
-  height: 100%;
+  height: 143%;
   width: 100%;
   background-color:#3b3b3b;
 }
@@ -35,10 +36,16 @@ img{
 }
 
 .home-btn_container {
-   max-width: 14rem;
-  position: absolute;
-  bottom: calc(10% + 10px);
-  left: calc(50% - 90px);
+   width: 100%;
+   position: absolute;
+   display: flex;
+   justify-content: center;
+   bottom: calc(10% + 10px);
+
+}
+.home_btn{
+
+
 }
 
 

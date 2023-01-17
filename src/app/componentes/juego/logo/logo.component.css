@@ -1,7 +1,7 @@
 .home-logo__container{
    position: absolute;
-   max-width:426px;
    height: 15rem;
+   width: 47rem;
    left: calc(50% - 205px);
    top: calc(0% + 20px);
    z-index: 2;
@@ -16,7 +16,7 @@
    position: absolute;
    height: 15rem;
    top: calc(0% + 20px);
-   left: calc(50% - 210px);
+   left: calc(50% - 364px);
    z-index: 2;
 
 }

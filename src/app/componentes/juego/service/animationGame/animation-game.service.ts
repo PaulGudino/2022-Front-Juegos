@@ -9,15 +9,13 @@ export class AnimationGameService {
 	columna2 = [5, 6, 7, 8, 9, 10, 1, 2, 3, 4]
 	columna3 = [3, 4, 5, 6, 7, 8, 9, 10, 1, 2]
 
-	widthImage: number = 156 //heigth image + gap
+	widthImage: number = 210 //heigth image + gap
 	animationCountCol1 = 5
 	disabledPlayButton: boolean = false
 
 	constructor(private gameLogicService: GameLogicService) {}
 
 	startGame(refCol1: any, refCol2: any, refCol3: any) {
-		debugger
-
 		if (this.gameLogicService.attempts > 0) {
 			//Logic return true if win
 			this.disabledPlayButton = true
