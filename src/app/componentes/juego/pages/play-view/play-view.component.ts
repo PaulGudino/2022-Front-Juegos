@@ -65,6 +65,7 @@ export class PlayViewComponent implements OnInit {
 		this.slot_music = true
 		setTimeout(() => {
 			this.slot_music = false
-		}, 7000)
+		}, 6000)
 	}
+
 }

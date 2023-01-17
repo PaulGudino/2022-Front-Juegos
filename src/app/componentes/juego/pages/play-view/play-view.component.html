@@ -1,6 +1,6 @@
-<audio
+<!-- <audio
 	autoplay
-	src="/src/assets/audio/playing hip hop.mp3"></audio>
+	src="/src/assets/audio/playing hip hop.mp3"></audio> -->
 
 <div
 	class="container-fullscreen p-0 m-0"
@@ -54,6 +54,13 @@
 					</p>
 					<ng-template #winText>
 						<p class="info-game__text">HAS GANADO!!!</p>
+						<audio
+						controls="None" hidden
+						autoplay>
+						<source
+							src="./assets/audio/win.mp3"
+							type="audio/mp3" />
+						</audio>
 					</ng-template>
 				</ng-template>
 			</div>
@@ -130,11 +137,11 @@
 				(click)="animation.startGame(col1, col2, col3); music()">
 				<div *ngIf="slot_music">
 					<audio
-						controls="None"
+						controls="None" hidden
 						autoplay>
 						<source
 							src="./assets/audio/tragaperras.mp3"
-							type="audio/mpeg" />
+							type="audio/mp3" />
 					</audio>
 				</div>
 			</app-generic-button>

@@ -15,7 +15,7 @@
 .logo__container-background{
    position: absolute;
    height: 15rem;
-   top: calc(0% + 20px);
+   top: calc(40% + 20px);
    left: calc(50% - 364px);
    z-index: 2;
 

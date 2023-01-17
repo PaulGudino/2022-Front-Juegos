@@ -99,6 +99,8 @@ ocupa 900 px de altura la columna en negativo
    position: absolute;
    z-index: 5;
    top: -240px;
+   width: 950px;
+   height: 900px;
 }
 p,
 figure {
