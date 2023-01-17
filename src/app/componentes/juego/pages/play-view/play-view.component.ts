@@ -67,5 +67,4 @@ export class PlayViewComponent implements OnInit {
 			this.slot_music = false
 		}, 6000)
 	}
-
 }
