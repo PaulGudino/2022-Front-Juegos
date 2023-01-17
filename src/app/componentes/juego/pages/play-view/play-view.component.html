@@ -111,7 +111,17 @@
 				fontSize="1.8rem"
 				styledPadding="1.5rem 2.6rem"
 				class="mb-2"
-				(click)="animation.startGame(col1, col2, col3)"></app-generic-button>
+				(click)="animation.startGame(col1, col2, col3); music()">
+				<div *ngIf="slot_music">
+					<audio
+						controls="None"
+						autoplay>
+						<source
+							src="./assets/audio/tragaperras.mp3"
+							type="audio/mpeg" />
+					</audio>
+				</div>
+			</app-generic-button>
 		</div>
 	</div>
 
