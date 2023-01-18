@@ -1,14 +1,10 @@
 <div class="container-fluid publicity_container p-0">
    <div class="scroll-container" #scrollContainer>
-      <figure
-         *ngFor="let publicity of publicityList"
-         class="publicity_img-container"
-      >
-         <img
-            class="publicity_img"
-            [src]="publicity.image"
-            alt="publicity-img"
-         />
+      <figure *ngFor="let publicity of publicityList" class="publicity_img-container">
+         <img class="publicity_img" [src]="publicity.image" alt="publicity-img" />
       </figure>
    </div>
+   <audio controls="None" loop hidden>
+      <source src="./assets/audio/idle_music.mp3" type="audio/mp3">
+   </audio>
 </div>

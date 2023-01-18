@@ -18,12 +18,12 @@ import { AudioService } from "src/app/servicios/audio/audio.service"
 	templateUrl: "./play-view.component.html",
 	styleUrls: ["./play-view.component.css"],
 })
-export class PlayViewComponent implements OnInit {
+export class PlayViewComponent {
 	informationText: string = "A JUGAR!"
 	slot_music = false
 
-	audio = new Audio()
-	audioArray: Audio[] = []
+	// audio = new Audio()
+	// audioArray: Audio[] = []
 
 	probability: any = {
 		// id: 1,
@@ -46,18 +46,18 @@ export class PlayViewComponent implements OnInit {
 		private audioService: AudioService
 	) {}
 
-	async ngAfterViewInit(): Promise<void> {
-		// this.audio.loop;
-		this.audio.play()
-	}
+	// async ngAfterViewInit(): Promise<void> {
+	// 	// this.audio.loop;
+	// 	this.audio.play()
+	// }
 
-	ngOnInit(): void {
-		this.audioService.getAll().subscribe((data) => {
-			this.audioArray = data
-			this.audio.src = this.audioArray[0].audio
-			// console.log(this.audio.src);
-		})
-	}
+	// ngOnInit(): void {
+	// 	this.audioService.getAll().subscribe((data) => {
+	// 		this.audioArray = data
+	// 		this.audio.src = this.audioArray[0].audio
+	// 		// console.log(this.audio.src);
+	// 	})
+	// }
 	doSomething() {
 		sessionStorage.removeItem("juego_play")
 	}
