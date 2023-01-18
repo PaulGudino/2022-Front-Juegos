@@ -200,7 +200,7 @@ export class GameLogicService {
 	 */
 	async getPrize(): Promise<any> {
 		let min: number = 0
-		let max: number = 100
+		let max: number = 1000
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let category: string = ""
 
@@ -209,19 +209,19 @@ export class GameLogicService {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 
-			if (rd_number <= 60) {
+			if (rd_number <= 600) {
 				//console.log("Common prize");
 				// category = "Common prize"
 				category = "Común"
-			} else if (rd_number <= 85) {
+			} else if (rd_number <= 850) {
 				//console.log("Rare prize");
 				// category = "Rare prize"
 				category = "Rara"
-			} else if (rd_number <= 95) {
+			} else if (rd_number <= 950) {
 				//console.log("Epic prize");
 				// category = "Epic prize"
 				category = "Épica"
-			} else if (rd_number <= 100) {
+			} else if (rd_number <= 1000) {
 				//console.log("Lengendary prize");
 				// category = "Lengendary prize"
 				category = "Legendaria"
