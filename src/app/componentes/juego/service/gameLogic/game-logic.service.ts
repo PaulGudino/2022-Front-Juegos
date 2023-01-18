@@ -83,6 +83,7 @@ export class GameLogicService {
 		await this.deleteAwardConditionPast()
 
 		//Second Check limitWinners
+		debugger
 		if (!(await this.checkLimitWinners())) {
 			//Third check if there's any award conditioned if true then the client must win
 			let awardsConditioned: any = await this.getAwardConditionToday()
@@ -93,6 +94,7 @@ export class GameLogicService {
 				console.log(this.winner)
 			} else {
 				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
+
 				let awards = await this.getPrize()
 				if (awards) {
 					let award = awards[0]
@@ -204,8 +206,8 @@ export class GameLogicService {
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let category: string = ""
 
-		// debugger
-		if (rd_number <= (this.winProb * 10)) {
+		debugger
+		if (rd_number <= this.winProb * 10) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 
@@ -269,6 +271,7 @@ export class GameLogicService {
 		let current_day = this.gameDataSrv.DateFormat(today).split("T")[0]
 
 		let matchesToday: any = await this.getWinnMatchesToday(current_day)
+		debugger
 		if (matchesToday.length >= this.winnersLimit) {
 			this.setWinnerState(false)
 			return true

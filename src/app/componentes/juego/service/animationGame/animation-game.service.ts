@@ -59,40 +59,29 @@ export class AnimationGameService {
 								"transform 0s cubic-bezier(.17,.67,.83,.67)"
 						}, 1000)
 					} else {
-						let movimientosCol1 =
-							(n - 1) *
-							this.widthImage *
-							-1
+						let movimientosCol1 = (n - 1) * this.widthImage * -1
 						let movimientosCol2
 						if (n >= 5) {
 							movimientosCol2 =
-								(n -
-									5) *
-								this
-									.widthImage *
+								(n - 5) *
+								this.widthImage *
 								-1
 						} else {
 							movimientosCol2 =
-								(n +
-									5) *
-								this
-									.widthImage *
+								(n + 5) *
+								this.widthImage *
 								-1
 						}
 						let movimientosCol3
 						if (n >= 3) {
 							movimientosCol3 =
-								(n -
-									3) *
-								this
-									.widthImage *
+								(n - 3) *
+								this.widthImage *
 								-1
 						} else {
 							movimientosCol3 =
-								(n +
-									7) *
-								this
-									.widthImage *
+								(n + 7) *
+								this.widthImage *
 								-1
 						}
 						console.log("MOVIMIENTOS COL2: ", movimientosCol2)
@@ -171,7 +160,7 @@ export class AnimationGameService {
 			this.gameLogicService.setWinnerState(false)
 			this.gameLogicService.decreaseAttemptCount()
 		} else {
-			window.location.reload();
+			window.location.reload()
 		}
 	}
 }

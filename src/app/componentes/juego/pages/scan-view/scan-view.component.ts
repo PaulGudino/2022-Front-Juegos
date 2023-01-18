@@ -38,7 +38,8 @@ export class ScanViewComponent implements OnInit {
 		if (this.keyController.getCode() != "") {
 			// let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
 			console.log("Codigo ingresado", this.code)
-			let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
+			// let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
+			let validateTicket = this.gameLogic.verifyTicket("115727094")
 			if (await validateTicket) {
 				console.log("dentro del if" + validateTicket)
 				this.router.navigate(["/juego/play"])

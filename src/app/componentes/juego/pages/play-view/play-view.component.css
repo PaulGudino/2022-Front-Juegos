@@ -102,6 +102,9 @@ ocupa 900 px de altura la columna en negativo
    width: 950px;
    height: 900px;
 }
+.container_play-btn{
+   z-index:6;
+}
 p,
 figure {
    margin: 0;

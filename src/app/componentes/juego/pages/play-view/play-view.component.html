@@ -40,22 +40,18 @@
 					ngPluralCase="other">
 					<p
 						class="info-game__text"
-						*ngIf="
-							gameLogicService.winFirstTime ==
-								false;
-							else winText
-						">
-						Disponible {{ gameLogicService.attempts }} Giros
-						más!
+						*ngIf="gameLogicService.winFirstTime == false; else winText">
+						Disponible {{ gameLogicService.attempts }} Giros más!
 					</p>
 					<ng-template #winText>
 						<p class="info-game__text">HAS GANADO!!!</p>
 						<audio
-						controls="None" hidden
-						autoplay>
-						<source
-							src="./assets/audio/win.mp3"
-							type="audio/mp3" />
+							controls="None"
+							hidden
+							autoplay>
+							<source
+								src="./assets/audio/win.mp3"
+								type="audio/mp3" />
 						</audio>
 					</ng-template>
 				</ng-template>
@@ -79,14 +75,10 @@
 						class="awards-column"
 						#col1>
 						<figure
-							*ngFor="
-								let name of theme.publicityGameList
-							"
+							*ngFor="let name of theme.publicityGameList"
 							class="award-image-container">
 							<img
-								[src]="
-									name.image
-								"
+								[src]="name.image"
 								alt="publicityLogo" />
 						</figure>
 					</div>
@@ -99,9 +91,7 @@
 							"
 							class="award-image-container">
 							<img
-								[src]="
-									image.image
-								"
+								[src]="image.image"
 								alt="publicityLogo" />
 						</figure>
 					</div>
@@ -114,9 +104,7 @@
 							"
 							class="award-image-container">
 							<img
-								[src]="
-									name.image
-								"
+								[src]="name.image"
 								alt="publicityLogo" />
 						</figure>
 					</div>
@@ -129,11 +117,12 @@
 				title="Girar"
 				[fontSize]="'2.8rem'"
 				[styledPadding]="'2.4rem 6.6rem'"
-				class="mb-2"
+				class="mb-2 container_play-btn"
 				(click)="animation.startGame(col1, col2, col3); music()">
 				<div *ngIf="slot_music">
 					<audio
-						controls="None" hidden
+						controls="None"
+						hidden
 						autoplay>
 						<source
 							src="./assets/audio/tragaperras.mp3"
@@ -144,7 +133,12 @@
 		</div>
 	</div>
 
-	<audio autoplay loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
+	<audio
+		autoplay
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
 
 	<app-publicity
 		[publicityList]="publicity.getBottomPublicityList()"
