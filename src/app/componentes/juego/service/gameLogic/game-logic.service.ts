@@ -205,19 +205,19 @@ export class GameLogicService {
 		let category: string = ""
 
 		// debugger
-		if (rd_number <= (this.winProb * 100)) {
+		if (rd_number <= (this.winProb * 10)) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 
-			if (rd_number <= 600) {
+			if (rd_number <= 800) {
 				//console.log("Common prize");
 				// category = "Common prize"
 				category = "Común"
-			} else if (rd_number <= 850) {
+			} else if (rd_number <= 900) {
 				//console.log("Rare prize");
 				// category = "Rare prize"
 				category = "Rara"
-			} else if (rd_number <= 950) {
+			} else if (rd_number <= 990) {
 				//console.log("Epic prize");
 				// category = "Epic prize"
 				category = "Épica"
