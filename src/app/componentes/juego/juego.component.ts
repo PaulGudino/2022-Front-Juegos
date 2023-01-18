@@ -22,7 +22,7 @@ import { Audio } from 'src/app/interfaces/audio/Audio';
 
 
 
-export class JuegoComponent implements OnInit, AfterViewInit {
+export class JuegoComponent {
    backgroundImgUrl = '';
    buttonTitle: string = '';
    logoImage?: string = '';
@@ -31,8 +31,8 @@ export class JuegoComponent implements OnInit, AfterViewInit {
    boxes_images: number = 0
    design_images: number = 0
 
-   audio = new Audio();
-   audioArray : Audio[] = [];
+   // audio = new Audio();
+   // audioArray : Audio[] = [];
 
    constructor(
       public dashPublicity: DashboardPublicityService,
@@ -48,47 +48,47 @@ export class JuegoComponent implements OnInit, AfterViewInit {
 
    ) { }
 
-   async ngAfterViewInit(): Promise<void> {
-      // this.audio.loop;
-      this.audio.play();
-   }  
+   // async ngAfterViewInit(): Promise<void> {
+   //    // this.audio.loop;
+   //    this.audio.play();
+   // }  
 
-   async ngOnInit(): Promise<void> {
+   // async ngOnInit(): Promise<void> {
 
 
-      this.audioService.getAll().subscribe((data) => {
-         this.audioArray = data;
-         this.audio.src = this.audioArray[0].audio;
-         // console.log(this.audio.src);
-      });
+   //    this.audioService.getAll().subscribe((data) => {
+   //       this.audioArray = data;
+   //       this.audio.src = this.audioArray[0].audio;
+   //       // console.log(this.audio.src);
+   //    });
 
-      // let today = new Date();
-      // console.log(today)
-      // this.Gamelogic.changeStateTicket(1)
-      await this.auth()
-      this.validateSlot()
-      sessionStorage.removeItem('juego_scan');
-      sessionStorage.removeItem('juego_play');
-      this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
-         if (dataTopPublicity.length > 0) {
-            this.dashPublicity.loadTopData(dataTopPublicity);
-            // console.log(dataTopPublicity);
-            this.publicity
-               .getPublicityBottomList()
-               .subscribe((dataBottomPublicity) => {
-                  this.dashPublicity.loadBottomData(dataBottomPublicity);
-               });
-         }
-         this.themeService.getDesignInformation().subscribe((data) => {
-            this.styles.loadData(data[0]);
-            this.buttonTitle = this.styles.get_title_button_screensaver();
-            this.logoImage = this.styles.get_image_logo_game();
-            this.videoUrl = this.styles.get_video_screensaver();
-            // console.log(this.themeService.publicityGameList);
-         });
-      });
+   //    // let today = new Date();
+   //    // console.log(today)
+   //    // this.Gamelogic.changeStateTicket(1)
+   //    await this.auth()
+   //    this.validateSlot()
+   //    sessionStorage.removeItem('juego_scan');
+   //    sessionStorage.removeItem('juego_play');
+   //    this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
+   //       if (dataTopPublicity.length > 0) {
+   //          this.dashPublicity.loadTopData(dataTopPublicity);
+   //          // console.log(dataTopPublicity);
+   //          this.publicity
+   //             .getPublicityBottomList()
+   //             .subscribe((dataBottomPublicity) => {
+   //                this.dashPublicity.loadBottomData(dataBottomPublicity);
+   //             });
+   //       }
+   //       this.themeService.getDesignInformation().subscribe((data) => {
+   //          this.styles.loadData(data[0]);
+   //          this.buttonTitle = this.styles.get_title_button_screensaver();
+   //          this.logoImage = this.styles.get_image_logo_game();
+   //          this.videoUrl = this.styles.get_video_screensaver();
+   //          // console.log(this.themeService.publicityGameList);
+   //       });
+   //    });
 
-   }
+   // }
    async goScan() {
       // this.Gamelogic.deleteAwardConditionPast()
       await this.validateSlot()
