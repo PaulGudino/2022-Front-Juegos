@@ -205,7 +205,7 @@ export class GameLogicService {
 		let category: string = ""
 
 		// debugger
-		if (rd_number <= this.winProb) {
+		if (rd_number <= (this.winProb * 100)) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 
