@@ -54,7 +54,13 @@
 				class="mb-2"></app-generic-button>
 		</div>
 	</div>
-
+	<audio
+		autoplay
+		[volume]="0.05"
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
 	<app-publicity
 		[publicityList]="publicity.getBottomPublicityList()"
 		[isTop]="false"></app-publicity>
