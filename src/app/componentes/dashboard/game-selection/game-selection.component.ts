@@ -1,3 +1,4 @@
+import { MatchService } from 'src/app/servicios/match/match.service';
 import { PuenteDatosService } from './../../../servicios/comunicacio_componentes/puente-datos.service';
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/servicios/game/game.service';
@@ -15,12 +16,14 @@ export class GameSelectionComponent implements OnInit {
    pluralName: string = 'Juegos';
    actionName: string = 'Seleccionar';
    allGames: Game[] = [];
+   total_players = 0
 
    constructor(
       private GameAPI: GameService,
       private staticData: PuenteDatosService,
       private router: Router,
-      private snackbar: SnackbarService
+      private snackbar: SnackbarService,
+      private matchSrv: MatchService
    ) {
       this.GameAPI.getAll().subscribe((data) => {
          this.allGames = data;
@@ -30,6 +33,11 @@ export class GameSelectionComponent implements OnInit {
    ngOnInit(): void {
       // this.loadGames();
       this.staticData.setMenuGeneral();
+      this.matchSrv.getAllMatch().subscribe(
+         (data:any)=>{
+            this.total_players = Object.keys(data).length;
+         }
+      )
    }
 
    tragamonedas_settings() {
