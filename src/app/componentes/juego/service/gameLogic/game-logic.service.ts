@@ -87,10 +87,11 @@ export class GameLogicService {
 		if (!(await this.checkLimitWinners())) {
 			//Third check if there's any award conditioned if true then the client must win
 			let awardsConditioned: any = await this.getAwardConditionToday()
+			debugger
 			if (awardsConditioned && awardsConditioned.length > 0) {
 				let awardConditioned = awardsConditioned[0]
-				let award: any = this.winnedAward(awardConditioned)
-				this.winCase(award.id, awardConditioned.id, true)
+				// let award: any = this.winnedAward(awardConditioned)
+				this.winCase(awardConditioned.award_id, awardConditioned.id, true)
 				console.log(this.winner)
 			} else {
 				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
