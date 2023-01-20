@@ -56,15 +56,30 @@ table {
     justify-content: flex-end;
     margin-right: 7%;
 }
-.filter{
+.filter, .date_range{
     text-align: center;
     width: 400px;
+    height: 26px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: var(--color-principal) 1px solid;
     border-radius: 25px;
     margin-right: 25px;
+}
+.date_range_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.date_range{
+    color: var(--color-principal);
+}
+.date_text{
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
 }
 /* .mat-option{
     color: var(--color-principal);

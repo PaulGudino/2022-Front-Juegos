@@ -29,6 +29,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { QRCodeModule } from 'angularx-qrcode';
 
 
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 

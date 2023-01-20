@@ -193,7 +193,7 @@ export class CreateTicketComponent implements OnInit {
     let exist_code : any[] = [];
 
     do{
-      this.qr_code_digits = (Math.floor(Math.random() * (999999999 - 100000000 + 1)) + 100000000).toString(10);
+      this.qr_code_digits = (Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000).toString(10);
       let search_code = '?state=Disponible&qr_code_digits='+this.qr_code_digits
       this.ticketAPI.getFilter(search_code).subscribe({
         next : (res) => {

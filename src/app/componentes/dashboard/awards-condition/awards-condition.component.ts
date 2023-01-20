@@ -11,6 +11,8 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { lastValueFrom } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
+import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 
 @Component({
   selector: 'app-awards-condition',
@@ -18,6 +20,11 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./awards-condition.component.css']
 })
 export class AwardsConditionComponent implements OnInit {
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   Filters = [
     {id: '?is_approved=false', name: 'Premios Condicionados Pendientes'},
@@ -42,13 +49,15 @@ export class AwardsConditionComponent implements OnInit {
     private dialogService: ConfirmDialogService,
     private permisos_api: PermisosService,
     private premiosCondicionSrv: AwardsConditionService,
-    private staticData: PuenteDatosService
+    private staticData: PuenteDatosService,
+    private gameDataSrv: GameDateService,
   ) { }
 
   ngOnInit(): void {
     this.staticData.setMenuTragamonedas();
     this.cargarPremios(this.filter_default);
   }
+  
   cargarPremios(filter:string){
     this.premiosCondicionSrv.getAwardConditionFilter(filter).subscribe((data:any) => {
       this.dataSource = new MatTableDataSource(data);
@@ -121,5 +130,26 @@ export class AwardsConditionComponent implements OnInit {
     let permissionId = Number(permiso[0].id);
     const promise = await lastValueFrom(this.permisos_api.getPermisosbyRolandPermission(rolId, permissionId));
     this.permisos = promise;
+  }
+  date_filter(){
+    console.log(this.range.value.start)
+    console.log(this.range.value.end)
+    if(this.range.value.start || this.range.value.end){
+      let start : any = this.range.get('start')?.value;
+      let end : any = this.range.get('end')?.value;
+      let start_date = this.gameDataSrv.DateFormat(start).split('T')[0];
+      let end_date = this.gameDataSrv.DateFormat(end).split('T')[0];
+      console.log(start_date)
+      console.log(end_date)
+      let filter = '?start_date__date__range='+start_date+'%2C'+end_date
+      this.cargarPremios(filter);
+    }else{
+      this.cargarPremios(this.filter_default);
+    }
+  }
+  date_filter2(){
+    this.range.get('start')?.setValue(null);
+    this.range.get('end')?.setValue(null);
+    this.cargarPremios(this.filter_default);
   }
 }

@@ -16,6 +16,35 @@
    </div>
    
    <div class="filter_search_container">
+      <div class="date_range">
+         <div class="date_range_container">
+            <mat-date-range-input class="date_text" [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start">
+              <input matEndDate formControlName="end">
+            </mat-date-range-input>
+            <mat-datepicker-toggle class="green-primary" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <button
+               mat-icon-button
+               color="primary"
+               (click)="date_filter()"
+               matTooltip="Enviar fecha"
+            >
+               <mat-icon class="green-primary">done</mat-icon>
+            </button>
+            <button
+               mat-icon-button
+               color="primary"
+               (click)="date_filter2()"
+               matTooltip="Enviar fecha"
+            >
+               <mat-icon class="green-primary">close</mat-icon>
+            </button>
+         </div>
+       
+         <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+         <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </div>
       <div class="filter">
          <mat-select
             (selectionChange)="filter($event.value)"
@@ -65,9 +94,9 @@
             <td mat-cell *matCellDef="let fila">{{ fila.condition_stock }}</td>
          </ng-container>
    
-         <ng-container matColumnDef="total_awards">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Premios</th>
-            <td mat-cell *matCellDef="let fila">{{ fila.total_awards }}</td>
+         <ng-container matColumnDef="prizes_awarded">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>P. Ganados</th>
+            <td mat-cell *matCellDef="let fila">{{ fila.prizes_awarded }}</td>
          </ng-container>
    
          <ng-container matColumnDef="created">

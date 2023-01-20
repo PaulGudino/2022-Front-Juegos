@@ -38,14 +38,9 @@
                             <mat-list-item role="listitem">{{premioget.prizes_awarded}}</mat-list-item>
                         </div>
                         <div class="datos">
-                            <mat-label>Estado</mat-label>
+                            <mat-label>Total de Premios Ingresados</mat-label>
                             <br>
-                            <div *ngIf="premioget.is_active; else inactivo">
-                                <mat-list-item role="listitem">Activo</mat-list-item>
-                            </div>
-                            <ng-template #inactivo>
-                                <mat-list-item role="listitem">Inactivo</mat-list-item>
-                            </ng-template>
+                            <mat-list-item role="listitem">{{premioget.total_awards}}</mat-list-item>
                         </div>
                     </div>
                     <div class="container">
@@ -87,6 +82,23 @@
                             <mat-label>El premio pertenece al juego</mat-label>
                             <br>
                             <mat-list-item role="listitem">{{premioget.game}}</mat-list-item>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="datos">
+                            <mat-label>Estado</mat-label>
+                            <br>
+                            <div *ngIf="premioget.is_active; else inactivo">
+                                <mat-list-item role="listitem">Activo</mat-list-item>
+                            </div>
+                            <ng-template #inactivo>
+                                <mat-list-item role="listitem">Inactivo</mat-list-item>
+                            </ng-template>
+                        </div>
+                        <div class="datos">
+                            <mat-label></mat-label>
+                            <br>
+                            <mat-list-item role="listitem"></mat-list-item>
                         </div>
                     </div>
                 </div>

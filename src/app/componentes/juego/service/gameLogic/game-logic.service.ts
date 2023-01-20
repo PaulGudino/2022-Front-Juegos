@@ -252,7 +252,7 @@ export class GameLogicService {
 	private async getAwardsCategory(category: string) {
 		// let filter = '?is_active=true&initial_stock__gt=0&category='+category
 		// let awards: any = await lastValueFrom(this.awardSrv.getFilterAward(filter))
-		let awards: any = await lastValueFrom(this.awardSrv.getFilterAward("?is_active=true"))
+		let awards: any = await lastValueFrom(this.awardSrv.getFilterAward('?is_active=true&initial_stock__gt=0&category='+category))
 		let categoryAwards: any = awards.filter((award: any) => award.category == category)
 		return categoryAwards
 	}

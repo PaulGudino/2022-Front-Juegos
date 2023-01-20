@@ -212,3 +212,19 @@ Sobreescritura tablas
 .mat-calendar-body-disabled>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
    color: #555;
 }
+.mat-calendar-header{
+   background: var(--color-fondo-secundario);
+   color: var(--color-principal);
+}
+.mat-calendar-content{
+   background: var(--color-fondo-secundario);
+}
+.mat-datepicker-toggle, .mat-datepicker-content .mat-calendar-next-button, .mat-datepicker-content .mat-calendar-previous-button {
+   color: var(--color-principal);
+}
+.mat-calendar-table-header{
+   color: var(--color-principal);
+}
+.mat-datepicker-content .mat-calendar {
+   background: var(--color-fondo-secundario);
+}

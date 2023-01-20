@@ -11,6 +11,8 @@ import { AwardsService } from 'src/app/servicios/awards/awards.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { lastValueFrom } from 'rxjs';
 import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 
 @Component({
   selector: 'app-awards',
@@ -18,6 +20,11 @@ import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
   styleUrls: ['./awards.component.css']
 })
 export class AwardsComponent implements OnInit {
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   Filters = [
     {id: '?is_active=true', name: 'Premios Activos'},
@@ -29,7 +36,7 @@ export class AwardsComponent implements OnInit {
   filter_default = '?ordering=-created'
 
   Titulo = "Premios";
-  displayedColumns: string[] = ['id', 'name','initial_stock','condition_stock','total_awards','created','juego', 'is_active', 'Acciones']
+  displayedColumns: string[] = ['id', 'name','initial_stock','condition_stock','prizes_awarded','created','juego', 'is_active', 'Acciones']
   dataSource !: MatTableDataSource<getAwardList>;
   permisos:any = [];
   @ViewChild(MatPaginator) paginator !: MatPaginator;
@@ -42,7 +49,8 @@ export class AwardsComponent implements OnInit {
     private premiosSrv: AwardsService,
     private dialogService: ConfirmDialogService,
     private permisos_api: PermisosService,
-    private staticData: PuenteDatosService
+    private staticData: PuenteDatosService,
+    private gameDataSrv: GameDateService,
   ) { }
 
   ngOnInit(): void {
@@ -111,5 +119,26 @@ export class AwardsComponent implements OnInit {
 
   filter(filter: string){
     this.cargarPremios(filter);
+  }
+  date_filter(){
+    console.log(this.range.value.start)
+    console.log(this.range.value.end)
+    if(this.range.value.start || this.range.value.end){
+      let start : any = this.range.get('start')?.value;
+      let end : any = this.range.get('end')?.value;
+      let start_date = this.gameDataSrv.DateFormat(start).split('T')[0];
+      let end_date = this.gameDataSrv.DateFormat(end).split('T')[0];
+      console.log(start_date)
+      console.log(end_date)
+      let filter = '?created__date__range='+start_date+'%2C'+end_date
+      this.cargarPremios(filter);
+    }else{
+      this.cargarPremios(this.filter_default);
+    }
+  }
+  date_filter2(){
+    this.range.get('start')?.setValue(null);
+    this.range.get('end')?.setValue(null);
+    this.cargarPremios(this.filter_default);
   }
 }

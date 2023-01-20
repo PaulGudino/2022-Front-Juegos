@@ -10,6 +10,8 @@ import { lastValueFrom } from 'rxjs';
 import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 
 @Component({
   selector: 'app-tickets',
@@ -17,6 +19,11 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
   templateUrl: './tickets.component.html',
 })
 export class TicketsComponent implements OnInit{
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
   
   Filters = [
     {id: '?state=Disponible', name: 'Tickets Activos'},
@@ -38,10 +45,10 @@ export class TicketsComponent implements OnInit{
   displayedColumns : string[] = [
     'invoice_number',
     'qr_code_digits',
-    'state',
     'client',
-    'game',
-    'actions'
+    'date_created',
+    'state',
+    'actions',
   ]
   dataSource !: MatTableDataSource<Ticket>;
 
@@ -56,6 +63,7 @@ export class TicketsComponent implements OnInit{
     private confirmDialog : ConfirmDialogService,
     private snackBar : SnackbarService,
     private statickData: PuenteDatosService,
+    private gameDataSrv: GameDateService,
   ) {}
 
   ngOnInit() : void {
@@ -165,5 +173,25 @@ export class TicketsComponent implements OnInit{
   toTicketConfiguration(){
     this.router.navigate(['dashboard/tickets/configuracion']);
   }
-
+  date_filter(){
+    console.log(this.range.value.start)
+    console.log(this.range.value.end)
+    if(this.range.value.start || this.range.value.end){
+      let start : any = this.range.get('start')?.value;
+      let end : any = this.range.get('end')?.value;
+      let start_date = this.gameDataSrv.DateFormat(start).split('T')[0];
+      let end_date = this.gameDataSrv.DateFormat(end).split('T')[0];
+      console.log(start_date)
+      console.log(end_date)
+      let filter = '?date_created__date__range='+start_date+'%2C'+end_date
+      this.loadAll(filter);
+    }else{
+      this.loadAll(this.filter_default);
+    }
+  }
+  date_filter2(){
+    this.range.get('start')?.setValue(null);
+    this.range.get('end')?.setValue(null);
+    this.loadAll(this.filter_default);
+  }
 }
