@@ -141,4 +141,7 @@ export class AwardsComponent implements OnInit {
     this.range.get('end')?.setValue(null);
     this.cargarPremios(this.filter_default);
   }
+  toHistory(){
+    this.router.navigate(['/dashboard/premios/history/']);
+  }
 }

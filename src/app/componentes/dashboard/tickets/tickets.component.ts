@@ -43,6 +43,7 @@ export class TicketsComponent implements OnInit{
   total_tickets : number = 0
 
   displayedColumns : string[] = [
+    'id',
     'invoice_number',
     'qr_code_digits',
     'client',

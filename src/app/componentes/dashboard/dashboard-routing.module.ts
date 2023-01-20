@@ -1,3 +1,4 @@
+import { AwardHistoryComponent } from './award-history/award-history.component';
 import { PublicityGameComponent } from './publicity-game/publicity-game.component';
 import { WinnerDesignComponent } from './winner-design/winner-design.component';
 import { EditAwardsConditionComponent } from './awards-condition/edit-awards-condition/edit-awards-condition.component';
@@ -149,6 +150,12 @@ const routes: Routes = [
             path: 'premios',
             component: AwardsComponent,
             canActivate: [InicioGuard],
+         },
+         {
+            path: 'premios/history',
+            component: AwardHistoryComponent,
+            canActivate: [InicioGuard, PermissionsGuard],
+            data: { Permiso_nombre: 'Historial Premio' },
          },
          {
             path: 'premios/crear',
