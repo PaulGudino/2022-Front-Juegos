@@ -37,12 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar(){
-    console.log(this.ocultar);
     const username = this.form.value.username;
     const password = this.form.value.password;
     this.auth.Login({username, password}).subscribe(
       (res: any) => {
-        console.log(res);
         AuthInterceptor.accessToken = res.token;     
         sessionStorage.setItem('user_id', res.user.id);
         sessionStorage.setItem('rol_id', res.rol);
@@ -50,7 +48,6 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('refresh', res.refresh);
         this.router.navigate(['/dashboard/juego/seleccion']);
       }, err => {
-        console.log(err);
         this.error();
         this.form.reset();
         this.ocultar = true;

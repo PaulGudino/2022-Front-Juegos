@@ -129,7 +129,6 @@ export class DesignComponent implements OnInit {
       this.dialogService.confirmed().subscribe((confirmed) => {
          if (confirmed) {
             if (this.fileToUploadMachine && this.fileToUploadLogo) {
-               console.log('entra a la doble condicion');
                let formMachine: FormData = this.updateMachineImage();
                formMachine.append(
                   'image_logo_game',
@@ -139,17 +138,11 @@ export class DesignComponent implements OnInit {
                this.theme.updateDesgin(1, formMachine);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             } else if (this.fileToUploadMachine) {
-               console.log('ACTUALIZACION SOLO CON LA IMAGEN MACHINE');
                let form = this.updateMachineImage();
                this.theme.updateDesgin(1, form);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
-               //this.router.navigate(['/dashboard/juego/fecha']);
             } else if (this.fileToUploadLogo) {
-               console.log('ACTUALIZACION SOLO CON LA IMAGEN LOGO');
                this.updateLogoImage();
-               console.log(
-                  'SE EJECUTO LA ACTUALIZACION SOLO CON LA IMAGEN LOGO'
-               );
             } else if (!this.fileToUploadMachine && !this.fileToUploadLogo) {
                let formData: FormData = new FormData();
                formData.append('id', '1');
@@ -160,7 +153,6 @@ export class DesignComponent implements OnInit {
                formData.append('game_id', '1');
                this.theme.updateDesgin(1, formData);
 
-               //this.router.navigate(['/dashboard/juego/fecha']);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             }
          }
@@ -182,12 +174,9 @@ export class DesignComponent implements OnInit {
       formData.append('game_id', '1');
       return formData;
 
-      // this.theme.updateDesgin(1, formData);
-      // this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
-      console.log(` en machine ${formData}`);
+
    }
    private updateLogoImage() {
-      console.log('updateLogoImage');
       let formData: FormData = new FormData();
       formData.append('id', '1');
       formData.append(
@@ -200,10 +189,8 @@ export class DesignComponent implements OnInit {
       formData.append('date_modified', new Date().toISOString());
       formData.append('is_active', 'true');
       formData.append('game_id', '1');
-      console.log(` en LOGO ${formData}`);
 
       this.theme.updateDesgin(1, formData);
-      //this.router.navigate(['/dashboard/juego/fecha']);
       this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
    }
 
@@ -214,11 +201,8 @@ export class DesignComponent implements OnInit {
    previewChangeColorLetter(event: Event) {
       let element: HTMLSelectElement = event.target as HTMLSelectElement;
       this.colorText = element.value;
-      console.log(this.colorText);
    }
    cancel() {
-      // this.fontFamily = this.dashStyle.get_font_letter();
-      // this.colorText = this.dashStyle.get_color_text();
       window.location.reload();
    }
 }

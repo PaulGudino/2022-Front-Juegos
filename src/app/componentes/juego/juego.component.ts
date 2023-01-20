@@ -57,9 +57,6 @@ export class JuegoComponent {
 		// 	// console.log(this.audio.src);
 		// })
 
-		// let today = new Date();
-		// console.log(today)
-		// this.Gamelogic.changeStateTicket(1)
 		await this.auth()
 		this.validateSlot()
 		sessionStorage.removeItem("juego_scan")
@@ -67,7 +64,6 @@ export class JuegoComponent {
 		this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
 			if (dataTopPublicity.length > 0) {
 				this.dashPublicity.loadTopData(dataTopPublicity)
-				// console.log(dataTopPublicity);
 				this.publicity.getPublicityBottomList().subscribe((dataBottomPublicity) => {
 					this.dashPublicity.loadBottomData(dataBottomPublicity)
 				})
@@ -77,12 +73,10 @@ export class JuegoComponent {
 				this.buttonTitle = this.styles.get_title_button_screensaver()
 				this.logoImage = this.styles.get_image_logo_game()
 				this.videoUrl = this.styles.get_video_screensaver()
-				// console.log(this.themeService.publicityGameList);
 			})
 		})
 	}
 	async goScan() {
-		// this.Gamelogic.deleteAwardConditionPast()
 		await this.validateSlot()
 		if (this.boxes_images == 10 && this.design_images == 3) {
 			this.router.navigate(["/juego/scan"])

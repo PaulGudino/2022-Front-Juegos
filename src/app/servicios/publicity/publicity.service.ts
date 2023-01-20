@@ -26,13 +26,7 @@ export class PublicityService {
    postBottomPublicity(form: FormData) {
       return this.http.post(this.url + 'api/Publicity_bottom/', form);
    }
-   // put(id: number, data: FormData) {
-   //    return this.http
-   //       .put(this.url + 'api/Publicity/' + id + '/', data)
-   //       .subscribe((data) => {
-   //          console.log(data);
-   //       });
-   // }
+
    deleteTopPublicity(id: number) {
       return this.http.delete(this.url + 'api/Publicity_top/' + id + '/');
    }

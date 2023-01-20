@@ -24,7 +24,6 @@ export class TickectQRComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.QRdata)
 
     this.GameSrv.getById(1).subscribe((res: any) => {
       this.startdate = res.start_date.split('T')[0].split('-').reverse().join('/');

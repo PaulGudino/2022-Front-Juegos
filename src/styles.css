@@ -146,36 +146,6 @@ Sobreescritura tablas
    color: var(--color-principal);
 }
 
-/* .mat-toolbar{
-   background-color: var(--color-fondo-principal);
-   color: var(--color-principal);
-} */
-/* .mat-sidenav{
-   background-color: var(--color-fondo-secundario);
-}
-.mat-sidenav-container{
-   background-color: var(--color-fondo-principal);
-   color: var(--color-principal);
-}
-.mat-drawer-backdrop.mat-drawer-shown {
-   background-color: transparent
-}
-.mat-select-placeholder{
-   color: var(--color-principal);
-}
-.mat-select-arrow {
-   color: var(--color-principal);
-}
-.mat-select-value {
-   color: var(--color-principal)
-}
-.mat-form-field-underline{
-   width: 0px !important;
-}
-.mat-snack-bar-container{
-   background-color: var(--color-ventanas);
-   color: var(--color-principal);
-} */
 
 /* Colores de los time-picker */
 .btn-outline-primary {

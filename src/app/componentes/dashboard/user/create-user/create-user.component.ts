@@ -85,7 +85,6 @@ export class CrearUsuariosComponent implements OnInit {
   }
 
   crearUsuario():void{
-    console.log(this.form.value)
     if(this.form.valid){
       const options = {
         title: 'CREAR USUARIO',

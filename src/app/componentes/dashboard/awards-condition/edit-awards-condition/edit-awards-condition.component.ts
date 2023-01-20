@@ -80,7 +80,6 @@ export class EditAwardsConditionComponent implements OnInit {
         let hora_fin = res.end_date.split(" ")[1].split(":")[0];
         let minute_fin = res.end_date.split(" ")[1].split(":")[1];
 
-        console.log(res.award.toString())
 
         this.form.controls['award'].setValue(res.award.toString());
         this.form.controls['startTime'].setValue({
@@ -137,8 +136,6 @@ export class EditAwardsConditionComponent implements OnInit {
           formData.append('award', this.form.get('award')?.value);
           formData.append('game', game.toString());
           formData.append('user_modify', user_register!);
-          console.log(start_date)
-          console.log(end_date)
 
           this.awardConditionSrv.putAwardCondition(this.award_condition_id, formData).subscribe(
             (res) => {

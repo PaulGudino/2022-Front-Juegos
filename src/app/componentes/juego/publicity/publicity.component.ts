@@ -33,8 +33,6 @@ export class PublicityComponent implements OnInit {
    createInterval(timeInterval: number) {
       let intervalId: any;
       intervalId = setInterval(() => {
-         // console.log('interval ' + timeInterval);
-         // console.log('intervalId ' + intervalId);
          let width = this.animationCount * -100;
          this.scrollContainer.nativeElement.style.transform = `translateX(${width}%)`;
          this.scrollContainer.nativeElement.style.transition =

@@ -126,8 +126,6 @@ export class CreateAwardsConditionComponent implements OnInit {
          parseInt(hora_fin),
          parseInt(minuto_fin)
       );
-      console.log('async s',this.startDate)
-      console.log('async f',this.endDate)
    }
 
    async create() {
@@ -149,8 +147,6 @@ export class CreateAwardsConditionComponent implements OnInit {
                   let game = 1;
                   let user_register = sessionStorage.getItem('user_id');
                   
-                  console.log(this.startDate)
-                  console.log(this.endDate)
 
                   let start_date = this.gameDataSrv.DateFormat(this.startDate)
                   formData.append(
@@ -162,8 +158,7 @@ export class CreateAwardsConditionComponent implements OnInit {
                      'end_date',
                      end_date
                   );
-                  console.log(start_date)
-                  console.log(end_date)
+
                   formData.append('award', this.form.get('award')?.value.id);
                   formData.append('game', game.toString());
                   formData.append('user_register', user_register!);

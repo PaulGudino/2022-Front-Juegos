@@ -19,8 +19,6 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 export class ClientsComponent implements OnInit{
 
   Filters = [
-    // {id: '?state=Activo', name: 'Clientes Activos'},
-    // {id: '?state=Inactivo', name: 'Clientes Inactivos'},
     {id: '?ordering=-created', name: 'Ultimos Clientes Creados'},
     {id: '?ordering=created', name: 'Primeros Clientes Creados'},
   ]

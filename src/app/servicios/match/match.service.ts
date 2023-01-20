@@ -12,7 +12,7 @@ export class MatchService {
 
 	postMatch(data: any) {
 		return this.http.post(this.url + "api/match/", data).subscribe((data) => {
-			console.log(data)
+			console.log('data')
 		})
 	}
 	getMatchFilter(filter: string) {

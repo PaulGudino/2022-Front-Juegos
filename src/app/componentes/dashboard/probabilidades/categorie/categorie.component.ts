@@ -46,9 +46,6 @@ export class CategorieComponent implements OnInit {
       this.awards = this.controller.getNewAwards();
    }
 
-   // ngOnChanges(changes: SimpleChanges) {
-   //   console.log(changes)
-   // }
 
    openModal() {
       this.isModalOpen = true;

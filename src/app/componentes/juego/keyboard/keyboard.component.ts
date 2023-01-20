@@ -14,7 +14,6 @@ export class KeyboardComponent implements OnInit {
 	getButtonValue(event: Event) {
 		let btn = event.target as HTMLElement
 		if (btn.textContent) this.KeyControllerService.setCode(btn.textContent.trim())
-		console.log(btn.textContent)
 	}
 	deleteValue() {
 		this.KeyControllerService.deleteLastValue()

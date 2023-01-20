@@ -42,7 +42,6 @@ export class AuthInterceptor implements HttpInterceptor {
                return this.http.post('http://localhost:8000/token/refresh/', formData, {withCredentials: true,}).pipe(
                //  return this.http.post('https://juegos.pythonanywhere.com/token/refresh/', formData, {withCredentials: true}).pipe(
                   switchMap((data: any) => {
-                     console.log(data);
                      sessionStorage.setItem('token', data.access);
                      sessionStorage.setItem('refresh', data.refresh);
                      AuthInterceptor.accessToken = data.access;

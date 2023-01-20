@@ -47,7 +47,6 @@ export class WinnerDesignComponent implements OnInit {
          this.theme.getDesignInformation().subscribe((designData) => {
             this.dashStyle.loadData(designData[0]);
             this.previsualizacion = this.dashStyle.get_image_winner();
-            console.log(designData[0]);
          });
       });
    }

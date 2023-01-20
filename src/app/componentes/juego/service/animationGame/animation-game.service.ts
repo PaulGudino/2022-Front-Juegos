@@ -24,27 +24,11 @@ export class AnimationGameService {
 
 			if (this.gameLogicService.winner) {
 				const n = Math.floor(Math.random() * 9) + 1 //Indice a mostrar ganador
-				console.log("Indice a ganar: " + n)
 				const intervalId = setInterval(() => {
 					let vueltas = this.widthImage * -9
-					console.log("ejecucion setTimeout")
-					console.log(this.animationCountCol1)
-					console.log(`numero ganador: ${n}`)
 					if (this.animationCountCol1 > 0) {
 						this.animationCountCol1 -= 1
-						console.log(refCol1)
 
-						// refCol1.style.transform = `translateY(${vueltas}px)`
-						// refCol1.style.transition =
-						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
-
-						// refCol2.style.transform = `translateY(${vueltas}px)`
-						// refCol2.style.transition =
-						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
-
-						// refCol3.style.transform = `translateY(${vueltas}px)`
-						// refCol3.style.transition =
-						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
 						refCol1.style.transform = `translateY(${vueltas}px)`
 						refCol1.style.transition =
 							"transform 2s cubic-bezier(.17,.67,.83,.67)"
@@ -93,7 +77,6 @@ export class AnimationGameService {
 								this.widthImage *
 								-1
 						}
-						console.log("MOVIMIENTOS COL2: ", movimientosCol2)
 
 						this.translateToBegining(refCol1, refCol2, refCol3)
 
@@ -124,7 +107,6 @@ export class AnimationGameService {
 					if (this.animationCountCol1 > 0) {
 						this.animationCountCol1 -= 1
 
-						console.log(refCol1)
 
 						refCol1.style.transform = `translateY(${vueltas}px)`
 						refCol1.style.transition =
@@ -163,8 +145,6 @@ export class AnimationGameService {
 					} else {
 						let randomPosition = Math.floor(Math.random() * this.columna1.length)
 						let translate = this.widthImage * randomPosition
-						console.log(`en el else, valor de count: ${this.animationCountCol1}`)
-						console.log(refCol1)
 
 						refCol1.style.transform = `translateY(-${translate}px)`
 						refCol1.style.transition = "transform 1s "
@@ -196,7 +176,6 @@ export class AnimationGameService {
 	private translateToBegining(refCol1: any, refCol2: any, refCol3: any) {
 		refCol1.style.transform = `translateY(0px)`
 		refCol1.style.transition = "transform 0s"
-		console.log(refCol1)
 
 		refCol2.style.transform = `translateY(231px)`
 		refCol2.style.transition = "transform 0s "

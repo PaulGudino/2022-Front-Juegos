@@ -24,7 +24,6 @@ export class ViewAwardsComponent implements OnInit {
     let premioid = this.activerouter.snapshot.paramMap.get('id');
     this.award.getAwardbyIdVisualizer(Number(premioid)).subscribe((data) => {
       this.premioget = data;
-      console.log(this.premioget);
     })
   }
   regresarPremios(){

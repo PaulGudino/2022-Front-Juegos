@@ -21,7 +21,7 @@ export class ThemeService {
 
   updateDesgin(id:number,data:FormData){
    return this.http.put(this.url+'api/design/'+id+'/', data).subscribe((data) => {
-      console.log(data);
+      console.log('data');
    })
   }
 

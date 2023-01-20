@@ -63,7 +63,6 @@ export class PlayViewComponent {
 	}
 	music() {
 		if (this.gameLogicService.attempts >= 0) {
-			console.log("Intentos:", this.gameLogicService.attempts)
 			this.slot_music = true
 			setTimeout(() => {
 				this.slot_music = false

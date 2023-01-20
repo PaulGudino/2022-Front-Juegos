@@ -175,15 +175,11 @@ export class TicketsComponent implements OnInit{
     this.router.navigate(['dashboard/tickets/configuracion']);
   }
   date_filter(){
-    console.log(this.range.value.start)
-    console.log(this.range.value.end)
     if(this.range.value.start || this.range.value.end){
       let start : any = this.range.get('start')?.value;
       let end : any = this.range.get('end')?.value;
       let start_date = this.gameDataSrv.DateFormat(start).split('T')[0];
       let end_date = this.gameDataSrv.DateFormat(end).split('T')[0];
-      console.log(start_date)
-      console.log(end_date)
       let filter = '?date_created__date__range='+start_date+'%2C'+end_date
       this.loadAll(filter);
     }else{

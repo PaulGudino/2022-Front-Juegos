@@ -38,7 +38,6 @@ export class RecuperarComponent implements OnInit {
         this.snackBar.mensaje('Se ha enviado un correo a su cuenta de correo electrónico');
         this.router.navigate(['reset-contraseña']);
       }, err => {
-        console.log(err.error);
         for(let message in err.error){
           this.mensaje_error_lista.push(err.error[message])
         }

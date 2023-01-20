@@ -136,7 +136,6 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
         if(confirmed){
           this.probability.putProbabilityConfig(formData)
           .subscribe(res =>{
-            console.log(res);
             this.snackBar.mensaje('Configuracion Cambiada con exito');
             this.getTragamonedasProbability()
           })
@@ -201,9 +200,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
   getTragamonedasProbability(){
     this.probability.getProbabilites()
     .subscribe(data =>{
-             console.log(data)
              this.probabilityData = data
-             console.log('sdasdas',this.probabilityData);
              this.limitWinners = this.probabilityData.winners_limit
              this.percentage = this.probabilityData.percent_win
              this.limitAttempts = this.probabilityData.attempts_limit

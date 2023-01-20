@@ -44,7 +44,6 @@ export class ScanCodeComponent implements OnInit {
             this.dashStyle.loadData(designData[0]);
             this.title = this.dashStyle.get_scan_code_title();
             this.description = this.dashStyle.get_scan_code_description();
-            console.log(designData[0]);
          });
       });
    }

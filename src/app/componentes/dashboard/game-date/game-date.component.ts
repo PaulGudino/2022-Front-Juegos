@@ -70,7 +70,6 @@ export class GameDateComponent implements OnInit {
       const [year_f, month_f, day_f] = fin_date.split('-');
   
       this.startDate = new Date(parseInt(year_i), parseInt(month_i) - 1, parseInt(day_i), parseInt(hora_inicio), parseInt(minuto_inicio));
-      console.log(this.startDate)
       this.endDate = new Date(parseInt(year_f), parseInt(month_f) - 1, parseInt(day_f), parseInt(hora_fin), parseInt(minuto_fin));
 
     }
@@ -86,7 +85,6 @@ export class GameDateComponent implements OnInit {
           };
          this.dialogService.open(options);
          await this.changetime();
-         console.log(this.startDate)
          this.dialogService.confirmed().subscribe(confirmed => {
             if (confirmed) {
               let formData: FormData = new FormData();
