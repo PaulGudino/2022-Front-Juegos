@@ -8,6 +8,7 @@ import { defaultIfEmpty, lastValueFrom } from "rxjs"
 import { GameDateService } from "src/app/servicios/game-date/game-date.service"
 import { GameService } from "src/app/servicios/game/game.service"
 import { ProbabilityService } from "src/app/servicios/probability/probability/probability.service"
+import { ThemeService } from "../theme/theme.service"
 
 @Injectable({
 	providedIn: "root",
@@ -28,6 +29,7 @@ export class GameLogicService {
 		private awardConditionSrv: AwardsConditionService,
 		private awardSrv: AwardsService,
 		private game: GameService,
+		private theme: ThemeService,
 
 		// Added for getPrize()
 		private probabilityService: ProbabilityService
@@ -83,34 +85,36 @@ export class GameLogicService {
 		await this.deleteAwardConditionPast()
 
 		//Second Check limitWinners
-		
+
 		if (!(await this.checkLimitWinners())) {
 			//Third check if there's any award conditioned if true then the client must win
 			let awardsConditioned: any = await this.getAwardConditionToday()
-			debugger
+
 			if (awardsConditioned && awardsConditioned.length > 0) {
 				let awardConditioned = awardsConditioned[0]
 				// let award: any = this.winnedAward(awardConditioned)
 				this.winCase(awardConditioned.award_id, awardConditioned.id, true)
-				console.log(this.winner)
 			} else {
 				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
 
 				let awards = await this.getPrize()
 				if (awards) {
 					let award = awards[0]
+
 					this.winCase(award.id, null, false)
 				} else {
 					this.changeStateTicket(this.ticket.id)
 					this.createMatch("false", "false", this.ticket.id, null)
 
 					this.setWinnerState(false)
+					this.theme.getThemeGame(this.winner)
 				}
 			}
 		} else {
 			this.changeStateTicket(this.ticket.id)
 			this.createMatch("false", "false", this.ticket.id, null)
 			this.setWinnerState(false)
+			this.theme.getThemeGame(this.winner)
 		}
 	}
 	/**
@@ -127,6 +131,7 @@ export class GameLogicService {
 		} else {
 			this.wonAward(awardId)
 		}
+		this.theme.getThemeGame(this.winner)
 	}
 
 	/**
@@ -207,7 +212,6 @@ export class GameLogicService {
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let category: string = ""
 
-		
 		if (rd_number <= this.winProb * 10) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
@@ -272,7 +276,7 @@ export class GameLogicService {
 		let current_day = this.gameDataSrv.DateFormat(today).split("T")[0]
 
 		let matchesToday: any = await this.getWinnMatchesToday(current_day)
-		
+
 		if (matchesToday.length >= this.winnersLimit) {
 			this.setWinnerState(false)
 			return true

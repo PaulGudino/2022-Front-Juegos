@@ -10,7 +10,7 @@ export class AnimationGameService {
 	columna3 = [3, 4, 5, 6, 7, 8, 9, 10, 1, 2]
 
 	widthImage: number = 270 //heigth image + gap
-	animationCountCol1 = 5
+	animationCountCol1 = 4
 	disabledPlayButton: boolean = false
 
 	constructor(private gameLogicService: GameLogicService) {}
@@ -34,30 +34,39 @@ export class AnimationGameService {
 						this.animationCountCol1 -= 1
 						console.log(refCol1)
 
+						// refCol1.style.transform = `translateY(${vueltas}px)`
+						// refCol1.style.transition =
+						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
+
+						// refCol2.style.transform = `translateY(${vueltas}px)`
+						// refCol2.style.transition =
+						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
+
+						// refCol3.style.transform = `translateY(${vueltas}px)`
+						// refCol3.style.transition =
+						// 	"transform 1s cubic-bezier(.17,.67,.83,.67)"
 						refCol1.style.transform = `translateY(${vueltas}px)`
 						refCol1.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol1.style.filter = "blur(3px)"
 
 						refCol2.style.transform = `translateY(${vueltas}px)`
 						refCol2.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol2.style.filter = "blur(3px)"
 
 						refCol3.style.transform = `translateY(${vueltas}px)`
 						refCol3.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol3.style.filter = "blur(3px)"
+
 						setTimeout(() => {
-							refCol1.style.transform = `translateY(0px)`
-							refCol1.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-							refCol2.style.transform = `translateY(0px)`
-							refCol2.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-							refCol3.style.transform = `translateY(0px)`
-							refCol3.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-						}, 1000)
+							this.translateToBegining(
+								refCol1,
+								refCol2,
+								refCol3
+							)
+						}, 2000)
 					} else {
 						let movimientosCol1 = (n - 1) * this.widthImage * -1
 						let movimientosCol2
@@ -86,75 +95,95 @@ export class AnimationGameService {
 						}
 						console.log("MOVIMIENTOS COL2: ", movimientosCol2)
 
-						refCol1.style.transform = `translateY(0px)`
-						refCol1.style.transition =
-							"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-						refCol2.style.transform = `translateY(0px)`
-						refCol2.style.transition =
-							"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-						refCol3.style.transform = `translateY(0px)`
-						refCol3.style.transition =
-							"transform 0s cubic-bezier(.17,.67,.83,.67)"
+						this.translateToBegining(refCol1, refCol2, refCol3)
 
 						refCol1.style.transform = `translateY(${movimientosCol1}px)`
 						refCol1.style.transition =
 							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+						refCol1.style.filter = "blur(0px)"
 
 						refCol2.style.transform = `translateY(${movimientosCol2}px)`
 						refCol2.style.transition =
 							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+						refCol2.style.filter = "blur(0px)"
 
 						refCol3.style.transform = `translateY(${movimientosCol3}px)`
 						refCol3.style.transition =
 							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+						refCol3.style.filter = "blur(0px)"
 
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
 						this.gameLogicService.winFirstTime = true
 						clearInterval(intervalId)
 					}
-				}, 1030)
+				}, 2030)
 			} else {
 				const intervalId = setInterval(() => {
-					let vueltas = this.widthImage * -9
-					console.log("ejecucion setTimeout")
-					console.log(this.animationCountCol1)
+					let vueltas = (this.widthImage + 0) * -9
 					if (this.animationCountCol1 > 0) {
 						this.animationCountCol1 -= 1
+
 						console.log(refCol1)
 
 						refCol1.style.transform = `translateY(${vueltas}px)`
 						refCol1.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol1.style.filter = "blur(3px)"
 
 						refCol2.style.transform = `translateY(${vueltas}px)`
 						refCol2.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol2.style.filter = "blur(3px)"
 
 						refCol3.style.transform = `translateY(${vueltas}px)`
 						refCol3.style.transition =
-							"transform 1s cubic-bezier(.17,.67,.83,.67)"
+							"transform 2s cubic-bezier(.17,.67,.83,.67)"
+						refCol3.style.filter = "blur(3px)"
+
+						// refCol1.style.transform = `translateY(${vueltas}px)`
+						// refCol1.style.transition =
+						// 	"transform 2s cubic-bezier(0.85, 0, 0.15, 1)"
+
+						// refCol2.style.transform = `translateY(${vueltas}px)`
+						// refCol2.style.transition =
+						// 	"transform 2s cubic-bezier(0.85, 0, 0.15, 1) "
+
+						// refCol3.style.transform = `translateY(${vueltas}px)`
+						// refCol3.style.transition =
+						// 	"transform 2s cubic-bezier(0.85, 0, 0.15, 1)"
 						setTimeout(() => {
-							refCol1.style.transform = `translateY(0px)`
-							refCol1.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-							refCol2.style.transform = `translateY(0px)`
-							refCol2.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-
-							refCol3.style.transform = `translateY(0px)`
-							refCol3.style.transition =
-								"transform 0s cubic-bezier(.17,.67,.83,.67)"
-						}, 1000)
+							this.translateToBegining(
+								refCol1,
+								refCol2,
+								refCol3
+							)
+							// }, 1015)
+						}, 2000)
 					} else {
+						let randomPosition = Math.floor(Math.random() * this.columna1.length)
+						let translate = this.widthImage * randomPosition
+						console.log(`en el else, valor de count: ${this.animationCountCol1}`)
+						console.log(refCol1)
+
+						refCol1.style.transform = `translateY(-${translate}px)`
+						refCol1.style.transition = "transform 1s "
+						refCol1.style.filter = "blur(0px)"
+
+						refCol2.style.transform = `translateY(-${translate}px)`
+						refCol2.style.transition = "transform 1s "
+						refCol2.style.filter = "blur(0px)"
+
+						refCol3.style.transform = `translateY(-${translate}px)`
+						refCol3.style.transition = "transform 1s "
+						refCol3.style.filter = "blur(0px)"
+
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
 						clearInterval(intervalId)
 					}
-				}, 1030)
+				}, 2030)
+				// }, 2500)
 			}
 
 			this.gameLogicService.setWinnerState(false)
@@ -162,5 +191,17 @@ export class AnimationGameService {
 		} else {
 			window.location.reload()
 		}
+	}
+
+	private translateToBegining(refCol1: any, refCol2: any, refCol3: any) {
+		refCol1.style.transform = `translateY(0px)`
+		refCol1.style.transition = "transform 0s"
+		console.log(refCol1)
+
+		refCol2.style.transform = `translateY(231px)`
+		refCol2.style.transition = "transform 0s "
+
+		refCol3.style.transform = `translateY(231px)`
+		refCol3.style.transition = "transform 0s "
 	}
 }
