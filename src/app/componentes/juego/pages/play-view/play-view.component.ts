@@ -51,23 +51,23 @@ export class PlayViewComponent {
 	// 	this.audio.play()
 	// }
 
-	// ngOnInit(): void {
-	// 	this.audioService.getAll().subscribe((data) => {
-	// 		this.audioArray = data
-	// 		this.audio.src = this.audioArray[0].audio
-	// 		// console.log(this.audio.src);
-	// 	})
-	// }
+	ngOnInit(): void {
+		// this.audioService.getAll().subscribe((data) => {
+		// 	this.audioArray = data
+		// 	this.audio.src = this.audioArray[0].audio
+		// 	// console.log(this.audio.src);
+		// })
+	}
 	doSomething() {
 		sessionStorage.removeItem("juego_play")
 	}
 	music() {
 		if (this.gameLogicService.attempts >= 0) {
-			console.log('Intentos:',this.gameLogicService.attempts)
+			console.log("Intentos:", this.gameLogicService.attempts)
 			this.slot_music = true
-		setTimeout(() => {
-			this.slot_music = false
-		}, 6000)
+			setTimeout(() => {
+				this.slot_music = false
+			}, 6000)
 		}
 	}
 }

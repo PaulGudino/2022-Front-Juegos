@@ -3,7 +3,7 @@ import { GameLogicService } from "./service/gameLogic/game-logic.service"
 import { GameService } from "src/app/servicios/game/game.service"
 import { AuthService } from "src/app/servicios/auth/auth.service"
 import { AfterViewInit, Component, OnInit } from "@angular/core"
-import { ThemeService } from "./service/theme/theme.service"
+
 import { DashboardStyleService } from "../../servicios/theme/dashboardStyle/dashboard-style.service"
 import { DashboardPublicityService } from "../../servicios/publicity/dashboardPublicity/dashboard-publicity.service"
 import { PublicityService } from "../../servicios/publicity/publicity.service"
@@ -13,6 +13,7 @@ import { filter } from "rxjs/operators"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 import { AudioService } from "src/app/servicios/audio/audio.service"
 import { Audio } from "src/app/interfaces/audio/Audio"
+import { ThemeService } from "src/app/servicios/theme/theme.service"
 
 @Component({
 	selector: "app-juego",
