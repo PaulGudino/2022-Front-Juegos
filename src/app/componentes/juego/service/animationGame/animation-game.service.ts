@@ -97,7 +97,10 @@ export class AnimationGameService {
 
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
-						this.gameLogicService.winFirstTime = true
+						setTimeout(() => {
+							this.gameLogicService.winFirstTime = true
+						}, 2500)
+						
 						clearInterval(intervalId)
 					}
 				}, 2030)
