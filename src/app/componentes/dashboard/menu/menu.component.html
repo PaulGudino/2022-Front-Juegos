@@ -7,7 +7,7 @@
       <span class="example-spacer"></span>
       <h1 class="example-app-name">{{ Titulo2 }}</h1>
       <span class="example-spacer"></span>
-      <div class="nav-container">
+      <div class="nav-container" *ngIf="admin != 1">
          <ul class="nav-items">
            <li class="nav-item nav-item-dropdown">
             <mat-icon>settings</mat-icon>
@@ -18,7 +18,7 @@
              </ul>
            </li>
          </ul>
-       </div>
+      </div>
    </mat-toolbar>
    
 

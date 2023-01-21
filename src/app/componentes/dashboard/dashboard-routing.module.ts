@@ -1,3 +1,4 @@
+import { PasswordGuardGuard } from './../../guardianes/PasswordGuard/password-guard.guard';
 import { AwardHistoryComponent } from './award-history/award-history.component';
 import { PublicityGameComponent } from './publicity-game/publicity-game.component';
 import { WinnerDesignComponent } from './winner-design/winner-design.component';
@@ -51,8 +52,9 @@ const routes: Routes = [
       path: '',
       component: DashboardComponent,
       children: [
-         { path: '', component: InicioComponent },
-         { path: 'cambiar-contraseña', component: CambiarContraseniaComponent },
+         { path: 'cambiar-contraseña', component: CambiarContraseniaComponent,
+            canActivate: [InicioGuard, PasswordGuardGuard],
+         },
          // Usuarios Administradores
          {
             path: 'usuarios',

@@ -17,6 +17,7 @@ export class MenuComponent implements OnInit {
   Titulo = 'Menu';
   Titulo2 = 'App Juegos'
   menu: Menu[] = [];
+  admin: any = ''
   constructor(
     private api: ApiService,
     private router: Router,
@@ -28,6 +29,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarMenu();
+    this.admin = sessionStorage.getItem('user_id') 
   }
 
   cargarMenu() {

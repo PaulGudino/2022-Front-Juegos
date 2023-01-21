@@ -45,17 +45,8 @@ export class JuegoComponent {
 		private audioService: AudioService
 	) {}
 
-	// async ngAfterViewInit(): Promise<void> {
-	// 	// this.audio.loop;
-	// 	this.audio.play()
-	// }
 
 	async ngOnInit(): Promise<void> {
-		// this.audioService.getAll().subscribe((data) => {
-		// 	this.audioArray = data
-		// 	this.audio.src = this.audioArray[0].audio
-		// 	// console.log(this.audio.src);
-		// })
 
 		await this.auth()
 		this.validateSlot()
