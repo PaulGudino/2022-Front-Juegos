@@ -8,9 +8,6 @@ import {Publicity} from '../../../interfaces/publicity/publicity'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import {SnackbarService} from '../../../servicios/snackbar/snackbar.service'
-import { AwardsConditionService } from 'src/app/servicios/awards-condition/awards-condition.service';
-import { MatchService } from 'src/app/servicios/match/match.service';
-import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 
 
 @Component({
@@ -46,11 +43,6 @@ export class ProbabilidadesComponent implements OnInit {
   percentage:number=0;
   limitMessage:string=''
 
-  len_award_cond_today : number = 0;
-  len_match_today : number = 0;
-  winner_limit : number = 0;
-  winner_compare : number = 0;
-
   constructor(
     private awards:AwardsService,
     private controller:ControllerProbabilityService,
@@ -59,9 +51,6 @@ export class ProbabilidadesComponent implements OnInit {
     private dialog:ConfirmDialogService,
     private snackBar:SnackbarService,
     private staticData: PuenteDatosService,
-    private matchSrv : MatchService,
-    private awardConditionSrv: AwardsConditionService,
-    private gameDataSrv: GameDateService,
 
   ) {
     this.form = this.fb.group({
@@ -85,13 +74,7 @@ export class ProbabilidadesComponent implements OnInit {
       this.getTragamonedasProbability()
 
    })
-  //  this.awards.getFilterAward('?is_active=true').subscribe(
-  //   data =>{
-  //     for (let x of data){
-  //       this.total_awards += x.total_awards
-  //     }
-  //   }
-  //  )
+
 }
 
 
@@ -160,7 +143,6 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
     this.isModalOpen = modalChange;
   }
   async validateData():Promise<Boolean>{
-    await this.getTodayAwaradCondition()
     let percent = this.form.get('percent_win')?.value
     let limit_winner = this.form.get('limit_winners')?.value
     let limit_attempts= this.form.get('limit_attempts')?.value
@@ -189,11 +171,6 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
       return false;
     }
     
-    if(limit_winner<this.winner_compare){
-      this.snackBar.mensaje('El día de hoy va a existir '+this.winner_compare+' ganadores, el límite no puede ser menor')
-      return false;
-    }
-
     return true;
 
   }
@@ -208,40 +185,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
     })
   }
 
-  async getTodayAwaradCondition(){
-    let today = new Date();
-    let current_day = this.gameDataSrv.DateFormat(today).split('T')[0]
 
-    await this.getLenAwardCondToday(current_day)
-    await this.getLenMatchToday(current_day)
-    await this.getWinnerLimit()
- }
 
- async getLenAwardCondToday(current_day:string){
-    let filter_today = '?start_date__date__range='+current_day+'%2C'+current_day
-    this.awardConditionSrv.getAwardConditionFilter(filter_today).subscribe(
-       (res) => {
-          this.len_award_cond_today = Object.keys(res).length;
-       }
-    )
- }
-
- async getLenMatchToday(current_day:string){
-    let filter_match = '?win_match=true&start_date__date__range='+current_day+'%2C'+current_day
-    this.matchSrv.getMatchFilter(filter_match).subscribe(
-       (res) => {
-          this.len_match_today = Object.keys(res).length;
-       }
-    )
- }
-
- async getWinnerLimit(){
-    this.probability.getProbabilites().subscribe(
-       (res) => {
-          this.winner_limit = res.winners_limit;
-          this.winner_compare = this.len_award_cond_today + this.len_match_today
-       }
-    )
- }
 
 }

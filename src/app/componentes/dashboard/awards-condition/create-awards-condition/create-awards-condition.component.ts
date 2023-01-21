@@ -1,4 +1,3 @@
-import { ProbabilityService } from 'src/app/servicios/probability/probability/probability.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,7 +6,6 @@ import { AwardsService } from 'src/app/servicios/awards/awards.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
-import { MatchService } from 'src/app/servicios/match/match.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { getAwardList } from 'src/app/interfaces/awards/getAwardList';
 import { map, Observable, startWith } from 'rxjs';
@@ -43,10 +41,8 @@ export class CreateAwardsConditionComponent implements OnInit {
    beginDate: Date = new Date();
    finishDate: Date = new Date();
 
-   len_award_cond_today : number = 0;
    len_match_today : number = 0;
    winner_limit : number = 0;
-   limit_award_condition : number = 0;
 
    allAwards : getAwardList[] = [];
    filteredOptions!: Observable<getAwardList[]>;
@@ -60,8 +56,6 @@ export class CreateAwardsConditionComponent implements OnInit {
       private router: Router,
       private staticData: PuenteDatosService,
       private gameDataSrv: GameDateService,
-      private matchSrv : MatchService,
-      private probabilitySrv : ProbabilityService
    ) {
       this.form = this.fb.group({
          startTime: ['', Validators.required],
@@ -98,8 +92,7 @@ export class CreateAwardsConditionComponent implements OnInit {
       this.minDate = new Date(currentYear, currentMonth, currentDay);
       this.minDatefin = new Date(currentYear, currentMonth, currentDay);
       this.finishDate = new Date(currentYear, currentMonth, currentDay);
-      
-      await this.getTodayAwaradCondition()
+
    }
 
    async changetime() {
@@ -130,7 +123,6 @@ export class CreateAwardsConditionComponent implements OnInit {
 
    async create() {
       if (this.form.valid) {
-         if (this.len_award_cond_today < this.limit_award_condition){
             await this.changetime();
             const options = {
                title: 'CREAR PREMIO CONDICIONADO',
@@ -177,9 +169,6 @@ export class CreateAwardsConditionComponent implements OnInit {
                   );
                }
             });
-         }else{
-            this.snackbar.mensaje('Alcanzó el máximo de Premios Condicionados de hoy')
-         }
       } else {
          this.snackbar.mensaje('Complete todos los campos');
       }
@@ -213,39 +202,6 @@ export class CreateAwardsConditionComponent implements OnInit {
    cancel() {
       this.router.navigate(['dashboard/premios/condicion']);
    }
-   async getTodayAwaradCondition(){
-      let today = new Date();
-      let current_day = this.gameDataSrv.DateFormat(today).split('T')[0]
 
-      await this.getLenAwardCondToday(current_day)
-      await this.getLenMatchToday(current_day)
-      await this.getWinnerLimit()
-   }
 
-   async getLenAwardCondToday(current_day:string){
-      let filter_today = '?start_date__date__range='+current_day+'%2C'+current_day
-      this.awardConditionSrv.getAwardConditionFilter(filter_today).subscribe(
-         (res) => {
-            this.len_award_cond_today = Object.keys(res).length;
-         }
-      )
-   }
-
-   async getLenMatchToday(current_day:string){
-      let filter_match = '?win_match=true&start_date__date__range='+current_day+'%2C'+current_day
-      this.matchSrv.getMatchFilter(filter_match).subscribe(
-         (res) => {
-            this.len_match_today = Object.keys(res).length;
-         }
-      )
-   }
-
-   async getWinnerLimit(){
-      this.probabilitySrv.getProbabilites().subscribe(
-         (res) => {
-            this.winner_limit = res.winners_limit;
-            this.limit_award_condition = this.winner_limit - this.len_match_today
-         }
-      )
-   }
 }
