@@ -45,7 +45,7 @@ export class PlayViewComponent {
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
 		private audioService: AudioService,
-		private confirmDialog: ConfirmDialogService,
+		private confirmDialog: ConfirmDialogService
 	) {}
 
 	// async ngAfterViewInit(): Promise<void> {
@@ -54,6 +54,7 @@ export class PlayViewComponent {
 	// }
 
 	ngOnInit(): void {
+		this.theme.getThemeGame(this.gameLogicService.winner)
 		// this.audioService.getAll().subscribe((data) => {
 		// 	this.audioArray = data
 		// 	this.audio.src = this.audioArray[0].audio
@@ -79,7 +80,7 @@ export class PlayViewComponent {
 				// 		title: 'Aún tienes intentos',
 				// 		image: './assets/img/tryagain.png'
 				// 	};
-				// 	this.confirmDialog.result_game(options)	
+				// 	this.confirmDialog.result_game(options)
 				// }
 				this.slot_music = false
 			}, 15000)

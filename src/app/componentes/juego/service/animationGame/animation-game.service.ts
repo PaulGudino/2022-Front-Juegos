@@ -14,10 +14,11 @@ export class AnimationGameService {
 	animationCountCol1 = 4
 	disabledPlayButton: boolean = false
 
-	constructor(private gameLogicService: GameLogicService,private confirmDialog: ConfirmDialogService,) {}
+	constructor(private gameLogicService: GameLogicService, private confirmDialog: ConfirmDialogService) {}
 
 	startGame(refCol1: any, refCol2: any, refCol3: any) {
 		this.gameLogicService.winFirstTime = false
+		debugger
 
 		if (this.gameLogicService.attempts > 0) {
 			//Logic return true if win
@@ -52,6 +53,12 @@ export class AnimationGameService {
 								refCol3
 							)
 						}, 2000)
+
+						let options = {
+							title: "INTENTA OTRA VEZ!!!",
+							image: "../../../../../assets/img/loseImage.png",
+						}
+						this.confirmDialog.result_game(options)
 					} else {
 						let movimientosCol1 = (n - 1) * this.widthImage * -1
 						let movimientosCol2
@@ -98,10 +105,15 @@ export class AnimationGameService {
 
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
-						setTimeout(() => {
-							this.gameLogicService.winFirstTime = true
-						}, 2500)
-						
+
+						this.gameLogicService.winFirstTime = true
+
+						let options = {
+							title: "HAS GANADO!!!",
+							image: this.gameLogicService.winAwardImage,
+						}
+						this.confirmDialog.result_game(options)
+
 						clearInterval(intervalId)
 					}
 				}, 2030)
@@ -110,7 +122,6 @@ export class AnimationGameService {
 					let vueltas = (this.widthImage + 0) * -9
 					if (this.animationCountCol1 > 0) {
 						this.animationCountCol1 -= 1
-
 
 						refCol1.style.transform = `translateY(${vueltas}px)`
 						refCol1.style.transition =
@@ -165,6 +176,11 @@ export class AnimationGameService {
 						this.animationCountCol1 = 5
 						this.disabledPlayButton = false
 						clearInterval(intervalId)
+						let options = {
+							title: "INTENTA OTRA VEZ!!!",
+							image: "../../../../../assets/img/loseImage.png",
+						}
+						this.confirmDialog.result_game(options)
 					}
 				}, 2030)
 				// }, 2500)
@@ -173,14 +189,11 @@ export class AnimationGameService {
 			this.gameLogicService.setWinnerState(false)
 			this.gameLogicService.decreaseAttemptCount()
 		} else {
-			// const options = {
-			// 	title: 'Se terminó la partida',
-			// 	image: './assets/img/tryagain.png'
-			// };
-			// this.confirmDialog.result_game(options)
-			setTimeout(() => {
-				window.location.reload()
-			}, 2000)
+			const options = {
+				title: "Se terminó la partida",
+				image: "./assets/img/gameover.png",
+			}
+			this.confirmDialog.result_game(options)
 		}
 	}
 

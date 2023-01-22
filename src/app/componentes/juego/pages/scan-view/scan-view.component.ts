@@ -34,22 +34,26 @@ export class ScanViewComponent implements OnInit {
 	}
 
 	async continueToGame() {
-		if (this.keyController.getCode() != "") {
-			let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
+		let validateTicket = this.gameLogic.verifyTicket("115727094")
+		sessionStorage.setItem("juego_play", "juego_play")
+		this.router.navigate(["/juego/play"])
+		this.gameLogic.playGame()
 
-			if (await validateTicket) {
-				this.gameLogic.playGame()
-				sessionStorage.setItem("juego_play", "juego_play")
-				this.router.navigate(["/juego/play"])
-			} else {
-				let game_message = [
-					"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
-					"Ó",
-					"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
-				]
-				this.confirmDialog.error(game_message)
-			}
-		}
+		// if (this.keyController.getCode() != "") {
+		// 	let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
+		// 	if (await validateTicket) {
+		// 		this.gameLogic.playGame()
+		// 		sessionStorage.setItem("juego_play", "juego_play")
+		// 		this.router.navigate(["/juego/play"])
+		// 	} else {
+		// 		let game_message = [
+		// 			"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
+		// 			"Ó",
+		// 			"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
+		// 		]
+		// 		this.confirmDialog.error(game_message)
+		// 	}
+		// }
 	}
 	doSomething() {
 		sessionStorage.removeItem("juego_scan")

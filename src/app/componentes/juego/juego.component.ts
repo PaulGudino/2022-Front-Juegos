@@ -45,15 +45,7 @@ export class JuegoComponent {
 		private audioService: AudioService
 	) {}
 
-
 	async ngOnInit(): Promise<void> {
-
-		const options = {
-				title: 'Prueba',
-				image: './assets/img/gameover.png'
-			};
-		this.confirmDialog.result_game(options)
-		
 		await this.auth()
 		this.validateSlot()
 		sessionStorage.removeItem("juego_scan")

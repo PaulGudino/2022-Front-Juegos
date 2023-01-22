@@ -9,6 +9,8 @@ import { GameDateService } from "src/app/servicios/game-date/game-date.service"
 import { GameService } from "src/app/servicios/game/game.service"
 import { ProbabilityService } from "src/app/servicios/probability/probability/probability.service"
 import { ThemeService } from "../theme/theme.service"
+import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
+import { AnimationGameService } from "../animationGame/animation-game.service"
 
 @Injectable({
 	providedIn: "root",
@@ -21,6 +23,7 @@ export class GameLogicService {
 	winProb: number = 0
 	public winner: boolean = false
 	public winFirstTime: boolean = false
+	public winAwardImage: string = ""
 
 	constructor(
 		private ticketService: TicketService,
@@ -50,7 +53,6 @@ export class GameLogicService {
 
 			const res: any = await lastValueFrom(this.game.getById(1))
 
-
 			ticket_created = new Date(this.ticket.date_created_nf) //nf -> no format, represents date when ticket was created
 
 			start_game = new Date(res.start_date_nf)
@@ -73,31 +75,37 @@ export class GameLogicService {
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 
-		//Second Check limitWinners
+		//Second Check for an award conditioned if true then the client will automatically win
+		//the award
+		let awardsConditioned: any = await this.getAwardConditionToday()
+
+		if (awardsConditioned && awardsConditioned.length > 0) {
+			let awardConditioned = awardsConditioned[0]
+			let award: any = this.awardSrv.getAwardbyId(awardsConditioned.award_id)
+			// let award: any = this.winnedAward(awardConditioned)
+			this.winCase(awardConditioned.award_id, awardConditioned.id, true)
+			this.winAwardImage = award.imagen
+
+			return
+		}
+
+		//Third Check limitWinners
 
 		if (!(await this.checkLimitWinners())) {
-			//Third check if there's any award conditioned if true then the client must win
-			let awardsConditioned: any = await this.getAwardConditionToday()
+			//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
 
-			if (awardsConditioned && awardsConditioned.length > 0) {
-				let awardConditioned = awardsConditioned[0]
-				// let award: any = this.winnedAward(awardConditioned)
-				this.winCase(awardConditioned.award_id, awardConditioned.id, true)
+			let awards = await this.getPrize()
+			if (awards) {
+				let award = awards[0]
+
+				this.winCase(award.id, null, false)
+				this.winAwardImage = award.imagen
 			} else {
-				//Third Run the Probabilities and check if the client win or lose, and if win get the award category he won
+				this.changeStateTicket(this.ticket.id)
+				this.createMatch("false", "false", this.ticket.id, null)
 
-				let awards = await this.getPrize()
-				if (awards) {
-					let award = awards[0]
-
-					this.winCase(award.id, null, false)
-				} else {
-					this.changeStateTicket(this.ticket.id)
-					this.createMatch("false", "false", this.ticket.id, null)
-
-					this.setWinnerState(false)
-					this.theme.getThemeGame(this.winner)
-				}
+				this.setWinnerState(false)
+				this.theme.getThemeGame(this.winner)
 			}
 		} else {
 			this.changeStateTicket(this.ticket.id)
@@ -115,6 +123,7 @@ export class GameLogicService {
 		this.createMatch("true", "false", this.ticket.id, awardId)
 		this.changeStateTicket(this.ticket.id)
 		this.setWinnerState(true)
+
 		if (conditionedWin) {
 			this.wonAwardCondition(awardId, awardConditionedId)
 		} else {
@@ -235,7 +244,7 @@ export class GameLogicService {
 	 * @private
 	 */
 	private async getAwardsCategory(category: string) {
-		let awards: any = await lastValueFrom(this.awardSrv.getFilterAward('?is_active=true&initial_stock__gt=0&category='+category))
+		let awards: any = await lastValueFrom(this.awardSrv.getFilterAward("?is_active=true&initial_stock__gt=0&category=" + category))
 		let categoryAwards: any = awards.filter((award: any) => award.category == category)
 		return categoryAwards
 	}
