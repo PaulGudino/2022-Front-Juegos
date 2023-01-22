@@ -12,6 +12,7 @@ import { PublicityGame } from "src/app/interfaces/publicityGame/PublicityGame"
 
 import { Audio } from "src/app/interfaces/audio/Audio"
 import { AudioService } from "src/app/servicios/audio/audio.service"
+import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 
 @Component({
 	selector: "app-play-view",
@@ -43,7 +44,8 @@ export class PlayViewComponent {
 		public theme: ThemeService,
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
-		private audioService: AudioService
+		private audioService: AudioService,
+		private confirmDialog: ConfirmDialogService,
 	) {}
 
 	// async ngAfterViewInit(): Promise<void> {
@@ -65,8 +67,22 @@ export class PlayViewComponent {
 		if (this.gameLogicService.attempts >= 0) {
 			this.slot_music = true
 			setTimeout(() => {
+				// console.log(this.gameLogicService.winFirstTime)
+				// if(this.gameLogicService.winFirstTime){
+				// 	const options = {
+				// 		title: 'Ganaste',
+				// 		image: './assets/img/tryagain.png'
+				// 	};
+				// 	this.confirmDialog.result_game(options)
+				// }else{
+				// 	const options = {
+				// 		title: 'Aún tienes intentos',
+				// 		image: './assets/img/tryagain.png'
+				// 	};
+				// 	this.confirmDialog.result_game(options)	
+				// }
 				this.slot_music = false
-			}, 6000)
+			}, 15000)
 		}
 	}
 }

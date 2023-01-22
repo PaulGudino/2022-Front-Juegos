@@ -1,3 +1,4 @@
+import { ResultMessageComponent } from './../../componentes/juego/result-message/result-message.component';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -25,7 +26,7 @@ export class ConfirmDialogService {
         cancelText: options.cancelText,
         confirmText: options.confirmText
       }
- });  
+    });  
   }  
   public confirmed(): Observable<any> {
     return this.dialogRef.afterClosed().pipe(take(1), map(res => {
@@ -46,4 +47,12 @@ export class ConfirmDialogService {
       data: mensaje_error_lista
     });
   }
+  public result_game(options: any) {
+    const dialogref = this.dialog.open(ResultMessageComponent, {    
+      data: {
+        title: options.title,
+        image: options.image,
+      }
+    });  
+  }  
 }

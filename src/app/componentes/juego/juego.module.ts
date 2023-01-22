@@ -13,6 +13,7 @@ import { ScanViewComponent } from './pages/scan-view/scan-view.component';
 import { PublicityComponent } from './publicity/publicity.component';
 import { PlayViewComponent } from './pages/play-view/play-view.component';
 import { LogoComponent } from './logo/logo.component';
+import { ResultMessageComponent } from './result-message/result-message.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LogoComponent } from './logo/logo.component';
     PublicityComponent,
     PlayViewComponent,
     LogoComponent,
+    ResultMessageComponent,
   ],
   imports: [
     CommonModule,

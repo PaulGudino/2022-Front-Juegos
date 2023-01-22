@@ -1,5 +1,6 @@
 import { GameLogicService } from "./../gameLogic/game-logic.service"
 import { ElementRef, Injectable } from "@angular/core"
+import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 
 @Injectable({
 	providedIn: "root",
@@ -13,7 +14,7 @@ export class AnimationGameService {
 	animationCountCol1 = 4
 	disabledPlayButton: boolean = false
 
-	constructor(private gameLogicService: GameLogicService) {}
+	constructor(private gameLogicService: GameLogicService,private confirmDialog: ConfirmDialogService,) {}
 
 	startGame(refCol1: any, refCol2: any, refCol3: any) {
 		this.gameLogicService.winFirstTime = false
@@ -172,7 +173,14 @@ export class AnimationGameService {
 			this.gameLogicService.setWinnerState(false)
 			this.gameLogicService.decreaseAttemptCount()
 		} else {
-			window.location.reload()
+			// const options = {
+			// 	title: 'Se terminó la partida',
+			// 	image: './assets/img/tryagain.png'
+			// };
+			// this.confirmDialog.result_game(options)
+			setTimeout(() => {
+				window.location.reload()
+			}, 2000)
 		}
 	}
 
