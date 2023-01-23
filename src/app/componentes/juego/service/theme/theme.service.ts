@@ -41,7 +41,7 @@ export class ThemeService {
 		}
 		this.publicityGame.getAllPublicityGame().subscribe((publicityGame) => {
 			this.publicityGameList = publicityGame
-			debugger
+
 			this.columna2.map((i) => {
 				publicityGame.forEach((image) => {
 					if (image.id == i) {

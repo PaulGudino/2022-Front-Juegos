@@ -54,7 +54,6 @@ export class PlayViewComponent {
 	// }
 
 	ngOnInit(): void {
-		this.theme.getThemeGame(this.gameLogicService.winner)
 		// this.audioService.getAll().subscribe((data) => {
 		// 	this.audioArray = data
 		// 	this.audio.src = this.audioArray[0].audio

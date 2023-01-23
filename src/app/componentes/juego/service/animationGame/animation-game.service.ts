@@ -18,7 +18,6 @@ export class AnimationGameService {
 
 	startGame(refCol1: any, refCol2: any, refCol3: any) {
 		this.gameLogicService.winFirstTime = false
-		debugger
 
 		if (this.gameLogicService.attempts > 0) {
 			//Logic return true if win
@@ -53,12 +52,6 @@ export class AnimationGameService {
 								refCol3
 							)
 						}, 2000)
-
-						let options = {
-							title: "INTENTA OTRA VEZ!!!",
-							image: "../../../../../assets/img/loseImage.png",
-						}
-						this.confirmDialog.result_game(options)
 					} else {
 						let movimientosCol1 = (n - 1) * this.widthImage * -1
 						let movimientosCol2
@@ -194,6 +187,9 @@ export class AnimationGameService {
 				image: "./assets/img/gameover.png",
 			}
 			this.confirmDialog.result_game(options)
+			this.confirmDialog.confirmed().subscribe((confirm) => {
+				window.location.reload()
+			})
 		}
 	}
 
