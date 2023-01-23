@@ -22,6 +22,7 @@ import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-d
 export class PlayViewComponent {
 	informationText: string = "A JUGAR!"
 	slot_music = false
+	attemps = 0
 
 	// audio = new Audio()
 	// audioArray: Audio[] = []
@@ -44,8 +45,8 @@ export class PlayViewComponent {
 		public theme: ThemeService,
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
-		private audioService: AudioService,
-		private confirmDialog: ConfirmDialogService
+		private probalilitySrv : ProbabilityService
+
 	) {}
 
 	// async ngAfterViewInit(): Promise<void> {
@@ -54,35 +55,23 @@ export class PlayViewComponent {
 	// }
 
 	ngOnInit(): void {
-		// this.audioService.getAll().subscribe((data) => {
-		// 	this.audioArray = data
-		// 	this.audio.src = this.audioArray[0].audio
-		// 	// console.log(this.audio.src);
-		// })
+		this.probalilitySrv.getProbabilites().subscribe(
+			(data:any)=>{
+				this.attemps = data.attempts_limit
+			}
+		)
 	}
 	doSomething() {
 		sessionStorage.removeItem("juego_play")
 	}
 	music() {
-		if (this.gameLogicService.attempts >= 0) {
+		console.log(this.attemps)
+		if (this.attemps > 0) {
 			this.slot_music = true
+			this.attemps -=1
 			setTimeout(() => {
-				// console.log(this.gameLogicService.winFirstTime)
-				// if(this.gameLogicService.winFirstTime){
-				// 	const options = {
-				// 		title: 'Ganaste',
-				// 		image: './assets/img/tryagain.png'
-				// 	};
-				// 	this.confirmDialog.result_game(options)
-				// }else{
-				// 	const options = {
-				// 		title: 'Aún tienes intentos',
-				// 		image: './assets/img/tryagain.png'
-				// 	};
-				// 	this.confirmDialog.result_game(options)
-				// }
 				this.slot_music = false
-			}, 15000)
+			}, 7000)
 		}
 	}
 }

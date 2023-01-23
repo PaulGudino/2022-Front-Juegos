@@ -33,7 +33,7 @@ export class AwardsConditionComponent implements OnInit {
     {id: '?ordering=-created', name: 'Primeros Premios Condicionados Creados'}
   ]
 
-  filter_default = '?ordering=created'
+  filter_default = '?ordering=-created'
 
   Titulo = "Premios Condicionados";
   displayedColumns: string[] = ['id', 'award', 'game','start_date','end_date', 'is_approved', 'Acciones']

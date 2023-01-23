@@ -81,14 +81,19 @@ export class GameLogicService {
 		//the award
 		let awardsConditioned: any = await this.getAwardConditionToday()
 
-		debugger
+		
 		if (awardsConditioned && awardsConditioned.length > 0) {
 			let awardConditioned = awardsConditioned[0]
-			let award: any = this.awardSrv.getAwardbyId(awardsConditioned.award_id)
+			
+			this.awardSrv.getAwardbyId(awardConditioned.award_id).subscribe(
+				(data:any)=>{
+					this.winCase(awardConditioned.award_id, awardConditioned.id, true)
+					this.winAwardImage = data.imagen
+					
+				}
+			)
 			// let award: any = this.winnedAward(awardConditioned)
-			this.winCase(awardConditioned.award_id, awardConditioned.id, true)
-			this.winAwardImage = award.imagen
-
+			
 			return
 		}
 
@@ -146,7 +151,7 @@ export class GameLogicService {
 		// let current_day = '2023-01-08 11:00:00'
 		let filter_today = "?is_approved=false&start_date__lte=" + current_day + "&end_date__gte=" + current_day
 		let promise: any = await lastValueFrom(this.awardConditionSrv.getAwardConditionFilter(filter_today))
-		debugger
+		
 		return promise
 	}
 
