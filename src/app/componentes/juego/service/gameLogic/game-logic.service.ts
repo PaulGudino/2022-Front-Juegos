@@ -75,10 +75,13 @@ export class GameLogicService {
 		//First Check for awards who not came in the time they supouse to appear, restock them
 		await this.deleteAwardConditionPast()
 
+		await this.getProbabilityData()
+
 		//Second Check for an award conditioned if true then the client will automatically win
 		//the award
 		let awardsConditioned: any = await this.getAwardConditionToday()
 
+		debugger
 		if (awardsConditioned && awardsConditioned.length > 0) {
 			let awardConditioned = awardsConditioned[0]
 			let award: any = this.awardSrv.getAwardbyId(awardsConditioned.award_id)
@@ -143,6 +146,7 @@ export class GameLogicService {
 		// let current_day = '2023-01-08 11:00:00'
 		let filter_today = "?is_approved=false&start_date__lte=" + current_day + "&end_date__gte=" + current_day
 		let promise: any = await lastValueFrom(this.awardConditionSrv.getAwardConditionFilter(filter_today))
+		debugger
 		return promise
 	}
 
@@ -255,11 +259,6 @@ export class GameLogicService {
 	 * @private
 	 */
 	private async checkLimitWinners() {
-		let probabilitiesData: any = await lastValueFrom(this.probabilityService.getProbabilites())
-		this.winProb = probabilitiesData.percent_win
-		this.attempts = probabilitiesData.attempts_limit
-		this.winnersLimit = probabilitiesData.winners_limit
-
 		let today = new Date()
 		let current_day = this.gameDataSrv.DateFormat(today).split("T")[0]
 
@@ -305,5 +304,12 @@ export class GameLogicService {
 
 	public decreaseAttemptCount() {
 		this.attempts--
+	}
+
+	private async getProbabilityData() {
+		let probabilitiesData: any = await lastValueFrom(this.probabilityService.getProbabilites())
+		this.winProb = probabilitiesData.percent_win
+		this.attempts = probabilitiesData.attempts_limit
+		this.winnersLimit = probabilitiesData.winners_limit
 	}
 }
