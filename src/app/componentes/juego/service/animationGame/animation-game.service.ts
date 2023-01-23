@@ -187,7 +187,7 @@ export class AnimationGameService {
 				image: "./assets/img/gameover.png",
 			}
 			this.confirmDialog.result_game(options)
-			this.confirmDialog.confirmed().subscribe((confirm) => {
+			this.confirmDialog.confirmed_result().subscribe((confirm) => {
 				window.location.reload()
 			})
 		}

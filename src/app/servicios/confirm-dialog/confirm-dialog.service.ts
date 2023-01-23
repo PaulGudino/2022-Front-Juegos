@@ -17,6 +17,7 @@ export class ConfirmDialogService {
   ) { }
 
   dialogRef!: MatDialogRef<ConfirmDialogComponent>;
+  dialogResult!: MatDialogRef<ResultMessageComponent>;
 
   public open(options: any) {
     this.dialogRef = this.dialog.open(ConfirmDialogComponent, {    
@@ -48,11 +49,17 @@ export class ConfirmDialogService {
     });
   }
   public result_game(options: any) {
-    const dialogref = this.dialog.open(ResultMessageComponent, {    
+     this.dialogResult = this.dialog.open(ResultMessageComponent, {    
       data: {
         title: options.title,
         image: options.image,
       }
     });  
   }  
+  public confirmed_result(): Observable<any> {
+    return this.dialogResult.afterClosed().pipe(take(1), map(res => {
+      return res;
+    }
+    ));
+  }
 }
