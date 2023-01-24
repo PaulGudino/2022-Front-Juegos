@@ -84,7 +84,6 @@ export class GameLogicService {
 		
 		if (awardsConditioned && awardsConditioned.length > 0) {
 			let awardConditioned = awardsConditioned[0]
-			
 			this.awardSrv.getAwardbyId(awardConditioned.award_id).subscribe(
 				(data:any)=>{
 					this.winCase(awardConditioned.award_id, awardConditioned.id, true)
@@ -278,7 +277,7 @@ export class GameLogicService {
 	}
 
 	async getWinnMatchesToday(current_day: string) {
-		let filter_match = "?win_match=true&start_date__date__range=" + current_day + "%2C" + current_day
+		let filter_match = "?win_match=true&date_created__date__range=" + current_day + "%2C" + current_day
 		let matchesToday = await lastValueFrom(this.matchService.getMatchFilter(filter_match))
 
 		return matchesToday

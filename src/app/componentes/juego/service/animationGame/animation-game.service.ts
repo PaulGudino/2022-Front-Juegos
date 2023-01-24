@@ -186,10 +186,7 @@ export class AnimationGameService {
 				title: "Se terminó la partida",
 				image: "./assets/img/gameover.png",
 			}
-			this.confirmDialog.result_game(options)
-			this.confirmDialog.confirmed_result().subscribe((confirm) => {
-				window.location.reload()
-			})
+			this.confirmDialog.end_game(options)
 		}
 	}
 

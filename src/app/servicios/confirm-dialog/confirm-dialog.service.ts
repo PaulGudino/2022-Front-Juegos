@@ -18,6 +18,7 @@ export class ConfirmDialogService {
 
   dialogRef!: MatDialogRef<ConfirmDialogComponent>;
   dialogResult!: MatDialogRef<ResultMessageComponent>;
+  dialogEndGame!: MatDialogRef<ResultMessageComponent>;
 
   public open(options: any) {
     this.dialogRef = this.dialog.open(ConfirmDialogComponent, {    
@@ -49,15 +50,30 @@ export class ConfirmDialogService {
     });
   }
   public result_game(options: any) {
-     this.dialogResult = this.dialog.open(ResultMessageComponent, {    
-      data: {
-        title: options.title,
-        image: options.image,
-      }
-    });  
-  }  
+    setTimeout(() => {
+      this.dialogResult = this.dialog.open(ResultMessageComponent, {    
+        data: {
+          title: options.title,
+          image: options.image,
+        }
+      });  
+    }, 2000)
+  } 
+  public end_game(options: any) {
+    setTimeout(() => {
+      this.dialogEndGame = this.dialog.open(ResultMessageComponent, {    
+        data: {
+          title: options.title,
+          image: options.image,
+        }
+      });
+      this.confirmed_result().subscribe((confirm) => {
+				window.location.reload()
+			})  
+    }, 2000)
+  }   
   public confirmed_result(): Observable<any> {
-    return this.dialogResult.afterClosed().pipe(take(1), map(res => {
+    return this.dialogEndGame.afterClosed().pipe(take(1), map(res => {
       return res;
     }
     ));
