@@ -224,7 +224,7 @@ export class GameLogicService {
 
 			if (rd_number <= 800) {
 				category = "Común"
-			} else if (rd_number <= 900) {
+			} else if (rd_number <= 950) {
 				category = "Rara"
 			} else if (rd_number <= 990) {
 				category = "Épica"
