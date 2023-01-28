@@ -104,6 +104,7 @@ export class AnimationGameService {
 						let options = {
 							title: "HAS GANADO!!!",
 							image: this.gameLogicService.winAwardImage,
+							result_music: "./assets/audio/win.mp3",
 						}
 						this.confirmDialog.result_game(options)
 
@@ -172,6 +173,7 @@ export class AnimationGameService {
 						let options = {
 							title: "INTENTA OTRA VEZ!!!",
 							image: "../../../../../assets/img/loseImage.png",
+							result_music: "../../../../../assets/audio/lose.mp3",
 						}
 						this.confirmDialog.result_game(options)
 					}
@@ -185,6 +187,7 @@ export class AnimationGameService {
 			const options = {
 				title: "Se terminó la partida",
 				image: "./assets/img/gameover.png",
+				result_music: "./assets/audio/lose.mp3",
 			}
 			this.confirmDialog.end_game(options)
 		}

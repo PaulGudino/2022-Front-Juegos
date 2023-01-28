@@ -65,7 +65,6 @@ export class PlayViewComponent {
 		sessionStorage.removeItem("juego_play")
 	}
 	music() {
-		console.log(this.attemps)
 		if (this.attemps > 0) {
 			this.slot_music = true
 			this.attemps -=1

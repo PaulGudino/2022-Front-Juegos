@@ -40,23 +40,9 @@
 					ngPluralCase="other">
 					<p
 						class="info-game__text"
-						*ngIf="gameLogicService.winFirstTime == false; else winText">
+						*ngIf="gameLogicService.winFirstTime == false">
 						Disponible {{ gameLogicService.attempts }} Giros más!
 					</p>
-					<ng-template #winText>
-						<p class="info-game__text">
-							Disponible
-							{{ gameLogicService.attempts }} Giros más!
-						</p>
-						<audio
-							controls="None"
-							hidden
-							autoplay>
-							<source
-								src="./assets/audio/win.mp3"
-								type="audio/mp3" />
-						</audio>
-					</ng-template>
 				</ng-template>
 			</div>
 			<div class="spinner__container">

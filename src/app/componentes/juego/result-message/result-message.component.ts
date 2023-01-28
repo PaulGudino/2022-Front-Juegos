@@ -11,12 +11,14 @@ export class ResultMessageComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ResultMessageComponent>,
     @Inject(MAT_DIALOG_DATA) public data:{
-      title : string
-      image : string
+      title : string;
+      image : string;
+      result_music : string;
     }
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data)
   }
   cerrar(){
     this.dialogRef.close();

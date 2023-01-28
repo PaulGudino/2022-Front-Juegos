@@ -55,6 +55,7 @@ export class ConfirmDialogService {
         data: {
           title: options.title,
           image: options.image,
+          result_music: options.result_music,
         }
       });  
     }, 2000)
@@ -65,6 +66,7 @@ export class ConfirmDialogService {
         data: {
           title: options.title,
           image: options.image,
+          result_music: options.result_music,
         }
       });
       this.confirmed_result().subscribe((confirm) => {
