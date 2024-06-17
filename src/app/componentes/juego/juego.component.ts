@@ -67,6 +67,8 @@ export class JuegoComponent {
 	}
 	async goScan() {
 		await this.validateSlot()
+		console.log('Valor de boxes_images después de getPublicityGame:', this.boxes_images)
+		console.log('Valor de boxes_images después de getPublicityGame:', this.design_images)
 		if (this.boxes_images == 10 && this.design_images == 3) {
 			this.router.navigate(["/juego/scan"])
 			sessionStorage.setItem("juego_scan", "juego_scan")
@@ -83,7 +85,7 @@ export class JuegoComponent {
 	async auth() {
 		let formData: FormData = new FormData()
 		formData.append("username", "admin")
-		formData.append("password", "admin")
+		formData.append("password", "admin123789")
 		this.AuthSrv.auth_token(formData).subscribe((data: any) => {
 			sessionStorage.setItem("token", data.access)
 			sessionStorage.setItem("refresh", data.refresh)

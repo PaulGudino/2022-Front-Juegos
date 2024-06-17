@@ -10,7 +10,8 @@ import { RecuperarContrase√±a } from 'src/app/interfaces/auth/recuperarContrase√
 })
 export class AuthService {
 
-  url = this.puente.geturl();
+  //url = this.puente.geturl();
+  url = 'http://127.0.0.1:8000/'; // Cambia esta URL a tu servidor local
   constructor(private http: HttpClient, private puente: PuenteDatosService) { }
 
   Login(login: Login){
