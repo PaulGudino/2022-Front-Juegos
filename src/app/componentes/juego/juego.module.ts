@@ -14,6 +14,8 @@ import { PublicityComponent } from './publicity/publicity.component';
 import { PlayViewComponent } from './pages/play-view/play-view.component';
 import { LogoComponent } from './logo/logo.component';
 import { ResultMessageComponent } from './result-message/result-message.component';
+import { RolldiceViewComponent } from './pages/rolldice-view/rolldice-view.component';
+import { SelectiongameViewComponent } from './pages/selectiongame-view/selectiongame-view.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ResultMessageComponent } from './result-message/result-message.componen
     PlayViewComponent,
     LogoComponent,
     ResultMessageComponent,
+    RolldiceViewComponent,
+    SelectiongameViewComponent,
   ],
   imports: [
     CommonModule,

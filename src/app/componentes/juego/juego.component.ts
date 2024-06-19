@@ -49,7 +49,9 @@ export class JuegoComponent {
 		await this.auth()
 		this.validateSlot()
 		sessionStorage.removeItem("juego_scan")
+		sessionStorage.removeItem("selection_game")
 		sessionStorage.removeItem("juego_play")
+		sessionStorage.removeItem("juego_rolldice")
 		this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
 			if (dataTopPublicity.length > 0) {
 				this.dashPublicity.loadTopData(dataTopPublicity)
@@ -69,7 +71,7 @@ export class JuegoComponent {
 		await this.validateSlot()
 		console.log('Valor de boxes_images después de getPublicityGame:', this.boxes_images)
 		console.log('Valor de boxes_images después de getPublicityGame:', this.design_images)
-		if (this.boxes_images == 10 && this.design_images == 3) {
+		if (this.boxes_images == 0 && this.design_images == 0) {
 			this.router.navigate(["/juego/scan"])
 			sessionStorage.setItem("juego_scan", "juego_scan")
 		} else {
