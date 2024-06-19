@@ -6,6 +6,7 @@ import { ThemeService } from '../../service/theme/theme.service';
 import { PublicityGameService } from 'src/app/servicios/publicityGame/publicity-game.service';
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { ProbabilityService } from 'src/app/servicios/probability/probability/probability.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rolldice-view',
@@ -33,6 +34,7 @@ export class RolldiceViewComponent implements OnInit {
 	}
 
 	constructor(
+		private router: Router,
 		public publicity: DashboardPublicityService,
 		public styles: DashboardStyleService,
 		public animation: AnimationGameService,
