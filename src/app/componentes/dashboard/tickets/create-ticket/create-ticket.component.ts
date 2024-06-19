@@ -38,7 +38,7 @@ export class CreateTicketComponent implements OnInit {
   invoiceNumber : string = '';
   qr_code_digits : string = '';
   clientId : string = '';
-  gameTragamonendas: string = '1';
+  game_id: string = '';
 
   Ticket_data: string = ''
   CanPrint = false
@@ -188,7 +188,7 @@ export class CreateTicketComponent implements OnInit {
     
     this.invoiceNumber = this.formGroup.get('invoice_number')?.value;
     this.clientId = this.formGroup.get('client')?.value.id;
-
+    this.game_id = this.formGroup.get('game')?.value;
     
     let exist_code : any[] = [];
 
@@ -203,7 +203,7 @@ export class CreateTicketComponent implements OnInit {
     }
     while(exist_code.length > 0);
     
-    this.Ticket_data = this.gameTragamonendas+'|'+this.invoiceNumber+'|'+this.clientId+'|'+this.qr_code_digits
+    this.Ticket_data = this.game_id+'|'+this.invoiceNumber+'|'+this.clientId+'|'+this.qr_code_digits
   }
 
   newForm(){
