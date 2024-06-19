@@ -31,3 +31,31 @@ img{
     height: 60px;
     margin-left: 7px;
 }
+
+.container2 {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around; /* Distribución equitativa de los contenedores */
+   gap: 20px; /* Espacio entre los contenedores */
+}
+
+.container-juego2{
+   position:relative;
+   max-width: 26rem;
+   border-radius: 40px;
+}
+
+.container_juego2 {
+   margin-top: 5%;
+   display: flex;
+   justify-content: center;
+}
+.logo-game-container2 {
+   margin-bottom: 10px; /* Espacio entre el icono y el título */
+}
+
+@media (max-width: 768px) {
+   .container_juego2 {
+       flex-basis: calc(50% - 20px); /* Dos columnas en dispositivos pequeños */
+   }
+}
