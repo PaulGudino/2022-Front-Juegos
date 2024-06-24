@@ -21,6 +21,8 @@ export class SelectiongameViewComponent implements OnInit {
   gameRoutes: { [key: string]: string } = {
     "Dados": "rolldice",
     "Tragamonedas": "play",
+    "Precision": "precision",
+    "Puertas": "puertas"
     // Añade más juegos según sea necesario
   };
 

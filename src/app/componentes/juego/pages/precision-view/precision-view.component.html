@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Precisión</title>
+    <link rel="stylesheet" href="precision-view.component.css">
+</head>
+<body>
+    <div class="container" 
+    contenteditable="true"
+	(window:beforeunload)="doSomething()">
+        <h1>Juego de Precisión</h1>
+        <p id="target-time">Hora objetivo: {{ targetTime }}</p>
+        <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
+        <button (click)="stopClock()" [disabled]="!clockRunning">Detener</button>
+        <div class="clock" id="clock">{{ currentTime }}</div>
+        <p id="result">{{ resultMessage }}</p>
+    </div>
+</body>
+</html>

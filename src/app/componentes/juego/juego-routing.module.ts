@@ -6,6 +6,8 @@ import {ScanViewComponent} from './pages/scan-view/scan-view.component';
 import {PlayViewComponent} from './pages/play-view/play-view.component';
 import { RolldiceViewComponent } from './pages/rolldice-view/rolldice-view.component';
 import { SelectiongameViewComponent } from './pages/selectiongame-view/selectiongame-view.component';
+import { PrecisionViewComponent } from './pages/precision-view/precision-view.component';
+import { PuertasViewComponent } from './pages/puertas-view/puertas-view.component';
 export const routes: Routes = [
     {
       path:'',component:JuegoComponent,
@@ -28,6 +30,16 @@ export const routes: Routes = [
       path:'rolldice',component:RolldiceViewComponent,
       canActivate: [JuegoGuard],
       data: { Validate_game: 'juego_rolldice' } 
+    },
+    {
+      path:'precision',component:PrecisionViewComponent,
+      canActivate: [JuegoGuard],
+      data: { Validate_game: 'juego_precision' } 
+    },
+    {
+      path:'puertas',component:PuertasViewComponent,
+      canActivate: [JuegoGuard],
+      data: { Validate_game: 'juego_puertas' } 
     },
 ];
 

@@ -1,0 +1,14 @@
+<div class="container" 
+contenteditable="true"
+	(window:beforeunload)="doSomething()">
+    <h1>Juego de Puertas</h1>
+    <p>{{ informationText }}</p>
+    <div class="doors">
+      <div *ngFor="let door of doors; let i = index" class="door" (click)="openDoor(i)">
+        <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
+        <p *ngIf="door.isOpen">{{ door.prize }}</p>
+      </div>
+    </div>
+    <p id="result">{{ resultMessage }}</p>
+  </div>
+  
