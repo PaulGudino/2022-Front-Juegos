@@ -86,6 +86,8 @@ export class JuegoComponent {
 	}
 	async auth() {
 		let formData: FormData = new FormData()
+		//formData.append("username", "sistemaskioskoto")
+		//formData.append("password", "Root@123")
 		formData.append("username", "admin")
 		formData.append("password", "admin123789")
 		this.AuthSrv.auth_token(formData).subscribe((data: any) => {

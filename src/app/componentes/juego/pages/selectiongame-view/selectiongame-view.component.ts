@@ -1,52 +1,52 @@
 import { Component, OnInit } from '@angular/core';
-import { routes } from '../../juego-routing.module';
-import { Router} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { GameService } from 'src/app/servicios/game/game.service';
+import { Game } from 'src/app/interfaces/game/Game';
+import { TicketService } from 'src/app/servicios/ticket/ticket.service';
+import { Ticket } from 'src/app/interfaces/ticket/Ticket'; // Asegúrate de importar la interfaz o clase Ticket
+import { GameLogicService } from '../../service/gameLogic/game-logic.service';
+
 @Component({
   selector: 'app-selectiongame-view',
   templateUrl: './selectiongame-view.component.html',
   styleUrls: ['./selectiongame-view.component.css']
 })
 export class SelectiongameViewComponent implements OnInit {
-  informationText: string = "ELIGE UN JUEGO"
-  
-	// audio = new Audio()
-	// audioArray: Audio[] = []
+  informationText: string = "ELIGE UN JUEGO";
+  allGames: Game[] = [];
+  gameId: number | undefined;
+  ticket: Ticket | undefined;
+  ticketId: Number | undefined;
 
-	probability: any = {
-		// id: 1,
-		// porcent_win: 20,
-		// winners_limit: 1,
-		// attempts_limit: 1,
-		// created: "2022-11-29T14:47:30.056806",
-		// modified: "2022-11-29T14:47:30.056806",
-		// is_active: true,
-		// game_id: 1
-	}
-  
+  gameRoutes: { [key: string]: string } = {
+    "Dados": "rolldice",
+    "Tragamonedas": "play",
+    // Añade más juegos según sea necesario
+  };
 
-	constructor(private router: Router) {}
+  constructor(
+   private gameService: GameService,
+    private router: Router,
+    private route: ActivatedRoute, // Inyectar ActivatedRoute
+    private ticketService: TicketService,
+    private gameLogicService: GameLogicService
+  ) {}
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+      this.gameService.getAll().subscribe((data) => {
+      this.allGames = data;
+    });
   }
 
-	// async ngAfterViewInit(): Promise<void> {
-	// 	// this.audio.loop;
-	// 	this.audio.play()
-	// }
 
-	
-  
-	doSomething() {
-		sessionStorage.removeItem("selection_game")
-	}
 
-  navigateTo(route: string) {
-    routes.forEach((r) => { 
-      if (r.path === route) {
-        this.router.navigate([route]);
-      }
-    })
+  navigateTo(gameName: string, gameId: number) {
+    const route = this.gameRoutes[gameName];
+    if (route) {
+      this.router.navigate([`/${route}`], { queryParams: { gameId: gameId } });
+    } else {
+      console.error(`No se encontró una ruta para el juego ${gameName}`);
+    }
   }
-  
 
 }

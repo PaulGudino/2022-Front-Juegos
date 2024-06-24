@@ -4,29 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juegos Disponibles</title>
-    <link rel="stylesheet" href="selectiongame-view.component.html">
+    <link rel="stylesheet" href="selectiongame-view.component.css">
 </head>
 <body>
     <div class="container">
         <h1>¡Juegos disponibles!</h1>
         <div class="games">
-            <div class="game">
-                <img src="../../../../../assets/img/door.png" alt="Adivina la puerta">
-                <button (click)="navigateTo('juego_guessdoor')">Adivina la puerta</button>
-            </div>
-            <div class="game">
-                <img src="../../../../../assets/img/slot_machine.png" alt="Máquina tragamonedas">
-                <button (click)="navigateTo('play')">Máquina tragamonedas</button>
-            </div>
-            <div class="game">
-                <img src="../../../../../assets/img/dice.png" alt="Tira los dados">
-                <button (click)="navigateTo('rolldice')">Tira los dados</button>
-            </div>
-            <div class="game">
-                <img src="../../../../../assets/img/precision.png" alt="Precisión">
-                <button (click)="navigateTo('juego_precision')">Precisión</button>
-            </div>
+          <div *ngFor="let game of allGames" class="game">
+            <img [src]="'../../../../../assets/img/' + game.name + '.png'" [alt]="game.name">
+            <button (click)="navigateTo(game.name, game.id)">{{ game.name }}</button>
+          </div>
         </div>
-    </div>
+      </div>      
 </body>
 </html>

@@ -7,6 +7,7 @@ import { PublicityGameService } from 'src/app/servicios/publicityGame/publicity-
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { ProbabilityService } from 'src/app/servicios/probability/probability/probability.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from "@angular/router"; // Importar ActivatedRoute
 
 @Component({
   selector: 'app-rolldice-view',
@@ -18,6 +19,7 @@ export class RolldiceViewComponent implements OnInit {
   informationText: string = "A JUGAR!"
 	slot_music = false
 	attemps = 0
+	gameId: number | undefined;
 
 	// audio = new Audio()
 	// audioArray: Audio[] = []
@@ -41,7 +43,8 @@ export class RolldiceViewComponent implements OnInit {
 		public theme: ThemeService,
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
-		private probalilitySrv : ProbabilityService
+		private probalilitySrv : ProbabilityService,
+		private route: ActivatedRoute // Inyectar ActivatedRoute
 
 	) {}
 
@@ -51,12 +54,23 @@ export class RolldiceViewComponent implements OnInit {
 	// }
 
 	ngOnInit(): void {
-		this.probalilitySrv.getProbabilites().subscribe(
-			(data:any)=>{
-				this.attemps = data.attempts_limit
-			}
-		)
-	}
+		this.route.queryParams.subscribe(params => {
+		  this.gameId = +params['gameId']; // Convertir el parámetro a número
+		  if (!this.gameId) {
+			console.error('No gameId found in query params.');
+			this.loadGameData();
+		  } else {
+			// Llama a cualquier función que necesite usar gameId aquí, si es necesario
+			this.loadGameData();
+		  }
+		});
+	  }
+
+	  loadGameData(): void {
+		// Aquí puedes cargar datos relacionados con gameId si es necesario
+		console.log(`Game ID: ${this.gameId}`);
+	  }
+
 	doSomething() {
 		sessionStorage.removeItem("juego_rolldice")
 	}

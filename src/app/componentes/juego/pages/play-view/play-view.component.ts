@@ -13,6 +13,8 @@ import { PublicityGame } from "src/app/interfaces/publicityGame/PublicityGame"
 import { Audio } from "src/app/interfaces/audio/Audio"
 import { AudioService } from "src/app/servicios/audio/audio.service"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
+import { ActivatedRoute } from "@angular/router"; // Importar ActivatedRoute
+
 
 @Component({
 	selector: "app-play-view",
@@ -23,6 +25,7 @@ export class PlayViewComponent {
 	informationText: string = "A JUGAR!"
 	slot_music = false
 	attemps = 0
+	gameId: number | undefined; // Variable para almacenar game.id
 
 	// audio = new Audio()
 	// audioArray: Audio[] = []
@@ -45,9 +48,10 @@ export class PlayViewComponent {
 		public theme: ThemeService,
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
-		private probalilitySrv : ProbabilityService
+		private probalilitySrv: ProbabilityService,
+		private route: ActivatedRoute // Inyectar ActivatedRoute
 
-	) {}
+	) { }
 
 	// async ngAfterViewInit(): Promise<void> {
 	// 	// this.audio.loop;
@@ -55,22 +59,34 @@ export class PlayViewComponent {
 	// }
 
 	ngOnInit(): void {
-		this.probalilitySrv.getProbabilites().subscribe(
-			(data:any)=>{
-				this.attemps = data.attempts_limit
+		this.route.queryParams.subscribe(params => {
+			this.gameId = +params['gameId']; // Convertir el parámetro a número
+			if (!this.gameId) {
+				console.error('No gameId found in query params.');
+			} else {
+				// Llama a cualquier función que necesite usar gameId aquí, si es necesario
+				this.loadGameData();
 			}
-		)
+		});
 	}
+
+	loadGameData(): void {
+		// Aquí puedes cargar datos relacionados con gameId si es necesario
+		console.log(`Game ID: ${this.gameId}`);
+	}
+
+
 	doSomething() {
-		sessionStorage.removeItem("juego_play")
+		sessionStorage.removeItem("juego_play");
 	}
+
 	music() {
 		if (this.attemps > 0) {
-			this.slot_music = true
-			this.attemps -=1
+			this.slot_music = true;
+			this.attemps -= 1;
 			setTimeout(() => {
-				this.slot_music = false
-			}, 7000)
+				this.slot_music = false;
+			}, 7000);
 		}
 	}
 }

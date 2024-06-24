@@ -1,3 +1,4 @@
+
 import { AwardsService } from "src/app/servicios/awards/awards.service"
 import { AwardsConditionService } from "src/app/servicios/awards-condition/awards-condition.service"
 import { Injectable } from "@angular/core"
@@ -67,6 +68,7 @@ export class GameLogicService {
 			return false
 		}
 	}
+
 	/**
 	 * template method with all the logic to follow step by step and return true if the client win the game
 	 * @public
@@ -80,7 +82,7 @@ export class GameLogicService {
 		//Second Check for an award conditioned if true then the client will automatically win
 		//the award
 		let awardsConditioned: any = await this.getAwardConditionToday()
-
+		this.changeStateTicket(this.ticket.id)
 		
 		if (awardsConditioned && awardsConditioned.length > 0) {
 			let awardConditioned = awardsConditioned[0]
@@ -108,14 +110,14 @@ export class GameLogicService {
 				this.winCase(award.id, null, false)
 				this.winAwardImage = award.imagen
 			} else {
-				this.changeStateTicket(this.ticket.id)
+				//this.changeStateTicket(this.ticket.id)
 				this.createMatch("false", "false", this.ticket.id, null)
 
 				this.setWinnerState(false)
 				this.theme.getThemeGame(this.winner)
 			}
 		} else {
-			this.changeStateTicket(this.ticket.id)
+			//this.changeStateTicket(this.ticket.id)
 			this.createMatch("false", "false", this.ticket.id, null)
 			this.setWinnerState(false)
 			this.theme.getThemeGame(this.winner)
@@ -316,4 +318,23 @@ export class GameLogicService {
 		this.attempts = probabilitiesData.attempts_limit
 		this.winnersLimit = probabilitiesData.winners_limit
 	}
+
+	async getIDTicket(qrCodeDigits: string): Promise<number | null> {
+        try {
+            // Llamada al servicio para obtener el ticket disponible
+			const promise = await lastValueFrom(this.ticketService.getFilter("?&state=Disponible&qr_code_digits=" + qrCodeDigits))
+            if (promise.length > 0) {
+                this.ticket = promise[0];
+                return this.ticket.id; // Retorna el ID del ticket encontrado
+            } else {
+				
+                return null; // No se encontró un ticket disponible
+            }
+        } catch (error) {
+            console.error("Error al obtener el ID del ticket:", error);
+            return null;
+        }
+    }
+
+
 }
