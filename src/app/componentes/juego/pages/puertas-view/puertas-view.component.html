@@ -1,14 +1,22 @@
-<div class="container" 
-contenteditable="true"
-	(window:beforeunload)="doSomething()">
-    <h1>Juego de Puertas</h1>
-    <p>{{ informationText }}</p>
-    <div class="doors">
-      <div *ngFor="let door of doors; let i = index" class="door" (click)="openDoor(i)">
-        <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
-        <p *ngIf="door.isOpen">{{ door.prize }}</p>
-      </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Puertas</title>
+    <link rel="stylesheet" href="puertas-view.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Juego de Puertas</h1>
+        <p>{{ informationText }}</p>
+        <div class="doors">
+            <div *ngFor="let door of doors; let i = index" class="door" (click)="openDoor(i)" [ngStyle]="{'background-image': 'url(' + door.image + ')'}">
+                <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
+                <p *ngIf="door.isOpen">{{ door.prize }}</p>
+            </div>
+        </div>
+        <p id="result">{{ resultMessage }}</p>
     </div>
-    <p id="result">{{ resultMessage }}</p>
-  </div>
-  
+</body>
+</html>

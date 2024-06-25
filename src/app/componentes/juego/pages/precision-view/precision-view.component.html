@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="precision-view.component.css">
 </head>
 <body>
-    <div class="container" 
-    contenteditable="true"
-	(window:beforeunload)="doSomething()">
+    <div class="container">
         <h1>Juego de Precisión</h1>
         <p id="target-time">Hora objetivo: {{ targetTime }}</p>
         <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
