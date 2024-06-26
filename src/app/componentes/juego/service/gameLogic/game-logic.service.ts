@@ -12,12 +12,15 @@ import { ProbabilityService } from "src/app/servicios/probability/probability/pr
 import { ThemeService } from "../theme/theme.service"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 import { AnimationGameService } from "../animationGame/animation-game.service"
+import { GameCurrentSessionService } from "src/app/servicios/gameCurrentSession/game-current-session.service"
+import { GameCurrentSession_Data } from "src/app/interfaces/gameCurrentSession/gamecurrentsession_data"
 
 @Injectable({
 	providedIn: "root",
 })
 export class GameLogicService {
 	ticket: any
+	gamecurrentsession:any
 	match: any = {}
 	attempts: number = 0
 	winnersLimit: number = 0
@@ -34,6 +37,7 @@ export class GameLogicService {
 		private awardSrv: AwardsService,
 		private game: GameService,
 		private theme: ThemeService,
+		private gameCurrentSessionService: GameCurrentSessionService,
 
 		// Added for getPrize()
 		private probabilityService: ProbabilityService
@@ -69,6 +73,14 @@ export class GameLogicService {
 		}
 	}
 
+	public async verifyGameCurrent(game_id: string) {
+		const promise = await lastValueFrom(this.gameCurrentSessionService.getFilter("?&kiosko_numero=1&game_id=" + game_id))
+		if (promise.length > 0) {
+			return promise[0]
+		} else {
+			return false
+		}
+	}
 	/**
 	 * template method with all the logic to follow step by step and return true if the client win the game
 	 * @public
@@ -90,11 +102,10 @@ export class GameLogicService {
 				(data:any)=>{
 					this.winCase(awardConditioned.award_id, awardConditioned.id, true)
 					this.winAwardImage = data.imagen
-					
 				}
 			)
 			// let award: any = this.winnedAward(awardConditioned)
-			
+			this.createGameSession(this.ticket.id,awardConditioned.award_id,true)
 			return
 		}
 
@@ -109,18 +120,22 @@ export class GameLogicService {
 
 				this.winCase(award.id, null, false)
 				this.winAwardImage = award.imagen
+				this.createGameSession(this.ticket.id,award.id,true)
+
 			} else {
 				//this.changeStateTicket(this.ticket.id)
 				this.createMatch("false", "false", this.ticket.id, null)
 
 				this.setWinnerState(false)
 				this.theme.getThemeGame(this.winner)
+				this.createGameSession(this.ticket.id,null,false)
 			}
 		} else {
 			//this.changeStateTicket(this.ticket.id)
 			this.createMatch("false", "false", this.ticket.id, null)
 			this.setWinnerState(false)
 			this.theme.getThemeGame(this.winner)
+			this.createGameSession(this.ticket.id,null,false)
 		}
 	}
 	/**
@@ -299,6 +314,25 @@ export class GameLogicService {
 		this.match = body
 		this.matchService.postMatch(body)
 	}
+
+	private createGameSession(idTicket: string, awardId: any, win: boolean) {
+		
+		let body2 = {
+			kiosko_numero: '1',
+			ticket_id: idTicket, // Ajusta el tipo según el tipo real en tu backend
+			game_id: '1', // Ajusta el tipo según el tipo real en tu backend
+			gano: win,
+			award_id: awardId, // Ajusta el tipo según el tipo real en tu backend
+			fecha_hora_startgame: new Date().toISOString(), // Ajusta el tipo según el tipo real en tu backend (string o Date)
+			fecha_hora_finalgame: new Date().toISOString(), // Ajusta el tipo según el tipo real en tu backend (string o Date)
+		}
+		
+		this.match = body2
+		this.gameCurrentSessionService.postGameCurrentSession(body2)
+
+	  }
+
+
 	/**
 	 * void function who set the state of winner of the client
 	 * @private
@@ -335,6 +369,6 @@ export class GameLogicService {
             return null;
         }
     }
-
+	  
 
 }

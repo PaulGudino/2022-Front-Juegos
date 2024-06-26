@@ -7,7 +7,15 @@ import { PublicityGameService } from 'src/app/servicios/publicityGame/publicity-
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { ProbabilityService } from 'src/app/servicios/probability/probability/probability.service';
 import { Router } from '@angular/router';
+import { GameCurrentSessionService } from "src/app/servicios/gameCurrentSession/game-current-session.service"
+import { GameCurrentSession_Data } from 'src/app/interfaces/gameCurrentSession/gamecurrentsession_data';
 import { ActivatedRoute } from "@angular/router"; // Importar ActivatedRoute
+import { PublicityGame } from "src/app/interfaces/publicityGame/PublicityGame"
+import { Audio } from "src/app/interfaces/audio/Audio"
+import { AudioService } from "src/app/servicios/audio/audio.service"
+import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
+
+
 
 @Component({
 	selector: 'app-rolldice-view',
@@ -15,11 +23,13 @@ import { ActivatedRoute } from "@angular/router"; // Importar ActivatedRoute
 	styleUrls: ['./rolldice-view.component.css']
 })
 export class RolldiceViewComponent implements OnInit {
+	gamecurrentsession: GameCurrentSession_Data | undefined; //juegoSeleccionado
+	gameId: number | undefined; // Variable para almacenar game.id
+
 
 	informationText: string = "A JUGAR!"
 	slot_music = false
 	attemps = 0
-	gameId: number | undefined;
 	isRolling = false;
 	images: string[] = [
 		'./assets/dice/cara1.jpg', 
@@ -44,6 +54,8 @@ export class RolldiceViewComponent implements OnInit {
 		// game_id: 1
 	}
 
+
+
 	constructor(
 		private router: Router,
 		public publicity: DashboardPublicityService,
@@ -53,7 +65,8 @@ export class RolldiceViewComponent implements OnInit {
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
 		private probalilitySrv: ProbabilityService,
-		private route: ActivatedRoute // Inyectar ActivatedRoute
+		private route: ActivatedRoute,
+		private gameCurrentSessionService: GameCurrentSessionService
 
 	) { }
 
@@ -67,18 +80,15 @@ export class RolldiceViewComponent implements OnInit {
 			this.gameId = +params['gameId']; // Convertir el parámetro a número
 			if (!this.gameId) {
 				console.error('No gameId found in query params.');
-				this.loadGameData();
 			} else {
 				// Llama a cualquier función que necesite usar gameId aquí, si es necesario
 				this.loadGameData();
+				this.updateGameIdForSession(this.gameId.toString());
+				this.loadCurrentJuego(this.gameId.toString());//el 1 representa la MAQUINA 1
 			}
 		});
 	}
 
-	loadGameData(): void {
-		// Aquí puedes cargar datos relacionados con gameId si es necesario
-		console.log(`Game ID: ${this.gameId}`);
-	}
 
 	doSomething() {
 		sessionStorage.removeItem("juego_rolldice")
@@ -134,5 +144,39 @@ export class RolldiceViewComponent implements OnInit {
 		  reader.readAsDataURL(file);
 		}
 	  }
+
+
+	  //Funciones usadas en el transcurso del Juego
+	loadGameData(): void {
+		// Aquí puedes cargar datos relacionados con gameId si es necesario
+		console.log(`Game ID: ${this.gameId}`);
+	}
+
+	updateGameIdForSession(gameId: string): void {
+		const kiosko_numero = '1';
+		this.gameCurrentSessionService.updateGameId(kiosko_numero, gameId).subscribe(
+			(response) => {
+				console.log('Game ID updated successfully:', response);
+			},
+			(error) => {
+				console.error('Error updating Game ID:', error);
+			}
+		);
+	}
+
+	async loadCurrentJuego(gameId: string) {
+		try {
+		  const juegoSeleccionado = await this.gameLogicService.verifyGameCurrent(gameId);
+		  if (juegoSeleccionado) {
+			this.gamecurrentsession = juegoSeleccionado;
+			console.log('Detalle de Juego Actual:', this.gamecurrentsession);
+		  } else {
+			console.error('No se encontró juego .');
+		  }
+		} catch (error) {
+		  console.error('Error al cargar el juego :', error);
+		}
+	}
+
 
 }

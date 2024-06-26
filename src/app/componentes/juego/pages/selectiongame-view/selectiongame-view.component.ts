@@ -23,7 +23,6 @@ export class SelectiongameViewComponent implements OnInit {
     "Tragamonedas": "play",
     "Precision": "precision",
     "Puertas": "puertas"
-    // Añade más juegos según sea necesario
   };
 
   constructor(
@@ -40,15 +39,17 @@ export class SelectiongameViewComponent implements OnInit {
     });
   }
 
-
+  
 
   navigateTo(gameName: string, gameId: number) {
     const route = this.gameRoutes[gameName];
     if (route) {
-      this.router.navigate([`/${route}`], { queryParams: { gameId: gameId } });
+      this.router.navigate([`/${route}`], { queryParams: { gameId: gameId,reload: true } });
     } else {
       console.error(`No se encontró una ruta para el juego ${gameName}`);
     }
   }
+
+  
 
 }

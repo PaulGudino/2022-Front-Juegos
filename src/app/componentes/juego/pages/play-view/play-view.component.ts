@@ -14,6 +14,8 @@ import { Audio } from "src/app/interfaces/audio/Audio"
 import { AudioService } from "src/app/servicios/audio/audio.service"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 import { ActivatedRoute } from "@angular/router"; // Importar ActivatedRoute
+import { GameCurrentSessionService } from "src/app/servicios/gameCurrentSession/game-current-session.service"
+import { GameCurrentSession_Data } from 'src/app/interfaces/gameCurrentSession/gamecurrentsession_data';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class PlayViewComponent {
 	slot_music = false
 	attemps = 0
 	gameId: number | undefined; // Variable para almacenar game.id
+	gamecurrentsession: GameCurrentSession_Data | undefined;
 
 	// audio = new Audio()
 	// audioArray: Audio[] = []
@@ -49,7 +52,8 @@ export class PlayViewComponent {
 		public publicityGame: PublicityGameService,
 		public gameLogicService: GameLogicService,
 		private probalilitySrv: ProbabilityService,
-		private route: ActivatedRoute // Inyectar ActivatedRoute
+		private route: ActivatedRoute, // Inyectar ActivatedRoute
+		private gameCurrentSessionService: GameCurrentSessionService
 
 	) { }
 
@@ -66,14 +70,43 @@ export class PlayViewComponent {
 			} else {
 				// Llama a cualquier función que necesite usar gameId aquí, si es necesario
 				this.loadGameData();
+				this.updateGameIdForSession(this.gameId.toString());
+				this.loadCurrentJuego(this.gameId.toString());//el 1 representa la MAQUINA 1
 			}
 		});
 	}
 
+	//Funciones usadas en el transcurso del Juego
 	loadGameData(): void {
 		// Aquí puedes cargar datos relacionados con gameId si es necesario
 		console.log(`Game ID: ${this.gameId}`);
 	}
+
+	updateGameIdForSession(gameId: string): void {
+		const kiosko_numero = '1';
+		this.gameCurrentSessionService.updateGameId(kiosko_numero, gameId).subscribe(
+			(response) => {
+				console.log('Game ID updated successfully:', response);
+			},
+			(error) => {
+				console.error('Error updating Game ID:', error);
+			}
+		);
+	}
+
+	async loadCurrentJuego(gameId: string) {
+		try {
+		  const juegoSeleccionado = await this.gameLogicService.verifyGameCurrent(gameId);
+		  if (juegoSeleccionado) {
+			this.gamecurrentsession = juegoSeleccionado;
+			console.log('Detalle de Juego Actual:', this.gamecurrentsession);
+		  } else {
+			console.error('No se encontró juego .');
+		  }
+		} catch (error) {
+		  console.error('Error al cargar el juego :', error);
+		}
+	  }
 
 
 	doSomething() {
