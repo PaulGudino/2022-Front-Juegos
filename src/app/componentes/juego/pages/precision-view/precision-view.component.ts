@@ -54,6 +54,7 @@ export class PrecisionViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.targetTime = this.generateRandomTime();
     this.route.queryParams.subscribe(params => {
 			this.gameId = +params['gameId']; // Convertir el parámetro a número
 			if (!this.gameId) {
@@ -69,7 +70,7 @@ export class PrecisionViewComponent implements OnInit {
    /*  this.probalilitySrv.getProbabilites().subscribe(
       (data: any) => {
         this.attemps = data.attempts_limit;
-        this.targetTime = this.generateRandomTime();
+        
       }
     ); */   
 

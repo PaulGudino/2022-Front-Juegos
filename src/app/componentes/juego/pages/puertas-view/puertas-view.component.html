@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="puertas-view.component.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" contenteditable="true"
+	(window:beforeunload)="doSomething()">
         <h1>Juego de Puertas</h1>
         <p>{{ informationText }}</p>
         <div class="doors">
@@ -18,5 +19,12 @@
         </div>
         <p id="result">{{ resultMessage }}</p>
     </div>
+    <audio
+		autoplay
+		[volume]="0.05"
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
 </body>
 </html>

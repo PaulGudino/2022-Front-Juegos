@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="precision-view.component.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container" contenteditable="true"
+	(window:beforeunload)="doSomething()">
         <h1>Juego de Precisión</h1>
         <p id="target-time">Hora objetivo: {{ targetTime }}</p>
         <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
@@ -15,5 +16,12 @@
         <div class="clock" id="clock">{{ currentTime }}</div>
         <p id="result">{{ resultMessage }}</p>
     </div>
+    <audio
+		autoplay
+		[volume]="0.05"
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
 </body>
 </html>

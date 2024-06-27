@@ -16,3 +16,10 @@
     <input type="file" (change)="onFileSelected($event, i)" *ngFor="let image of images; index as i">
 </div>
 </div>
+<audio
+		autoplay
+		[volume]="0.05"
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
