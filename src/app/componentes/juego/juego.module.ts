@@ -18,6 +18,7 @@ import { RolldiceViewComponent } from './pages/rolldice-view/rolldice-view.compo
 import { SelectiongameViewComponent } from './pages/selectiongame-view/selectiongame-view.component';
 import { PrecisionViewComponent } from './pages/precision-view/precision-view.component';
 import { PuertasViewComponent } from './pages/puertas-view/puertas-view.component';
+import { BackArrowComponent } from './back-arrow/back-arrow.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PuertasViewComponent } from './pages/puertas-view/puertas-view.componen
     SelectiongameViewComponent,
     PrecisionViewComponent,
     PuertasViewComponent,
+    BackArrowComponent,
   ],
   imports: [
     CommonModule,

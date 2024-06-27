@@ -14,13 +14,14 @@ import { PublicityGame } from "src/app/interfaces/publicityGame/PublicityGame"
 import { Audio } from "src/app/interfaces/audio/Audio"
 import { AudioService } from "src/app/servicios/audio/audio.service"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
-
+import { BackArrowComponent } from '../../back-arrow/back-arrow.component';
 @Component({
     selector: 'app-rolldice-view',
     templateUrl: './rolldice-view.component.html',
     styleUrls: ['./rolldice-view.component.css']
 })
 export class RolldiceViewComponent implements OnInit {
+    backArrowEnabled: boolean = true; //variable de flecha de retorno
     gamecurrentsession: GameCurrentSession_Data | undefined; //juegoSeleccionado
     gameId: number | undefined; // Variable para almacenar game.id
     informationText: string = "A JUGAR!"
@@ -85,9 +86,13 @@ export class RolldiceViewComponent implements OnInit {
     }
 
     rollDice() {
+        
         this.isRolling = true;
         const randomFace = Math.floor(Math.random() * 6) + 1;
         this.currentFace = randomFace;
+
+        //deshabilitar flecha de retorno
+        this.backArrowEnabled = false;
 
         // Tiempo aleatorio entre 1 y 2 segundos
         this.rollTime = Math.random() * 1 + 1;
@@ -107,10 +112,10 @@ export class RolldiceViewComponent implements OnInit {
         switch (this.currentFace) {
             case 1: return 'rotateX(0deg) rotateY(0deg)';
             case 2: return 'rotateX(0deg) rotateY(180deg)';
-            case 3: return 'rotateX(-90deg) rotateY(0deg)';
-            case 4: return 'rotateX(90deg) rotateY(0deg)';
-            case 5: return 'rotateX(0deg) rotateY(90deg)';
-            case 6: return 'rotateX(0deg) rotateY(-90deg)';
+            case 3: return 'rotateX(90deg) rotateY(0deg)';
+            case 4: return 'rotateX(-90deg) rotateY(0deg)';
+            case 5: return 'rotateX(0deg) rotateY(-90deg)';
+            case 6: return 'rotateX(0deg) rotateY(90deg)';
             default: return 'rotateX(0deg) rotateY(0deg)';
         }
     }
@@ -165,4 +170,5 @@ export class RolldiceViewComponent implements OnInit {
             console.error('Error al cargar el juego:', error);
         }
     }
+
 }

@@ -1,0 +1,14 @@
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.back-arrow-icon {
+  width: 24px; /* Ajusta el tamaño según tus necesidades */
+  height: 24px;
+}
+
+button:hover .back-arrow-icon {
+  filter: brightness(1.2); /* Agrega un efecto al pasar el mouse */
+}
