@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-result-message',
@@ -9,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ResultMessageComponent implements OnInit {
 
   constructor(
+    private router: Router,
     public dialogRef: MatDialogRef<ResultMessageComponent>,
     @Inject(MAT_DIALOG_DATA) public data:{
       title : string;
@@ -22,5 +24,11 @@ export class ResultMessageComponent implements OnInit {
   }
   cerrar(){
     this.dialogRef.close();
+    this.navigateTo("")
   }
+
+  navigateTo(gameName: string) {
+    this.router.navigate([`/${gameName}`]);
+  }
+
 }
