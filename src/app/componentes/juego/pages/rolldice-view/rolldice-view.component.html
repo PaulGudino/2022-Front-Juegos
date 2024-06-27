@@ -1,52 +1,48 @@
-<div class="container" contenteditable="true"
-(window:beforeunload)="doSomething()">
-    <h2 class="subtitle">Tira el dado</h2>
-    <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
-        <div class="dice" [ngClass]="{'roll': isRolling}" [ngStyle]="{'transform': !isRolling ? finalTransform : '', 'animation-duration': rollTime + 's'}">
-            <div class="face one"><img [src]="images[0]" alt="Face 1"></div>
-            <div class="face two"><img [src]="images[1]" alt="Face 2"></div>
-            <div class="face three"><img [src]="images[2]" alt="Face 3"></div>
-            <div class="face four"><img [src]="images[3]" alt="Face 4"></div>
-            <div class="face five"><img [src]="images[4]" alt="Face 5"></div>
-            <div class="face six"><img [src]="images[5]" alt="Face 6"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Dado</title>
+    <link rel="stylesheet" href="rolldice-view.component.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="subtitle">Tira el dado</h2>
+        <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
+        <div class="dice-container">
+            <div class="dice" [ngClass]="{'roll': isRolling}" [ngStyle]="{'transform': !isRolling ? finalTransform : '', 'animation-duration': rollTime + 's'}">
+                <div class="face one"><img [src]="images[0]" alt="Face 1"></div>
+                <div class="face two"><img [src]="images[1]" alt="Face 2"></div>
+                <div class="face three"><img [src]="images[2]" alt="Face 3"></div>
+                <div class="face four"><img [src]="images[3]" alt="Face 4"></div>
+                <div class="face five"><img [src]="images[4]" alt="Face 5"></div>
+                <div class="face six"><img [src]="images[5]" alt="Face 6"></div>
+            </div>
+            <input class="cuadrotxt" type="number" [(ngModel)]="userGuess" placeholder="Ingresa el número a adivinar" maxlength="1" oninput="validateInput(this)">
+            <button (click)="rollDice()">Girar</button>
         </div>
-        <input type="number" [(ngModel)]="userGuess" min="1" max="1" placeholder="Ingresa el número a adivinar">
-        
-    <div class="keypad">
-        <button (click)="addNumber(1)">1</button>
-        <button (click)="addNumber(2)">2</button>
-        <button (click)="addNumber(3)">3</button>
-        <button (click)="addNumber(4)">4</button>
-        <button (click)="addNumber(5)">5</button>
-        <button (click)="addNumber(6)">6</button>
-        <button (click)="addNumber(7)">7</button>
-        <button (click)="addNumber(8)">8</button>
-        <button (click)="addNumber(9)">9</button>
-        <button (click)="addNumber(0)">0</button>
-        <button (click)="clearNumber()">&#9003;</button>
+        <div class="keypad">
+            <button (click)="addNumber(1)">1</button>
+            <button (click)="addNumber(2)">2</button>
+            <button (click)="addNumber(3)">3</button>
+            <button (click)="addNumber(4)">4</button>
+            <button (click)="addNumber(5)">5</button>
+            <button (click)="addNumber(6)">6</button>
+            <!--<button (click)="addNumber(7)">7</button>
+            <button (click)="addNumber(8)">8</button>
+            <button (click)="addNumber(9)">9</button>
+            <button (click)="addNumber(0)">0</button> -->
+            <button (click)="clearNumber()">&#9003;</button>
+        </div>
+        <audio autoplay volume="0.05" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
     </div>
-
-    <app-generic-button
-				[disabled]="animation.disabledPlayButton"
-				title="Girar"
-				[fontSize]="'2.8rem'"
-				[styledPadding]="'2.4rem 6.6rem'"
-				class="mb-2 container_play-btn"
-				(click)="rollDice()">
-				<div *ngIf="slot_music">
-                    <!-- Cambiar el audio por uno del ruido de dados girando -->
-					<audio
-						controls="None"
-						hidden
-						autoplay>
-						<source
-							src="./assets/audio/tragaperras.mp3"  
-							type="audio/mp3" />
-					</audio>
-				</div>
-			</app-generic-button>
-
-
-    <audio autoplay volume="0.05" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
-</div>
-
+    <script>
+        function validateInput(input) {
+            if (input.value.length > 1) {
+                input.value = input.value.slice(0, 1);
+            }
+        }
+    </script>
+</body>
+</html>

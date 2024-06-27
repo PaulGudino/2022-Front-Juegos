@@ -1,5 +1,5 @@
 body {
-  background-color: #0a0a23;
+  background-color: #002130;
   color: white;
   font-family: Arial, sans-serif;
   display: flex;
@@ -11,12 +11,6 @@ body {
 
 .container {
   text-align: center;
-}
-
-.title {
-  font-size: 3rem;
-  color: #e60000;
-  margin-bottom: 0;
 }
 
 .subtitle {
@@ -34,7 +28,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
 .dice {
@@ -100,13 +93,6 @@ button:hover {
   background-color: #218838;
 }
 
-.upload-container {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .keypad {
   margin-top: 2rem;
   display: flex;
@@ -127,4 +113,8 @@ button:hover {
 
 .keypad button:hover {
   background-color: #555;
+}
+
+.cuadrotxt{
+  width: 100px;
 }
