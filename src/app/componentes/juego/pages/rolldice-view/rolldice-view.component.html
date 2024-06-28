@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="rolldice-view.component.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container"
+    contenteditable="true"
+	(window:beforeunload)="doSomething()">
+        <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
         <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
         <h2 class="subtitle">Tira el dado</h2>
         <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
@@ -41,8 +44,6 @@
 			</app-generic-button>
         </div>
             <input
-                
-				(click)="changeView()"
 				class="btn menu__input"
 				type="text"
 				#codeInput="ngModel"
@@ -52,7 +53,7 @@
                 placeholder="Ingresa el número a adivinar" 
                 maxlength="1"/>
 
-        <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', 'delete']"></app-keyboard>
+        <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6']"></app-keyboard>
         <audio
 		autoplay
 		[volume]="0.02"
@@ -60,6 +61,9 @@
 		controls="None"
 		hidden
 		src="./assets/audio/playing_music.mp3"></audio>
+        <app-publicity
+		[publicityList]="publicity.getBottomPublicityList()"
+		[isTop]="false"></app-publicity>
     </div>
 </body>
 </html>

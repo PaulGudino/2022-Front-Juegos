@@ -75,8 +75,9 @@ export class GameLogicService {
 
 	public async verifyGameCurrent(game_id: string) {
 		const promise = await lastValueFrom(this.gameCurrentSessionService.getFilter("?&kiosko_numero=1&game_id=" + game_id))
+		console.log("promesa: ", promise)
 		if (promise.length > 0) {
-			return promise[0]
+			return promise[promise.length - 1]
 		} else {
 			return false
 		}

@@ -8,6 +8,12 @@ export class KeyControllerService {
 
 	constructor() {}
 
+	
+
+	clearCode() {
+		this.code = ""
+	}
+
 	getCode() {
 		return this.code
 	}

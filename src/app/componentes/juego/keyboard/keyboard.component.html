@@ -5,13 +5,15 @@
 		  class="col btn"
 		  *ngFor="let key of row"
 		  [attr.value]="key"
-		  (click)="isDeleteKey(key) ? deleteValue() : getButtonValue($event)">
-		  <ng-container *ngIf="!isDeleteKey(key)">{{ key }}</ng-container>
-		  <ng-container *ngIf="isDeleteKey(key)">
-			<mat-icon [ngStyle]="{ 'font-size': '56px', height: '43px', width: '68px' }">keyboard_backspace</mat-icon>
-		  </ng-container>
+		  (click)="getButtonValue($event)">
+		  <ng-container>{{ key }}</ng-container>
 		</button>
 	  </div>
+	  <button 
+		class="col btn"
+		(click)="deleteValue()">
+		<mat-icon [ngStyle]="{ 'font-size': '56px', height: '43px', width: '68px' }">keyboard_backspace</mat-icon>
+	  </button>
 	</div>
   </div>
   

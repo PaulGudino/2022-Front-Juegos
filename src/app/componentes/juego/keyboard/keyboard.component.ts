@@ -11,14 +11,19 @@ export class KeyboardComponent implements OnInit {
 
   constructor(private KeyControllerService: KeyControllerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.keys); // Verifica que las teclas se están pasando correctamente
+
+  }
 
   getButtonValue(event: Event) {
-    let btn = event.target as HTMLElement;
-    if (btn.textContent) this.KeyControllerService.setCode(btn.textContent.trim());
+    console.log("click");
+    let btn = event.currentTarget as HTMLElement;
+    if (btn.textContent) this.KeyControllerService.setCode(btn.textContent);
   }
 
   deleteValue() {
+    console.log("delete");
     this.KeyControllerService.deleteLastValue();
   }
 
@@ -30,7 +35,4 @@ export class KeyboardComponent implements OnInit {
     return rows;
   }
 
-  isDeleteKey(key: string): boolean {
-    return key.toLowerCase() === 'delete';
-  }
 }

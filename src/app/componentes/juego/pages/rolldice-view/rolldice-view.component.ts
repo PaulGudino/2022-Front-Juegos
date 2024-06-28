@@ -54,7 +54,8 @@ export class RolldiceViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+    this.keyController.clearCode();
+    this.changeView()
     this.route.queryParams.subscribe(params => {
       this.gameId = +params['gameId'];
       if (!this.gameId) {
@@ -159,5 +160,8 @@ export class RolldiceViewComponent implements OnInit {
             this.slot_music = false;
         }, this.rollTime);
     //}
-}
+  }
+  doSomething() {
+    sessionStorage.removeItem("juego_rolldice");
+  }
 }

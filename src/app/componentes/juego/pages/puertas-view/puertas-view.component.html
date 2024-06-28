@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="puertas-view.component.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container"
+    contenteditable="true"
+	(window:beforeunload)="doSomething()">
+        <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
         <h1>Juego de Puertas</h1>
         <p>{{ informationText }}</p>
         <div class="doors">
@@ -31,5 +34,8 @@
 		controls="None"
 		hidden
 		src="./assets/audio/playing_music.mp3"></audio>
+        <app-publicity
+		[publicityList]="publicity.getBottomPublicityList()"
+		[isTop]="false"></app-publicity>
 </body>
 </html>
