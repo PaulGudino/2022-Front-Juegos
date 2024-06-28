@@ -120,7 +120,7 @@ export class GameLogicService {
 
 				this.winCase(award.id, null, false)
 				this.winAwardImage = award.imagen
-				this.createGameSession(this.ticket.id,award.id,true)
+				this.createGameSession(this.ticket.id,award.id,false)
 
 			} else {
 				//this.changeStateTicket(this.ticket.id)
