@@ -12,3 +12,10 @@ button {
 button:hover .back-arrow-icon {
   filter: brightness(1.2); /* Agrega un efecto al pasar el mouse */
 }
+
+.back-arrow-container {
+  position: fixed;
+  top: 20px; /* Ajusta según sea necesario */
+  left: 20px; /* Ajusta según sea necesario */
+  z-index: 1000; /* Ajusta según sea necesario */
+}
