@@ -24,6 +24,7 @@ import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-d
 export class PrecisionViewComponent implements OnInit {
   gamecurrentsession: GameCurrentSession_Data | undefined; //juegoSeleccionado
   gameId: number | undefined; // Variable para almacenar game.id
+  backArrowEnabled: boolean = true; //variable de flecha de retorno
 
   informationText: string = "A JUGAR!";
   slot_music = false;
@@ -121,6 +122,7 @@ export class PrecisionViewComponent implements OnInit {
   }
 
   startClock(): void {
+    this.backArrowEnabled = false;
     this.currentMinutes = 0;
     this.clockRunning = true;
     this.currentTime = this.formatTime(this.currentMinutes);

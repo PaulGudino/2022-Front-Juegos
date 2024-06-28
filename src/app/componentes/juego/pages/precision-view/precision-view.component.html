@@ -9,6 +9,8 @@
 <body>
     <div class="container" contenteditable="true"
 	(window:beforeunload)="doSomething()">
+    <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
+    <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
         <h1>Juego de Precisión</h1>
         <p id="target-time">Hora objetivo: {{ targetTime }}</p>
         <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>

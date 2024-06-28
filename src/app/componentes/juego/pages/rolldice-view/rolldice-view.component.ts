@@ -90,18 +90,19 @@ export class RolldiceViewComponent implements OnInit {
         this.isRolling = true;
         const randomFace = Math.floor(Math.random() * 6) + 1;
         this.currentFace = randomFace;
-
+        
         //deshabilitar flecha de retorno
         this.backArrowEnabled = false;
 
         // Tiempo aleatorio entre 1 y 2 segundos
         this.rollTime = Math.random() * 1 + 1;
-
+        
         setTimeout(() => {
-            this.isRolling = false;
             this.finalTransform = this.getTransform();
+            this.isRolling = false;
+            
             if (parseInt(this.userGuess) === this.currentFace) {
-                alert('¡Has ganado!');
+                console.log('¡Has ganado!');
             } else {
                 console.log(`El dado mostró: ${this.currentFace}. Intenta de nuevo.`);
             }

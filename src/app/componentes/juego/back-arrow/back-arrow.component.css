@@ -5,8 +5,8 @@ button {
 }
 
 .back-arrow-icon {
-  width: 24px; /* Ajusta el tamaño según tus necesidades */
-  height: 24px;
+  width: 50px; /* Ajusta el tamaño según tus necesidades */
+  height: 50px;
 }
 
 button:hover .back-arrow-icon {

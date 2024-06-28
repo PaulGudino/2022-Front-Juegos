@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <app-back-arrow [enabled]="backArrowEnabled"></app-back-arrow>
+        <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
         <h2 class="subtitle">Tira el dado</h2>
         <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
         <div class="dice-container">
@@ -36,7 +36,13 @@
             <button (click)="addNumber(0)">0</button> -->
             <button (click)="clearNumber()">&#9003;</button>
         </div>
-        <audio autoplay volume="0.05" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
+        <audio
+		autoplay
+		[volume]="0.05"
+		loop
+		controls="None"
+		hidden
+		src="./assets/audio/playing_music.mp3"></audio>
     </div>
     <script>
         function validateInput(input) {

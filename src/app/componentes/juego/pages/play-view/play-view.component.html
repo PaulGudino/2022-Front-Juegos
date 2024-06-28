@@ -16,6 +16,7 @@
 					height="22rem"
 					[isHome]="false"></app-logo>
 			</div>
+			<app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
 			<p
 				class="info-game__text-title"
 				[ngStyle]="{
@@ -105,7 +106,7 @@
 				[fontSize]="'2.8rem'"
 				[styledPadding]="'2.4rem 6.6rem'"
 				class="mb-2 container_play-btn"
-				(click)="animation.startGame(col1, col2, col3); music()">
+				(click)="animation.startGame(col1, col2, col3); music(); this.backArrowEnabled = false;">
 				<div *ngIf="slot_music">
 					<audio
 						controls="None"

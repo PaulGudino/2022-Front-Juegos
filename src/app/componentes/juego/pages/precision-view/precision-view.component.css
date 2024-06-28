@@ -59,3 +59,14 @@ button[disabled] {
     padding: 10px 20px;
     display: inline-block;
 }
+
+#back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+  }

@@ -17,10 +17,6 @@ import { Audio } from "src/app/interfaces/audio/Audio"
 import { AudioService } from "src/app/servicios/audio/audio.service"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 
-
-
-
-
 @Component({
   selector: 'app-puertas-view',
   templateUrl: './puertas-view.component.html',
@@ -32,9 +28,9 @@ export class PuertasViewComponent implements OnInit {
   attemps = 0;
   resultMessage = '';
   doors = [
-    { isOpen: false, prize: 'Premio 1' },
-    { isOpen: false, prize: 'Premio 2' },
-    { isOpen: false, prize: 'Premio 3' }
+    { isOpen: false, prize: 'Premio 1', image: './assets/img/diseno_puerta.png' },
+    { isOpen: false, prize: 'Premio 2', image: './assets/img/diseno_puerta.png'  },
+    { isOpen: false, prize: 'Premio 3', image: './assets/img/diseno_puerta.png'  }
   ];
 
   gameId: number | undefined; // Variable para almacenar game.id
@@ -128,7 +124,6 @@ export class PuertasViewComponent implements OnInit {
       this.resultMessage = "No tienes más intentos.";
     }
   }
-
 
     doSomething() {
       sessionStorage.removeItem("juego_puertas");

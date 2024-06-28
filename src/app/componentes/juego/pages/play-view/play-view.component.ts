@@ -24,6 +24,7 @@ import { GameCurrentSession_Data } from 'src/app/interfaces/gameCurrentSession/g
 	styleUrls: ["./play-view.component.css"],
 })
 export class PlayViewComponent {
+	backArrowEnabled: boolean = true; //variable de flecha de retorno
 	informationText: string = "A JUGAR!"
 	slot_music = false
 	attemps = 0
