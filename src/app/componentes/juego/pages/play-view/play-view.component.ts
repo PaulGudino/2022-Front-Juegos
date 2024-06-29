@@ -100,6 +100,7 @@ export class PlayViewComponent {
 		  const juegoSeleccionado = await this.gameLogicService.verifyGameCurrent(gameId);
 		  if (juegoSeleccionado) {
 			this.gamecurrentsession = juegoSeleccionado;
+			this.attemps = this.gameLogicService.attempts;
 			console.log('Detalle de Juego Actual:', this.gamecurrentsession);
 		  } else {
 			console.error('No se encontró juego .');

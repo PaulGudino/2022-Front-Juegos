@@ -28,7 +28,9 @@ export class ScanViewComponent implements OnInit {
 		private ticketService: TicketService
 	) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.keyController.clearCode()
+	}
 
 	changeView() {
 		this.scanState = false
