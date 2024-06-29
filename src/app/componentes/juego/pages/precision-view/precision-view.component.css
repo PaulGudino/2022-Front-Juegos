@@ -1,63 +1,51 @@
-body {
-    background-color: #0d1b2a;
-    color: #ffffff;
-    font-family: 'Arial', sans-serif;
-    text-align: center;
+/* Asegurarse de que el contenedor ocupe toda la pantalla */
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    background-color: #0d1b2a;
 }
 
-.container {
+/* Ajustes para que el contenedor principal ocupe toda la pantalla */
+.container-fullscreen {
+    background-color: #0d1b2a;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #ffffff;
+.container-menu {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: black;
 }
 
-p {
-    font-size: 1.2em;
-    margin: 10px 0;
+.scan-shadow {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #000000d4;
+    z-index: 2;
 }
 
-#target-time, #result {
-    font-size: 1.5em;
-}
-
-button {
-    background-color: #28a745;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2em;
-    margin: 10px 5px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-button[disabled] {
-    background-color: #6c757d;
-}
-
-.clock {
-    font-size: 3em;
-    margin: 20px 0;
-    background-color: #000000;
-    border-radius: 10px;
-    padding: 10px 20px;
-    display: inline-block;
+.scan_menu-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    box-sizing: border-box;
 }
 
 #back-arrow {
@@ -69,4 +57,58 @@ button[disabled] {
     color: white;
     font-size: 2rem;
     cursor: pointer;
-  }
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+p {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+#target-time, #result {
+    font-size: 2em;
+}
+
+button {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5em;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 200px; /* Ajustar el ancho para que todos los botones tengan el mismo tamaño */
+}
+
+button[disabled] {
+    background-color: #6c757d;
+}
+
+.clock {
+    font-size: 4em;
+    margin: 20px 0;
+    background-color: #000000;
+    color: #00ff00; /* Cambiar el color del texto para que sea verde como en la imagen */
+    border-radius: 10px;
+    padding: 20px 40px;
+    display: inline-block;
+    text-align: center; /* Asegurar que el texto esté centrado */
+}
+
+#result {
+    font-size: 2em;
+    color: #ffffff;
+    text-align: center;
+}

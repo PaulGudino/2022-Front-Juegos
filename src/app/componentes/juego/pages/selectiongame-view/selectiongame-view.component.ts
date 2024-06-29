@@ -5,6 +5,8 @@ import { Game } from 'src/app/interfaces/game/Game';
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';
 import { Ticket } from 'src/app/interfaces/ticket/Ticket'; // Asegúrate de importar la interfaz o clase Ticket
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
+import { DashboardPublicityService } from 'src/app/servicios/publicity/dashboardPublicity/dashboard-publicity.service';
+import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 
 @Component({
   selector: 'app-selectiongame-view',
@@ -30,7 +32,9 @@ export class SelectiongameViewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute, // Inyectar ActivatedRoute
     private ticketService: TicketService,
-    private gameLogicService: GameLogicService
+    private gameLogicService: GameLogicService,
+    public dashPublicity: DashboardPublicityService,
+    public styles: DashboardStyleService,
   ) {}
 
   ngOnInit(): void {

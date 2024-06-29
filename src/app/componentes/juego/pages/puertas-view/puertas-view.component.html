@@ -1,41 +1,29 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Puertas</title>
-    <link rel="stylesheet" href="puertas-view.component.css">
-</head>
-<body>
-    <div class="container"
-    contenteditable="true"
-	(window:beforeunload)="doSomething()">
+
+    <div class="container-fullscreen" contenteditable="true" (window:beforeunload)="doSomething()">
         <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
-        <h1>Juego de Puertas</h1>
-        <p>{{ informationText }}</p>
-        <div class="doors">
-            <div *ngFor="let door of doors; let i = index" class="door" [class.isOpen]="door.isOpen" (click)="openDoor(i)" [ngStyle]="{'background-image': 'url(' + door.image + ')'}">
-                <div class="door-inner">
-                    <div class="door-front">
-                        <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
-                    </div>
-                    <div class="door-back">
-                        <p *ngIf="door.isOpen">{{ door.prize }}</p>
+        <div class="container-menu">
+            <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
+            <div class="scan-shadow"></div>
+            <div class="scan_menu-container">
+                <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
+                <h1>Juego de Puertas</h1>
+                <p>{{ informationText }}</p>
+                <div class="doors">
+                    <div *ngFor="let door of doors; let i = index" class="door" [class.isOpen]="door.isOpen" (click)="openDoor(i)" [ngStyle]="{'background-image': 'url(' + door.image + ')'}">
+                        <div class="door-inner">
+                            <div class="door-front">
+                                <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
+                            </div>
+                            <div class="door-back">
+                                <p *ngIf="door.isOpen">{{ door.prize }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <p id="result">{{ resultMessage }}</p>
             </div>
         </div>
-        <p id="result">{{ resultMessage }}</p>
+        <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
     </div>
-    <audio
-		autoplay
-		[volume]="0.05"
-		loop
-		controls="None"
-		hidden
-		src="./assets/audio/playing_music.mp3"></audio>
-        <app-publicity
-		[publicityList]="publicity.getBottomPublicityList()"
-		[isTop]="false"></app-publicity>
-</body>
-</html>
+    <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
+

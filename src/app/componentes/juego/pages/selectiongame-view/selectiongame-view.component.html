@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juegos Disponibles</title>
-    <link rel="stylesheet" href="selectiongame-view.component.css">
-</head>
-<body>
-    <div class="container">
-        <h1>¡Juegos disponibles!</h1>
-        <div class="games">
-          <div *ngFor="let game of allGames" class="game">
-            <img [src]="'../../../../../assets/img/' + game.name + '.png'" [alt]="game.name">
-            <button (click)="navigateTo(game.name, game.id)">{{ game.name }}</button>
-          </div>
+
+    <div class="container-fullscreen">
+        <app-publicity [publicityList]="dashPublicity.getTopPublicityList()"></app-publicity>
+        <div class="container-menu">
+            <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
+            <div class="scan-shadow"></div>
+            <div class="scan_menu-container">
+                <h1>¡Juegos disponibles!</h1>
+                <div class="games">
+                    <div *ngFor="let game of allGames" class="game">
+                        <img [src]="'../../../../../assets/img/' + game.name + '.png'" [alt]="game.name">
+                        <button (click)="navigateTo(game.name, game.id)">{{ game.name }}</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>      
-</body>
-</html>
+        <app-publicity [publicityList]="dashPublicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
+    </div>

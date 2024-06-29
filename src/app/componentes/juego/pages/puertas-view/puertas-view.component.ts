@@ -23,6 +23,7 @@ import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-d
   styleUrls: ['./puertas-view.component.css']
 })
 export class PuertasViewComponent implements OnInit {
+  backArrowEnabled: boolean = true;
   informationText: string = "A JUGAR!";
   slot_music = false;
   attemps = 0;

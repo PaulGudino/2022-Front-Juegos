@@ -1,32 +1,27 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Precisión</title>
-    <link rel="stylesheet" href="precision-view.component.css">
-</head>
-<body>
-    <div class="container" contenteditable="true"
-	(window:beforeunload)="doSomething()">
+<div class="container-fullscreen" contenteditable="true" (window:beforeunload)="doSomething()">
     <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
-    <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-        <h1>Juego de Precisión</h1>
-        <p id="target-time">Hora objetivo: {{ targetTime }}</p>
-        <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
-        <button (click)="stopClock()" [disabled]="!clockRunning">Detener</button>
-        <div class="clock" id="clock">{{ currentTime }}</div>
-        <p id="result">{{ resultMessage }}</p>
+    <div class="container-menu">
+        <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
+        <div class="scan-shadow"></div>
+        <div class="scan_menu-container">
+            <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
+            <h1>Juego de Precisión</h1>
+            <p id="target-time" class="target-time">Hora objetivo:</p> 
+            <div class="clock">{{ targetTime }}</div>
+            <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
+            
+            <app-generic-button title="Detener" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="stopClock()" [disabled]="!clockRunning" this.backArrowEnabled = false;>
+                <!-- <div *ngIf="slot_music">
+                    <audio controls="None" hidden autoplay>
+                        <source src="./assets/audio/roll_dice.mp3" />
+                    </audio>
+                </div> -->
+            </app-generic-button>
+            
+            <div class="clock" id="clock">{{ currentTime }}</div>
+            <p id="result">{{ resultMessage }}</p>
+        </div>
     </div>
-    <audio
-		autoplay
-		[volume]="0.05"
-		loop
-		controls="None"
-		hidden
-		src="./assets/audio/playing_music.mp3"></audio>
-    <app-publicity
-		[publicityList]="publicity.getBottomPublicityList()"
-		[isTop]="false"></app-publicity>
-</body>
-</html>
+    <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
+</div>
+<audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>

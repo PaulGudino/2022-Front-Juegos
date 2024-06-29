@@ -14,7 +14,7 @@ button:hover .back-arrow-icon {
 }
 
 .back-arrow-container {
-  position: fixed;
+  position: relative;
   top: 20px; /* Ajusta según sea necesario */
   left: 20px; /* Ajusta según sea necesario */
   z-index: 1000; /* Ajusta según sea necesario */

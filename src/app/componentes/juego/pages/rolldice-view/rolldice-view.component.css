@@ -1,113 +1,142 @@
-  body {
-    background-color: #002130;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
+/* Ajustes para que el contenedor principal ocupe toda la pantalla */
+.container-fullscreen {
+  background-color: #0d1b2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .container {
-    text-align: center;
-    position: relative;
-  }
+.container-menu {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
 
-  #back-arrow {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-  }
+.scan-shadow {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: #000000d4;
+  z-index: 2;
+}
 
-  .subtitle {
-    font-size: 2rem;
-    margin-top: 0;
-  }
+.scan_menu-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-sizing: border-box;
+}
 
-  .instructions {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
+#back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
-  .dice-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.subtitle {
+  font-size: 2rem;
+  margin-top: 0;
+  color: white;
+}
 
-  .dice {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 2s;
-  }
+.instructions {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: white;
+}
+.dice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Añadir margen inferior para separar el botón del dado */
+}
 
-  .dice.roll {
-    animation: roll linear infinite;
-  }
+.generic-button-container {
+  margin-top: 20px; /* Añadir margen superior para separar el botón del dado */
+}
 
-  @keyframes roll {
-    0% { transform: rotateX(0deg) rotateY(0deg); }
-    100% { transform: rotateX(3600deg) rotateY(3600deg); }
-  }
+.dice {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 2s;
+}
 
-  .face {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-color: white;
-    border: 1px solid #ccc;
-  }
+.dice.roll {
+  animation: roll linear infinite;
+}
 
-  .face img {
-    width: 100%;
-    height: 100%;
-  }
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(3600deg) rotateY(3600deg); }
+}
 
-  .one { transform: rotateY(0deg) translateZ(100px); }
-  .two { transform: rotateX(180deg) translateZ(100px); }
-  .three { transform: rotateX(-90deg) translateZ(100px); }
-  .four { transform: rotateX(90deg) translateZ(100px); }
-  .five { transform: rotateY(90deg) translateZ(100px); }
-  .six { transform: rotateY(-90deg) translateZ(100px); }
+.face {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: 1px solid #ccc;
+}
 
-  input[type="text"] {
-    margin-top: 1rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-    text-align: center;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    align-self: center;
-  }
+.face img {
+  width: 100%;
+  height: 100%;
+}
 
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.one { transform: rotateY(0deg) translateZ(100px); }
+.two { transform: rotateX(180deg) translateZ(100px); }
+.three { transform: rotateX(-90deg) translateZ(100px); }
+.four { transform: rotateX(90deg) translateZ(100px); }
+.five { transform: rotateY(90deg) translateZ(100px); }
+.six { transform: rotateY(-90deg) translateZ(100px); }
 
-  button:hover {
-    background-color: #218838;
-  }
+input[type="text"] {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  align-self: center;
+}
 
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+button:hover {
+  background-color: #218838;
+}
 
-  .cuadrotxt{
-    width: 100px;
-  }
+.cuadrotxt {
+  width: 100px;
+}

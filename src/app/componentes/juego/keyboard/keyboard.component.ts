@@ -18,8 +18,8 @@ export class KeyboardComponent implements OnInit {
 
   getButtonValue(event: Event) {
     console.log("click");
-    let btn = event.currentTarget as HTMLElement;
-    if (btn.textContent) this.KeyControllerService.setCode(btn.textContent);
+    let btn = event.target as HTMLElement;
+    if (btn.textContent) this.KeyControllerService.setCode(btn.textContent.trim());
   }
 
   deleteValue() {
@@ -35,4 +35,7 @@ export class KeyboardComponent implements OnInit {
     return rows;
   }
 
+  isDeleteKey(key: string): boolean {
+    return key.toLowerCase() === 'delete';
+  }
 }
