@@ -53,7 +53,7 @@ export class EditAwardsConditionComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.getAwardConditionId(this.award_condition_id);
     this.form.get('award')?.disable()
-    this.staticData.setMenuTragamonedas();
+    this.staticData.setMenu('Tragamonedas');
     this.getAward();
 
     let currentYear = new Date().getFullYear();

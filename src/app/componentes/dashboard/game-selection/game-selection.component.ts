@@ -40,9 +40,20 @@ export class GameSelectionComponent implements OnInit {
       )
    }
 
-   tragamonedas_settings() {
-      this.router.navigate(['/dashboard/juego/resumen']);
+   juego_settings(name: string) {
+
+      
+      const rutas: { [key: string]: string } = {
+        'Tragamonedas': '/dashboard/juego/resumen',
+        'Dados': '/dashboard/juego/resumen/rolldice',
+        'Puertas': '/dashboard/juego/resumen/puertas',
+        'Precision': '/dashboard/juego/resumen/precision'
+      };
+    
+      const ruta = rutas[name];
+      this.router.navigate([ruta]);
    }
+
 
    toogleActiveGame(gameId: number) {
       let game: Game[] = this.allGames.filter(

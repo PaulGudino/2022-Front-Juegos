@@ -46,6 +46,12 @@ import { ScanCodeComponent } from './scan-code/scan-code.component';
 import { DesignComponent } from './design/design.component';
 import { TicketConfigurationComponent } from './ticket-configuration/ticket-configuration.component';
 import { GameSummaryComponent } from './game-summary/game-summary.component';
+import { GameSummaryRolldiceComponent } from './game-summary-rolldice/game-summary-rolldice.component';
+import { GameSummaryDoorsComponent } from './game-summary-doors/game-summary-doors.component';
+import { GameSummaryPrecisionComponent } from './game-summary-precision/game-summary-precision.component';
+import { DesignRolldiceComponent } from './design-rolldice/design-rolldice.component';
+import { DesignDoorsComponent } from './design-doors/design-doors.component';
+import { DesignPrecisionComponent } from './design-precision/design-precision.component';
 
 const routes: Routes = [
    {
@@ -215,6 +221,18 @@ const routes: Routes = [
             canActivate: [InicioGuard],
          },
          { 
+            path: 'juego/resumen/rolldice', component: GameSummaryRolldiceComponent,
+            canActivate: [InicioGuard],
+         },
+         { 
+            path: 'juego/resumen/puertas', component: GameSummaryDoorsComponent,
+            canActivate: [InicioGuard],
+         },
+         { 
+            path: 'juego/resumen/precision', component: GameSummaryPrecisionComponent,
+            canActivate: [InicioGuard],
+         },
+         { 
             path: 'juego/fecha', component: GameDateComponent,
             canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Fecha del Juego' }  
@@ -251,6 +269,21 @@ const routes: Routes = [
          },
          { 
             path: 'juego/diseno', component: DesignComponent,
+            canActivate: [InicioGuard, PermissionsGuard],
+            data: { Permiso_nombre: 'Modificar Diseño del Juego' } 
+         },
+         { 
+            path: 'juego/diseno/rolldice', component: DesignRolldiceComponent,
+            canActivate: [InicioGuard, PermissionsGuard],
+            data: { Permiso_nombre: 'Modificar Diseño del Juego' } 
+         },
+         { 
+            path: 'juego/diseno/puertas', component: DesignDoorsComponent,
+            canActivate: [InicioGuard, PermissionsGuard],
+            data: { Permiso_nombre: 'Modificar Diseño del Juego' } 
+         },
+         { 
+            path: 'juego/diseno/precision', component: DesignPrecisionComponent,
             canActivate: [InicioGuard, PermissionsGuard],
             data: { Permiso_nombre: 'Modificar Diseño del Juego' } 
          },

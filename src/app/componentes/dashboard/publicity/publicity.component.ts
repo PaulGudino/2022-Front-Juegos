@@ -23,7 +23,7 @@ export class PublicityComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.statickData.setMenuTragamonedas();
+      this.statickData.setMenu('Tragamonedas');
       this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
          if (dataTopPublicity.length > 0) {
             this.dashboardPublicityService.loadTopData(dataTopPublicity);

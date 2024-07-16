@@ -54,7 +54,7 @@ export class AwardsConditionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.staticData.setMenuTragamonedas();
+    this.staticData.setMenu('Tragamonedas');
     this.cargarPremios(this.filter_default);
   }
   

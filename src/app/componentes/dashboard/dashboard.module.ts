@@ -56,6 +56,12 @@ import { BoxPublicityComponent } from './publicity/box-publicity/box-publicity.c
 import { TicketConfigurationComponent } from './ticket-configuration/ticket-configuration.component';
 import { GameSummaryComponent } from './game-summary/game-summary.component';
 import { AwardHistoryComponent } from './award-history/award-history.component';
+import { GameSummaryRolldiceComponent } from './game-summary-rolldice/game-summary-rolldice.component';
+import { GameSummaryDoorsComponent } from './game-summary-doors/game-summary-doors.component';
+import { GameSummaryPrecisionComponent } from './game-summary-precision/game-summary-precision.component';
+import { DesignRolldiceComponent } from './design-rolldice/design-rolldice.component';
+import { DesignDoorsComponent } from './design-doors/design-doors.component';
+import { DesignPrecisionComponent } from './design-precision/design-precision.component';
 
 @NgModule({
    declarations: [
@@ -115,6 +121,12 @@ import { AwardHistoryComponent } from './award-history/award-history.component';
       TicketConfigurationComponent,
       GameSummaryComponent,
       AwardHistoryComponent,
+      GameSummaryRolldiceComponent,
+      GameSummaryDoorsComponent,
+      GameSummaryPrecisionComponent,
+      DesignRolldiceComponent,
+      DesignDoorsComponent,
+      DesignPrecisionComponent,
    ],
    imports: [
       SharedModule,

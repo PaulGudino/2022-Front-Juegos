@@ -1,14 +1,14 @@
+import { Component, OnInit } from '@angular/core';
 import { MatchService } from 'src/app/servicios/match/match.service';
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';
-import { Component, OnInit } from '@angular/core';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 
 @Component({
-  selector: 'app-game-summary',
-  templateUrl: './game-summary.component.html',
-  styleUrls: ['./game-summary.component.css']
+  selector: 'app-game-summary-rolldice',
+  templateUrl: './game-summary-rolldice.component.html',
+  styleUrls: ['./game-summary-rolldice.component.css']
 })
-export class GameSummaryComponent implements OnInit {
+export class GameSummaryRolldiceComponent implements OnInit {
 
   total_tickets : number = 0;
   total_winners : number = 0;
@@ -21,7 +21,7 @@ export class GameSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.staticData.setMenu('Tragamonedas');
+    this.staticData.setMenu('Dados');
     this.ticketSrv.getAll().subscribe(
       data =>{
         this.total_tickets = data.length

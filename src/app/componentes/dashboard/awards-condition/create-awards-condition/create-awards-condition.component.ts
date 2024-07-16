@@ -84,7 +84,7 @@ export class CreateAwardsConditionComponent implements OnInit {
     }
 
    async ngOnInit(): Promise<void> {
-      this.staticData.setMenuTragamonedas();
+      this.staticData.setMenu('Tragamonedas');
       this.getAward();
       let currentYear = new Date().getFullYear();
       let currentMonth = new Date().getMonth();

@@ -31,7 +31,7 @@ export class ViewAwardsConditionComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.staticData.setMenuTragamonedas();
+    this.staticData.setMenu('Tragamonedas');
     await this.getAwardConditionId(this.award_condition_id);
   }
   async getAwardConditionId(id:number){

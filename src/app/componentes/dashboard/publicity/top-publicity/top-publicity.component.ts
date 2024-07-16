@@ -35,7 +35,7 @@ export class TopPublicityComponent implements OnInit {
    }
 
    ngOnInit(): void {
-      this.staticData.setMenuTragamonedas();
+      this.staticData.setMenu('Tragamonedas');
       this.chargePublicity();
    }
 

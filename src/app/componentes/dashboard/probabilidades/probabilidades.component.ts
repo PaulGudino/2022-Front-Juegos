@@ -62,7 +62,7 @@ export class ProbabilidadesComponent implements OnInit {
    }
 
   ngOnInit(){
-    this.staticData.setMenuTragamonedas();
+    this.staticData.setMenu('Tragamonedas');
     this.awards.getAward()
       .subscribe(data => {
         this.probability.getAwardsListGame().subscribe(

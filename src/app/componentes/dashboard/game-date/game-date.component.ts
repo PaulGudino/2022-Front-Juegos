@@ -49,7 +49,7 @@ export class GameDateComponent implements OnInit {
    }
 
    async ngOnInit(): Promise<void>  {
-      this.staticData.setMenuTragamonedas();
+      this.staticData.setMenu('Tragamonedas');
       await this.getDate();
       this.awardsConditionService.getAwardConditionFilter('?is_approved=false').subscribe((data: any) => {
          this.awardConditionList = data;

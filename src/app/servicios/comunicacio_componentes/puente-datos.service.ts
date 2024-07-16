@@ -31,8 +31,15 @@ export class PuenteDatosService {
    getMenu():Observable<Menu[]>{
       return this.http.get<Menu[]>(this.menu);
    }
-   setMenuTragamonedas(){
-      this.menu = '/assets/data/tragamonedas.json';
+   setMenu(name: string) {
+      const menus: { [key: string]: string } = {
+        'Tragamonedas': '/assets/data/tragamonedas.json',
+        'Dados': '/assets/data/dados.json',
+        'Puertas': '/assets/data/puertas.json',
+        'Precision': '/assets/data/precision.json'
+      };
+    
+      this.menu = menus[name];
    }
    setMenuGeneral(){
       this.menu = '/assets/data/menu.json';

@@ -18,7 +18,7 @@ export class PublicityGameComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.staticData.setMenuTragamonedas();
+      this.staticData.setMenu('Tragamonedas');
    }
    addPublicity() {}
    deletePublicity() {}
