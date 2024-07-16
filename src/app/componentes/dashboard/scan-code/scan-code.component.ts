@@ -7,6 +7,7 @@ import { ImageService } from 'src/app/servicios/image/image.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
    selector: 'app-scan-code',
@@ -26,27 +27,30 @@ export class ScanCodeComponent implements OnInit {
       private theme: ThemeService,
       public dashStyle: DashboardStyleService,
       private imageSrv: ImageService,
-      private staticData: PuenteDatosService
+      private staticData: PuenteDatosService,
+      private gameSelectionService: GameSelectionService
    ) {}
 
    ngOnInit(): void {
-      this.staticData.setMenu('Tragamonedas');
-      this.publicity.getPublicityTopList().subscribe((data) => {
-         this.dashboardPublicityService.loadTopData(data);
-         this.publicity
-            .getPublicityBottomList()
-            .subscribe((bottomPublicityList) => {
-               this.dashboardPublicityService.loadBottomData(
-                  bottomPublicityList
-               );
-            });
-         this.theme.getDesignInformation().subscribe((designData) => {
-            this.dashStyle.loadData(designData[0]);
-            this.title = this.dashStyle.get_scan_code_title();
-            this.description = this.dashStyle.get_scan_code_description();
-         });
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+          this.staticData.setMenu(game);
+          this.loadInitialData();
       });
-   }
+    }
+  
+    private loadInitialData() {
+      this.publicity.getPublicityTopList().subscribe((data) => {
+        this.dashboardPublicityService.loadTopData(data);
+        this.publicity.getPublicityBottomList().subscribe((bottomPublicityList) => {
+          this.dashboardPublicityService.loadBottomData(bottomPublicityList);
+        });
+        this.theme.getDesignInformation().subscribe((designData) => {
+          this.dashStyle.loadData(designData[0]);
+          this.title = this.dashStyle.get_scan_code_title();
+          this.description = this.dashStyle.get_scan_code_description();
+        });
+      });
+    }
    updateScanScreen() {
       const options = {
          title: 'ACTUALIZAR SCANNER',

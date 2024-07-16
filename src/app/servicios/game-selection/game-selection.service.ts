@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class GameSelectionService {
-  private selectedGameSource = new BehaviorSubject<string>('Dados');
+  private selectedGameSource = new BehaviorSubject<string>('Tragamonedas');
   selectedGame$ = this.selectedGameSource.asObservable();
 
   setSelectedGame(game: string) {

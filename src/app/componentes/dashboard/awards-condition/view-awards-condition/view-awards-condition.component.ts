@@ -5,6 +5,7 @@ import { AwardsConditionService } from 'src/app/servicios/awards-condition/award
 import { AwardsService } from 'src/app/servicios/awards/awards.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 
 @Component({
@@ -27,13 +28,17 @@ export class ViewAwardsConditionComponent implements OnInit {
     private dialogService: ConfirmDialogService,
     private router: Router, 
     private activerouter: ActivatedRoute, 
-    private staticData: PuenteDatosService
+    private staticData: PuenteDatosService,
+    private gameSelectionService: GameSelectionService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.staticData.setMenu('Tragamonedas');
-    await this.getAwardConditionId(this.award_condition_id);
+    this.gameSelectionService.selectedGame$.subscribe(game => {
+        this.staticData.setMenu(game);
+        this.getAwardConditionId(this.award_condition_id);
+    });
   }
+  
   async getAwardConditionId(id:number){
     this.awardConditionSrv.getAwardConditionbyId(id).subscribe(
       (res:any) => {

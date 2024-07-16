@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Menu } from 'src/app/interfaces/menu';
+import { GameSelectionService } from '../game-selection/game-selection.service';
 
 export interface ID {
    user_id: number;
@@ -24,7 +25,11 @@ export class PuenteDatosService {
    //
    //url = 'https://sistemaskioskotouch.pythonanywhere.com/';
 
-   constructor(private http: HttpClient) {}
+   constructor(private http: HttpClient, private gameSelectionService: GameSelectionService) {
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+         this.setMenu(game);
+   });
+ }
    geturl(): string {
       return this.url;
    }

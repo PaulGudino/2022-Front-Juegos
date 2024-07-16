@@ -13,6 +13,7 @@ import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { lastValueFrom } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
   selector: 'app-awards-condition',
@@ -51,11 +52,14 @@ export class AwardsConditionComponent implements OnInit {
     private premiosCondicionSrv: AwardsConditionService,
     private staticData: PuenteDatosService,
     private gameDataSrv: GameDateService,
+    private gameSelectionService: GameSelectionService
   ) { }
 
   ngOnInit(): void {
-    this.staticData.setMenu('Tragamonedas');
-    this.cargarPremios(this.filter_default);
+    this.gameSelectionService.selectedGame$.subscribe(game => {
+      this.staticData.setMenu(game);
+      this.cargarPremios(this.filter_default);
+    });
   }
   
   cargarPremios(filter:string){

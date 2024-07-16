@@ -6,6 +6,7 @@ import { AwardsService } from 'src/app/servicios/awards/awards.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 
 @Component({
@@ -41,7 +42,8 @@ export class EditAwardsConditionComponent implements OnInit {
     private router: Router, 
     private activerouter: ActivatedRoute, 
     private staticData: PuenteDatosService,
-    private gameDataSrv: GameDateService
+    private gameDataSrv: GameDateService,
+    private gameSelectionService: GameSelectionService
   ) {
     this.form = this.fb.group({
       startTime:['', Validators.required],
@@ -50,11 +52,14 @@ export class EditAwardsConditionComponent implements OnInit {
     })
    }
 
-  async ngOnInit(): Promise<void> {
-    await this.getAwardConditionId(this.award_condition_id);
-    this.form.get('award')?.disable()
-    this.staticData.setMenu('Tragamonedas');
-    this.getAward();
+   async ngOnInit(): Promise<void> {
+    this.gameSelectionService.selectedGame$.subscribe(game => {
+        this.staticData.setMenu(game);
+        this.getAwardConditionId(this.award_condition_id);
+        this.getAward();
+    });
+
+    this.form.get('award')?.disable();
 
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth();
