@@ -1,29 +1,44 @@
-
-    <div class="container-fullscreen" contenteditable="true" (window:beforeunload)="doSomething()">
-        <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
-        <div class="container-menu">
-            <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
-            <div class="scan-shadow"></div>
-            <div class="scan_menu-container">
-                <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-                <h1>Juego de Puertas</h1>
-                <p>{{ informationText }}</p>
-                <div class="doors">
-                    <div *ngFor="let door of doors; let i = index" class="door" [class.isOpen]="door.isOpen" (click)="openDoor(i)" [ngStyle]="{'background-image': 'url(' + door.image + ')'}">
-                        <div class="door-inner">
-                            <div class="door-front">
-                                <p *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
-                            </div>
-                            <div class="door-back">
-                                <p *ngIf="door.isOpen">{{ door.prize }}</p>
-                            </div>
+<div class="container-fullscreen">
+    <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
+    <div class="container-menu">
+        <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
+        <div class="scan-shadow"></div>
+        <div class="scan_menu-container">
+            <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
+            <h2 class="subtitle">Juego de Puertas</h2>
+            <p class="instructions">{{ informationText }}</p>
+            <div class="doors">
+                <div *ngFor="let door of doors; let i = index" 
+                     class="door" 
+                     [class.isOpen]="door.isOpen" 
+                     [class.disabled]="!isGameStarted || isDoorSelected && !door.isOpen" 
+                     (click)="openDoor(i); music();">
+                    <div *ngIf="slot_music">
+                        <audio controls="None" hidden autoplay>
+                            <source src="./assets/audio/door_opened.mp3" />
+                        </audio>
+                    </div>
+                    <div class="door-inner">
+                        <div class="door-front">
+                            <img [src]="door.image" alt="Puerta {{ i + 1 }}">
+                        </div>
+                        <div class="door-back">
+                            <p *ngIf="door.isOpen">{{ door.prize }}</p>
                         </div>
                     </div>
+                    <p class="door-label" *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
                 </div>
-                <p id="result">{{ resultMessage }}</p>
             </div>
+            <p id="result">{{ resultMessage }}</p>
+            <app-generic-button *ngIf="!isGameStarted" title="Empezar" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="startGame(); this.backArrowEnabled = false">
+                <div *ngIf="slot_music">
+                    <audio controls="None" hidden autoplay>
+                        <source src="./assets/audio/roll_dice.mp3" />
+                    </audio>
+                </div>
+            </app-generic-button>
         </div>
-        <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
     </div>
-    <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
-
+    <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
+</div>
+<audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
