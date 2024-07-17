@@ -11,12 +11,12 @@
             <button (click)="startClock()" [disabled]="clockRunning">Iniciar</button>
             
             <app-generic-button title="Detener" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="stopClock()" [disabled]="!clockRunning" this.backArrowEnabled = false;>
-                <!-- <div *ngIf="slot_music">
-                    <audio controls="None" hidden autoplay>
-                        <source src="./assets/audio/roll_dice.mp3" />
-                    </audio>
-                </div> -->
             </app-generic-button>
+            <div *ngIf="slot_music">
+                <audio controls="None" hidden autoplay loop [volume]="1">
+                    <source src="./assets/audio/ticking_timer.mp3" />
+                </audio>
+            </div>
             
             <div class="clock" id="clock">{{ currentTime }}</div>
             <p id="result">{{ resultMessage }}</p>

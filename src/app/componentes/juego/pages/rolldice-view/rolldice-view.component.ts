@@ -158,7 +158,7 @@ export class RolldiceViewComponent implements OnInit {
         this.attemps -= 1;
         setTimeout(() => {
             this.slot_music = false;
-        }, this.rollTime);
+        }, this.rollTime * 1000);
     //}
   }
   doSomething() {

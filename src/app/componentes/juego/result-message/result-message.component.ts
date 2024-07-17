@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { GameLogicService } from '../service/gameLogic/game-logic.service';
 
 @Component({
   selector: 'app-result-message',
@@ -16,7 +17,8 @@ export class ResultMessageComponent implements OnInit {
       title : string;
       image : string;
       result_music : string;
-    }
+    },
+    private gameLogicService: GameLogicService
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +26,12 @@ export class ResultMessageComponent implements OnInit {
   }
   cerrar(){
     this.dialogRef.close();
-    this.navigateTo("")
+    if (this.gameLogicService.attempts === 0){
+      this.navigateTo("")
+    }
+    if(this.gameLogicService.winFirstTime){
+      this.navigateTo("")
+    }
   }
 
   navigateTo(gameName: string) {

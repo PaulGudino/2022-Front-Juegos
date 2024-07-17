@@ -125,6 +125,7 @@ export class PrecisionViewComponent implements OnInit {
     this.backArrowEnabled = false;
     this.currentMinutes = 0;
     this.clockRunning = true;
+    this.slot_music = true;
     this.currentTime = this.formatTime(this.currentMinutes);
     this.intervalId = setInterval(() => {
       this.currentMinutes = (this.currentMinutes + 1) % (24 * 60);
@@ -135,6 +136,7 @@ export class PrecisionViewComponent implements OnInit {
   stopClock(): void {
     clearInterval(this.intervalId);
     this.clockRunning = false;
+    this.slot_music = false;
     const currentTime = this.formatTime(this.currentMinutes);
     if (currentTime === this.targetTime) {
       const prize = this.prizes[Math.floor(Math.random() * this.prizes.length)];
@@ -149,14 +151,5 @@ export class PrecisionViewComponent implements OnInit {
     sessionStorage.removeItem("juego_precision");
   }
 
-  music() {
-    if (this.attemps > 0) {
-      this.slot_music = true;
-      this.attemps -= 1;
-      setTimeout(() => {
-        this.slot_music = false;
-      }, 7000);
-    }
-  }
 
 }

@@ -10,6 +10,7 @@
             <div class="doors">
                 <div *ngFor="let door of doors; let i = index" 
                      class="door" 
+                     [volume]="1"
                      [class.isOpen]="door.isOpen" 
                      [class.disabled]="!isGameStarted || isDoorSelected && !door.isOpen" 
                      (click)="openDoor(i); music();">
@@ -31,11 +32,6 @@
             </div>
             <p id="result">{{ resultMessage }}</p>
             <app-generic-button *ngIf="!isGameStarted" title="Empezar" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="startGame(); this.backArrowEnabled = false">
-                <div *ngIf="slot_music">
-                    <audio controls="None" hidden autoplay>
-                        <source src="./assets/audio/roll_dice.mp3" />
-                    </audio>
-                </div>
             </app-generic-button>
         </div>
     </div>
