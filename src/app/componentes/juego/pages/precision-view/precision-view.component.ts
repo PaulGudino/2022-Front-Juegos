@@ -55,7 +55,6 @@ export class PrecisionViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.targetTime = this.generateRandomTime();
     this.route.queryParams.subscribe(params => {
 			this.gameId = +params['gameId']; // Convertir el parámetro a número
 			if (!this.gameId) {
@@ -109,47 +108,12 @@ export class PrecisionViewComponent implements OnInit {
 		}
 	}
 
-  
-  formatTime(minutes: number): string {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-  }
-
-  generateRandomTime(): string {
-    const randomMinutes = Math.floor(Math.random() * (24 * 60));
-    return this.formatTime(randomMinutes);
-  }
-
-  startClock(): void {
-    this.backArrowEnabled = false;
-    this.currentMinutes = 0;
-    this.clockRunning = true;
-    this.slot_music = true;
-    this.currentTime = this.formatTime(this.currentMinutes);
-    this.intervalId = setInterval(() => {
-      this.currentMinutes = (this.currentMinutes + 1) % (24 * 60);
-      this.currentTime = this.formatTime(this.currentMinutes);
-    }, 1);
-  }
-
-  stopClock(): void {
-    clearInterval(this.intervalId);
-    this.clockRunning = false;
-    this.slot_music = false;
-    const currentTime = this.formatTime(this.currentMinutes);
-    if (currentTime === this.targetTime) {
-      const prize = this.prizes[Math.floor(Math.random() * this.prizes.length)];
-      this.resultMessage = `¡Felicidades! Ganaste ${prize}.`;
-    } else {
-      this.resultMessage = `Lo siento, no coincidieron. La hora objetivo era ${this.targetTime}. Intenta de nuevo.`;
-    }
-  }
-
-  
   doSomething() {
     sessionStorage.removeItem("juego_precision");
   }
 
+  public getTargetTime() {
+    return this.targetTime;
+  }
 
 }

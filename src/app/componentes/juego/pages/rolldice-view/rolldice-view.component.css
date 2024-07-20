@@ -39,6 +39,17 @@
   box-sizing: border-box;
 }
 
+.information-game-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 7rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: white;
+}
+
 #back-arrow {
   position: absolute;
   top: 20px;
@@ -57,10 +68,11 @@
 }
 
 .instructions {
-  font-size: 1.2rem;
+  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
   margin-bottom: 2rem;
   color: white;
 }
+
 .dice-container {
   display: flex;
   flex-direction: column;
@@ -113,13 +125,13 @@
 input[type="text"] {
   margin-top: 1rem;
   padding: 0.5rem;
-  font-size: 1rem;
+  font-size: 2rem; /* Aumentar el tamaño de la fuente para mayor visibilidad */
   text-align: center;
   background-color: #333;
   color: white;
   border: none;
   border-radius: 5px;
-  align-self: center;
+  width: 150px; /* Ajustar el ancho para que no ocupe demasiado espacio */
 }
 
 button {

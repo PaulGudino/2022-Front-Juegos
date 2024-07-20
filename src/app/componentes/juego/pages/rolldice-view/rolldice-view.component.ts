@@ -25,14 +25,7 @@ export class RolldiceViewComponent implements OnInit {
   slot_music = false;
   attemps = 0;
   isRolling = false;
-  images: string[] = [
-    './assets/img/dice/cara1.jpg', 
-    './assets/img/dice/cara2.jpg', 
-    './assets/img/dice/cara3.jpg', 
-    './assets/img/dice/cara4.jpg', 
-    './assets/img/dice/cara5.jpg', 
-    './assets/img/dice/cara6.jpg'
-  ];
+  
   scanState: boolean = true;
   probability: any = {};
   currentFace: number = 1;
@@ -81,47 +74,6 @@ export class RolldiceViewComponent implements OnInit {
     }
   }
 
-  rollDice() {
-    this.isRolling = true;
-    const randomFace = Math.floor(Math.random() * 6) + 1;
-    this.currentFace = randomFace;
-    this.backArrowEnabled = false;
-    this.rollTime = Math.random() * 1 + 1;
-    
-    setTimeout(() => {
-      this.finalTransform = this.getTransform();
-      this.isRolling = false;
-      
-      if (parseInt(this.keyController.getCode()) === this.currentFace) {
-        console.log('¡Has ganado!');
-      } else {
-        console.log(`El dado mostró: ${this.currentFace}. Intenta de nuevo.`);
-      }
-    }, this.rollTime * 1000);
-  }
-
-  getTransform() {
-    switch (this.currentFace) {
-      case 1: return 'rotateX(0deg) rotateY(0deg)';
-      case 2: return 'rotateX(0deg) rotateY(180deg)';
-      case 3: return 'rotateX(90deg) rotateY(0deg)';
-      case 4: return 'rotateX(-90deg) rotateY(0deg)';
-      case 5: return 'rotateX(0deg) rotateY(-90deg)';
-      case 6: return 'rotateX(0deg) rotateY(90deg)';
-      default: return 'rotateX(0deg) rotateY(0deg)';
-    }
-  }
-
-  onFileSelected(event: any, index: number) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.images[index] = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
 
   loadGameData(): void {
     console.log(`Game ID: ${this.gameId}`);
@@ -144,6 +96,7 @@ export class RolldiceViewComponent implements OnInit {
       const juegoSeleccionado = await this.gameLogicService.verifyGameCurrent(gameId);
       if (juegoSeleccionado) {
         this.gamecurrentsession = juegoSeleccionado;
+        this.attemps = this.gameLogicService.attempts;
         console.log('Detalle de Juego Actual:', this.gamecurrentsession);
       } else {
         console.error('No se encontró juego.');
@@ -153,13 +106,13 @@ export class RolldiceViewComponent implements OnInit {
     }
   }
   music() {
-    //if (this.attemps > 0) {
+    if (this.attemps > 0) {
         this.slot_music = true;
         this.attemps -= 1;
         setTimeout(() => {
             this.slot_music = false;
         }, this.rollTime * 1000);
-    //}
+    }
   }
   doSomething() {
     sessionStorage.removeItem("juego_rolldice");

@@ -5,6 +5,7 @@ html, body {
     padding: 0;
     overflow: hidden;
     background-color: #0d1b2a;
+    font-family: 'Arial', sans-serif;
 }
 
 /* Ajustes para que el contenedor principal ocupe toda la pantalla */
@@ -25,7 +26,7 @@ html, body {
     position: relative;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: #0d1b2a;
 }
 
 .scan-shadow {
@@ -75,6 +76,8 @@ p {
 
 #target-time, #result {
     font-size: 2em;
+    color: #ffffff;
+    text-align: center;
 }
 
 button {
@@ -97,12 +100,12 @@ button[disabled] {
 }
 
 .clock {
-    font-size: 4em;
+    font-size: 6em; /* Aumentar el tamaño de la fuente */
     margin: 20px 0;
     background-color: #000000;
     color: #00ff00; /* Cambiar el color del texto para que sea verde como en la imagen */
     border-radius: 10px;
-    padding: 20px 40px;
+    padding: 30px 60px; /* Aumentar el padding */
     display: inline-block;
     text-align: center; /* Asegurar que el texto esté centrado */
 }
@@ -111,4 +114,93 @@ button[disabled] {
     font-size: 2em;
     color: #ffffff;
     text-align: center;
+}
+
+/* Nuevos estilos para que se asemeje al segundo diseño */
+.container-fullscreen {
+    background-color: #0d1b2a;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0;
+    max-width: 90%; /* Asegurarse de que el texto no se salga del contenedor */
+    line-height: 1.4;
+}
+
+#target-time {
+    font-size: 6em; /* Aumentar el tamaño de la fuente */
+    color: #00ff00;
+    background-color: #000;
+    padding: 30px 60px; /* Aumentar el padding */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#result {
+    font-size: 6em; /* Aumentar el tamaño de la fuente */
+    color: #00ff00;
+    background-color: #000;
+    padding: 30px 60px; /* Aumentar el padding */
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button[disabled] {
+    background-color: #6c757d;
+}
+
+.clock {
+    font-size: 6em; /* Aumentar el tamaño de la fuente */
+    color: #00ff00;
+    background-color: #000;
+    padding: 30px 60px; /* Aumentar el padding */
+    border-radius: 10px;
+}
+
+.prizes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.prize {
+    margin: 0 10px;
+    text-align: center;
+    color: white;
+}
+
+.prize img {
+    max-width: 100px;
+    border-radius: 10px;
+}
+
+#nido {
+    background-color: #ffe600;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 5px;
 }
