@@ -7,7 +7,7 @@
    {
       "nombre": "Resumen",
       "icono": "radio_button_checked",
-      "ruta": "/dashboard/juego/resumen"
+      "ruta": "/dashboard/juego/resumen/precision"
    },
    {
       "nombre": "Probabilidades",

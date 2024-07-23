@@ -40,6 +40,7 @@ export class AnimationGameService {
 		
 	) {}
 	
+	// ----------------- Tragamonedas -----------------
 
 	startGameTragamonedas(refCol1: any, refCol2: any, refCol3: any) {
 		this.gameLogicService.winFirstTime = false
@@ -256,7 +257,7 @@ export class AnimationGameService {
 					result_music: "./assets/audio/win.mp3",
 				}
 				this.confirmDialog.result_game(options)
-	
+				//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
 			} else {
 				this.finalTransform = this.getTransform(this.currentFace);
 				while(parseInt(this.keyController.getCode()) === this.currentFace){

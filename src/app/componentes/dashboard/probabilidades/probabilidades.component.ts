@@ -75,7 +75,7 @@ export class ProbabilidadesComponent implements OnInit {
       this.probability.getAwardsListGame().subscribe(awardGameData => {
         this.getAwardsPerCategory(data, awardGameData);
       });
-      this.getTragamonedasProbability();
+      this.getProbability();
     });
   }
 
@@ -122,7 +122,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
           this.probability.putProbabilityConfig(formData)
           .subscribe(res =>{
             this.snackBar.mensaje('Configuracion Cambiada con exito');
-            this.getTragamonedasProbability()
+            this.getProbability()
           })
 
         }
@@ -176,7 +176,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
     return true;
 
   }
-  getTragamonedasProbability(){
+  getProbability(){
     this.probability.getProbabilites()
     .subscribe(data =>{
              this.probabilityData = data

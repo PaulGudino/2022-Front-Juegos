@@ -5,8 +5,11 @@
         <div class="scan-shadow"></div>
         <div class="scan_menu-container">
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-            <h1>Juego de precisión</h1>
-            <p>¡Selecciona el botón verde para detener el contador! Si aciertas, ¡ganas!</p>
+            <h1 class="subtitle">Juego de precisión</h1>
+            <p class="instructions">
+                ¡Selecciona el botón verde para detener el contador! Si aciertas, ¡ganas!
+            </p>
+            
             <div
 				class="information-game-container"
 				[ngPlural]="gameLogicService.attempts"

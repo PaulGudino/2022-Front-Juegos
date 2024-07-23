@@ -131,7 +131,7 @@ input[type="text"] {
   color: white;
   border: none;
   border-radius: 5px;
-  width: 150px; /* Ajustar el ancho para que no ocupe demasiado espacio */
+  width: 500px; /* Ajustar el ancho para que no ocupe demasiado espacio */
 }
 
 button {

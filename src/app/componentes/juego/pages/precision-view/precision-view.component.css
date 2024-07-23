@@ -204,3 +204,26 @@ button[disabled] {
     display: inline-block;
     margin-top: 5px;
 }
+
+.information-game-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 7rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: white;
+  }
+  
+  .subtitle {
+  font-size: 2rem;
+  margin-top: 0;
+  color: white;
+}
+
+.instructions {
+  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
+  margin-bottom: 2rem;
+  color: white;
+}
