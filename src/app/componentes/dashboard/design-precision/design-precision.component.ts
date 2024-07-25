@@ -18,7 +18,7 @@ import { PublicityGameService } from 'src/app/servicios/publicityGame/publicity-
 })
 
 export class DesignPrecisionComponent implements OnInit {
-   availableSpin: string = 'Disponible 1 Giro más!';
+   availableSpin: string = 'Disponible 1 Turno más!';
    fontFamily: string = '';
    colorText: string = '';
 
@@ -54,7 +54,7 @@ export class DesignPrecisionComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.staticData.setMenu('Tragamonedas');
+      this.staticData.setMenu('Precision');
       this.publicity.getPublicityTopList().subscribe((data) => {
          this.dashboardPublicityService.loadTopData(data);
          this.publicity

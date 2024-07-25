@@ -106,7 +106,7 @@ export class GameLogicService {
 				}
 			)
 			// let award: any = this.winnedAward(awardConditioned)
-			this.createGameSession(this.ticket.id,awardConditioned.award_id,true)
+			this.createGameSession(this.ticket.id,awardConditioned.award_id,this.winner)
 			return
 		}
 
@@ -121,7 +121,7 @@ export class GameLogicService {
 
 				this.winCase(award.id, null, false)
 				this.winAwardImage = award.imagen
-				this.createGameSession(this.ticket.id,award.id,false)
+				this.createGameSession(this.ticket.id,award.id,this.winner)
 
 			} else {
 				//this.changeStateTicket(this.ticket.id)
@@ -129,14 +129,14 @@ export class GameLogicService {
 
 				this.setWinnerState(false)
 				this.theme.getThemeGame(this.winner)
-				this.createGameSession(this.ticket.id,null,false)
+				this.createGameSession(this.ticket.id,null,this.winner)
 			}
 		} else {
 			//this.changeStateTicket(this.ticket.id)
 			this.createMatch("false", "false", this.ticket.id, null)
 			this.setWinnerState(false)
 			this.theme.getThemeGame(this.winner)
-			this.createGameSession(this.ticket.id,null,false)
+			this.createGameSession(this.ticket.id,null,this.winner)
 		}
 	}
 	/**
@@ -236,9 +236,11 @@ export class GameLogicService {
 		let rd_number = Math.floor(Math.random() * (max - min + 1)) + min
 		let category: string = ""
 
+		console.log("rd_number: ", rd_number)
 		if (rd_number <= this.winProb * 10) {
 			// Winner
 			rd_number = Math.floor(Math.random() * (max - min + 1)) + min
+			console.log("rd_number2: ", rd_number)
 
 			if (rd_number <= 800) {
 				category = "Común"
@@ -253,8 +255,11 @@ export class GameLogicService {
 			let validAward: any = await this.getAwardsCategory(category)
 
 			if (validAward.length > 0) {
+				console.log("Los premios existen")
+				this.createGameSession(this.ticket.id,validAward.award_id,this.winner)
 				return validAward
 			} else {
+				console.log("No hay premios de la categoria")
 				return null
 			}
 		} else {

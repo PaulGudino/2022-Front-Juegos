@@ -140,7 +140,7 @@ export class CreateAwardsConditionComponent implements OnInit {
                if (confirmed) {
                   let formData: FormData = new FormData();
    
-                  let game = 1;
+                  let game = 2;
                   let user_register = sessionStorage.getItem('user_id');
                   
 
