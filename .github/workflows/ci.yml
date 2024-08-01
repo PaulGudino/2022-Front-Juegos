@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - local_testing
-      - production
   pull_request:
     branches:
       - local_testing
-      - production
 
 jobs:
   build:
