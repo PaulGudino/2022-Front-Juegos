@@ -1,6 +1,5 @@
 <div
 	class="scan_container p-0 m-0"
-	contenteditable="true"
 	(window:beforeunload)="doSomething()">
 	<app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
 	<div class="container-menu">
@@ -38,14 +37,16 @@
 					src="../../../assets/img/codigoQR.png"
 					alt="scan-logo" />
 			</figure>
-			<app-keyboard *ngIf="!scanState"></app-keyboard>
+			<app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', '7', '8', '9','0', 'delete']"></app-keyboard>
 			<input
+				placeholder="Ingrese el código"
 				(click)="changeView()"
-				class="btn menu__input"
+				class="btn menu__input ng-pristine ng-valid ng-touched"
 				type="text"
 				#codeInput="ngModel"
 				[(ngModel)]="keyController.code"
-				onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+				onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
+				pattern = "[0-9]{6}" maxlength = "6" />
 			<app-generic-button
 				(click)="continueToGame()"
 				title="Continuar"

@@ -3,8 +3,9 @@ import { Router } from "@angular/router"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 import { DashboardPublicityService } from "../../../../servicios/publicity/dashboardPublicity/dashboard-publicity.service"
 import { DashboardStyleService } from "../../../../servicios/theme/dashboardStyle/dashboard-style.service"
-import { GameLogicService } from "../../service/gameLogic/game-logic.service"
+import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { KeyControllerService } from "../../service/keyController/key-controller.service"
+import { TicketService } from 'src/app/servicios/ticket/ticket.service';	
 
 @Component({
 	selector: "app-scan-view",
@@ -23,10 +24,13 @@ export class ScanViewComponent implements OnInit {
 		public styles: DashboardStyleService,
 		public keyController: KeyControllerService,
 		private gameLogic: GameLogicService,
-		private confirmDialog: ConfirmDialogService
+		private confirmDialog: ConfirmDialogService,
+		private ticketService: TicketService
 	) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.keyController.clearCode()
+	}
 
 	changeView() {
 		this.scanState = false
@@ -34,17 +38,15 @@ export class ScanViewComponent implements OnInit {
 	}
 
 	async continueToGame() {
-		// let validateTicket = this.gameLogic.verifyTicket("115727094")
-		// sessionStorage.setItem("juego_play", "juego_play")
-		// this.router.navigate(["/juego/play"])
-		// this.gameLogic.playGame()
-
+		const qrCodeDigits = this.keyController.getCode();
+    
+		// Obtener el ticketId desde GameLogicService		
 		if (this.keyController.getCode() != "") {
 			let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
 			if (await validateTicket) {
 				this.gameLogic.playGame()
-				sessionStorage.setItem("juego_play", "juego_play")
-				this.router.navigate(["/juego/play"])
+				sessionStorage.setItem("selection_game", "selection_game")
+				this.router.navigate(["/juego/selection"])
 			} else {
 				let game_message = [
 					"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
@@ -53,6 +55,13 @@ export class ScanViewComponent implements OnInit {
 				]
 				this.confirmDialog.error(game_message)
 			}
+		}else{
+			let game_message = [
+				"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
+				"Ó",
+				"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
+			]
+			this.confirmDialog.error(game_message)
 		}
 	}
 	doSomething() {

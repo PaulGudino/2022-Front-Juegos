@@ -5,6 +5,7 @@ import { GameService } from 'src/app/servicios/game/game.service';
 import { Game } from 'src/app/interfaces/game/Game';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
    selector: 'app-game-selection',
@@ -23,12 +24,18 @@ export class GameSelectionComponent implements OnInit {
       private staticData: PuenteDatosService,
       private router: Router,
       private snackbar: SnackbarService,
-      private matchSrv: MatchService
+      private matchSrv: MatchService,
+      private gameSelectionService: GameSelectionService
    ) {
       this.GameAPI.getAll().subscribe((data) => {
          this.allGames = data;
       });
    }
+
+   onSelectGame(gameName: string) {
+      this.gameSelectionService.setSelectedGame(gameName);
+      this.juego_settings(gameName);
+    }
 
    ngOnInit(): void {
       // this.loadGames();
@@ -40,9 +47,20 @@ export class GameSelectionComponent implements OnInit {
       )
    }
 
-   tragamonedas_settings() {
-      this.router.navigate(['/dashboard/juego/resumen']);
+   juego_settings(name: string) {
+
+      
+      const rutas: { [key: string]: string } = {
+        'Tragamonedas': '/dashboard/juego/resumen',
+        'Dados': '/dashboard/juego/resumen/rolldice',
+        'Puertas': '/dashboard/juego/resumen/puertas',
+        'Precision': '/dashboard/juego/resumen/precision'
+      };
+    
+      const ruta = rutas[name];
+      this.router.navigate([ruta]);
    }
+
 
    toogleActiveGame(gameId: number) {
       let game: Game[] = this.allGames.filter(

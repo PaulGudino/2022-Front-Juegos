@@ -1,0 +1,181 @@
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.time-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 24px;
+    border: 2px solid #fff;
+    position: relative;
+}
+
+.time-box input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.time-box img {
+    width: 100px;
+    height: auto;
+}
+
+.blue {
+    border-color: blue;
+}
+
+.green {
+    border-color: green;
+}
+
+.red {
+    border-color: red;
+}
+
+.plus-button {
+    background-color: gray;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.attempt-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#attempts {
+    margin: 10px 0;
+    padding: 5px;
+    width: 150px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    margin: 10px 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+.save-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-section img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.upload-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: center;
+}

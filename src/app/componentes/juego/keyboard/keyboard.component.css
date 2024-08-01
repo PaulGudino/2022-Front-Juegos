@@ -1,17 +1,35 @@
-.btn{
-   background-color: white;
-   border-radius: 45px;
-   padding: 1.3rem 0.2rem;
-   font-size: 2.8rem;
-}
-.keyboard-container{
+.keyboard-container {
   display: flex;
   flex-direction: column;
   gap:1.5rem;
   width:34rem;
   height: 32rem;
   font-size: 1.6rem;
+  justify-content: center;
 }
-.keyboard-row{
-  gap:1.6rem
+	
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.btn {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  background-color: rgb(49, 49, 49);
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 45px;
+  padding: 1.3rem 0.2rem;
+  font-size: 2.8rem;
+}
+
+.btn:hover {
+  background-color: #555;
 }

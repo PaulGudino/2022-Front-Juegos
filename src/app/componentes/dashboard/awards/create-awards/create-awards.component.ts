@@ -31,6 +31,9 @@ export class CreateAwardsComponent implements OnInit {
   ]
   Juegos = [
     {id:'1', name: 'Tragamonedas'},
+    {id:'2', name: 'Precision'},
+    {id:'3', name: 'Dados'},
+    {id:'4', name: 'Puertas'},
   ]
 
   constructor(

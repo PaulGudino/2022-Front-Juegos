@@ -1,21 +1,41 @@
-import { Component, OnInit } from "@angular/core"
-import { KeyControllerService } from "../service/keyController/key-controller.service"
+import { Component, OnInit, Input } from "@angular/core";
+import { KeyControllerService } from "../service/keyController/key-controller.service";
 
 @Component({
-	selector: "app-keyboard",
-	templateUrl: "./keyboard.component.html",
-	styleUrls: ["./keyboard.component.css"],
+  selector: "app-keyboard",
+  templateUrl: "./keyboard.component.html",
+  styleUrls: ["./keyboard.component.css"],
 })
 export class KeyboardComponent implements OnInit {
-	constructor(private KeyControllerService: KeyControllerService) {}
+  @Input() keys: string[] = [];
 
-	ngOnInit(): void {}
+  constructor(private KeyControllerService: KeyControllerService) {}
 
-	getButtonValue(event: Event) {
-		let btn = event.target as HTMLElement
-		if (btn.textContent) this.KeyControllerService.setCode(btn.textContent.trim())
-	}
-	deleteValue() {
-		this.KeyControllerService.deleteLastValue()
-	}
+  ngOnInit(): void {
+    console.log(this.keys); // Verifica que las teclas se están pasando correctamente
+
+  }
+
+  getButtonValue(event: Event) {
+    console.log("click");
+    let btn = event.target as HTMLElement;
+    if (btn.textContent) this.KeyControllerService.setCode(btn.textContent.trim());
+  }
+
+  deleteValue() {
+    console.log("delete");
+    this.KeyControllerService.deleteLastValue();
+  }
+
+  getRows(): string[][] {
+    const rows = [];
+    for (let i = 0; i < this.keys.length; i += 3) {
+      rows.push(this.keys.slice(i, i + 3));
+    }
+    return rows;
+  }
+
+  isDeleteKey(key: string): boolean {
+    return key.toLowerCase() === 'delete';
+  }
 }

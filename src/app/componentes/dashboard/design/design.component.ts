@@ -52,7 +52,7 @@ export class DesignComponent implements OnInit {
    ) {}
 
    ngOnInit(): void {
-      this.staticData.setMenuTragamonedas();
+      this.staticData.setMenu('Tragamonedas');
       this.publicity.getPublicityTopList().subscribe((data) => {
          this.dashboardPublicityService.loadTopData(data);
          this.publicity

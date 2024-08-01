@@ -6,6 +6,7 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ContentObserver } from '@angular/cdk/observers';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
    selector: 'app-publicity',
@@ -19,23 +20,26 @@ export class PublicityComponent implements OnInit {
       private router: Router,
       private snackbar: SnackbarService,
       private dialogService: ConfirmDialogService,
-      private statickData: PuenteDatosService
+      private staticData: PuenteDatosService,
+      private gameSelectionService: GameSelectionService
    ) {}
 
    ngOnInit(): void {
-      this.statickData.setMenuTragamonedas();
-      this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
-         if (dataTopPublicity.length > 0) {
-            this.dashboardPublicityService.loadTopData(dataTopPublicity);
-            this.publicity
-               .getPublicityBottomList()
-               .subscribe((dataBottomPublicity) => {
-                  this.dashboardPublicityService.loadBottomData(
-                     dataBottomPublicity
-                  );
-               });
-         }
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+          this.staticData.setMenu(game);
+          this.loadPublicityData();
       });
-   }
+    }
+  
+    private loadPublicityData() {
+      this.publicity.getPublicityTopList().subscribe((dataTopPublicity) => {
+        if (dataTopPublicity.length > 0) {
+          this.dashboardPublicityService.loadTopData(dataTopPublicity);
+          this.publicity.getPublicityBottomList().subscribe((dataBottomPublicity) => {
+            this.dashboardPublicityService.loadBottomData(dataBottomPublicity);
+          });
+        }
+      });
+    }
    
 }

@@ -14,6 +14,11 @@ import { PublicityComponent } from './publicity/publicity.component';
 import { PlayViewComponent } from './pages/play-view/play-view.component';
 import { LogoComponent } from './logo/logo.component';
 import { ResultMessageComponent } from './result-message/result-message.component';
+import { RolldiceViewComponent } from './pages/rolldice-view/rolldice-view.component';
+import { SelectiongameViewComponent } from './pages/selectiongame-view/selectiongame-view.component';
+import { PrecisionViewComponent } from './pages/precision-view/precision-view.component';
+import { PuertasViewComponent } from './pages/puertas-view/puertas-view.component';
+import { BackArrowComponent } from './back-arrow/back-arrow.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,11 @@ import { ResultMessageComponent } from './result-message/result-message.componen
     PlayViewComponent,
     LogoComponent,
     ResultMessageComponent,
+    RolldiceViewComponent,
+    SelectiongameViewComponent,
+    PrecisionViewComponent,
+    PuertasViewComponent,
+    BackArrowComponent,
   ],
   imports: [
     CommonModule,

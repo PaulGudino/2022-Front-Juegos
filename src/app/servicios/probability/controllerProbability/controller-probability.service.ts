@@ -8,8 +8,8 @@ import { AwardsService } from '../../awards/awards.service';
 })
 export class ControllerProbabilityService {
 
-  private id_game = '1';
-  private gameName = 'Tragamonedas';
+  private id_game = '3';
+  private gameName = 'Dados';
   private newAwards:getAwardList[] =[];
   private awardsGame:getAwardList[] =[];
   private legendary_box:Number[] = [1];

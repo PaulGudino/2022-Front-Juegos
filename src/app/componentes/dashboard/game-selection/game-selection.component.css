@@ -49,6 +49,7 @@ img{
    margin-top: 5%;
    display: flex;
    justify-content: center;
+   gap: 50px;
 }
 .logo-game-container2 {
    margin-bottom: 10px; /* Espacio entre el icono y el título */

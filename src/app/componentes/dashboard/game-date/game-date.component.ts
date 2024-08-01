@@ -7,6 +7,7 @@ import { GamePutDate } from 'src/app/interfaces/game/GamePutDate';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
    selector: 'app-game-date',
@@ -36,7 +37,8 @@ export class GameDateComponent implements OnInit {
       private game: GameService,
       private staticData: PuenteDatosService,
       private awardsConditionService: AwardsConditionService,
-      private gameDataSrv: GameDateService
+      private gameDataSrv: GameDateService,
+      private gameSelectionService: GameSelectionService
    ) {
       this.form = this.fb.group({
          startTime: ['', Validators.required],
@@ -48,9 +50,12 @@ export class GameDateComponent implements OnInit {
       this.minDate = new Date(currentYear, currentMonth, currentDay);
    }
 
-   async ngOnInit(): Promise<void>  {
-      this.staticData.setMenuTragamonedas();
-      await this.getDate();
+   async ngOnInit(): Promise<void> {
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+            this.staticData.setMenu(game);
+            this.getDate();
+      });
+
       this.awardsConditionService.getAwardConditionFilter('?is_approved=false').subscribe((data: any) => {
          this.awardConditionList = data;
       });

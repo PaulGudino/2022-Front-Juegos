@@ -1,0 +1,54 @@
+<app-menu>
+    <mat-toolbar class="background-navy-primary green-primary">
+        <span>Diseño Juego</span>
+        <span class="example-spacer"></span>
+    </mat-toolbar>
+
+    <div class="container">
+        <h2>ADIVINA LA PUERTA</h2>
+        <div class="doors-container">
+            <div class="door">
+                <div class="door-title">PUERTA IZQUIERDA</div>
+                <div class="door-image" id="door-left" style="background-color: #0051a3;"></div>
+                <button class="upload-button" onclick="document.getElementById('upload-door-left').click()">+</button>
+                <input type="file" id="upload-door-left" accept="image/*">
+            </div>
+            <div class="door">
+                <div class="door-title">PUERTA CENTRAL</div>
+                <div class="door-image" id="door-center" style="background-color: #8FCB9B;"></div>
+                <button class="upload-button" onclick="document.getElementById('upload-door-center').click()">+</button>
+                <input type="file" id="upload-door-center" accept="image/*">
+            </div>
+            <div class="door">
+                <div class="door-title">PUERTA DERECHA</div>
+                <div class="door-image" id="door-right" style="background-color: #ff6f7d;"></div>
+                <button class="upload-button" onclick="document.getElementById('upload-door-right').click()">+</button>
+                <input type="file" id="upload-door-right" accept="image/*">
+            </div>
+        </div>
+        <div class="settings">
+            <div class="image-scale">
+                <label for="image-scale">Escala de imagen 190x372</label>
+            </div>
+            <div class="attempts">
+                <label for="attempts">Numero de Intentos:</label>
+                <input type="number" id="attempts" name="attempts">
+            </div>
+            <div class="save-button">
+                <button>Guardar</button>
+            </div>
+        </div>
+        <div class="background-logo">
+            <div class="background">
+                <button id="select-background" onclick="document.getElementById('upload-background').click()">Seleccionar Fondo</button>
+                <input type="file" id="upload-background" accept="image/*" style="display:none;">
+            </div>
+            <div class="logo">
+                <button id="select-logo" onclick="document.getElementById('upload-logo').click()">Seleccionar Logo</button>
+                <input type="file" id="upload-logo" accept="image/*" style="display:none;">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</app-menu>
+  

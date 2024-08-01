@@ -16,6 +16,7 @@
 					height="22rem"
 					[isHome]="false"></app-logo>
 			</div>
+			<app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
 			<p
 				class="info-game__text-title"
 				[ngStyle]="{
@@ -29,7 +30,7 @@
 				[ngStyle]="{
 					color: 'styles.get_color_text()'
 				}">
-				<ng-template ngPluralCase="=0"> <p class="info-game__text">No te quedan más Giros!</p></ng-template>
+				<ng-template ngPluralCase="=0"> <p class="info-game__text">Disponible 0 giros /(U_U)\</p></ng-template>
 				<ng-template
 					class="info-game__text"
 					ngPluralCase="=1">
@@ -105,7 +106,7 @@
 				[fontSize]="'2.8rem'"
 				[styledPadding]="'2.4rem 6.6rem'"
 				class="mb-2 container_play-btn"
-				(click)="animation.startGame(col1, col2, col3); music()">
+				(click)="animation.startGameTragamonedas(col1, col2, col3); music(); this.backArrowEnabled = false;">
 				<div *ngIf="slot_music">
 					<audio
 						controls="None"
@@ -122,7 +123,7 @@
 
 	<audio
 		autoplay
-		[volume]="0.05"
+		[volume]="0.02"
 		loop
 		controls="None"
 		hidden

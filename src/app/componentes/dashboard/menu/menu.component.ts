@@ -53,7 +53,7 @@ export class MenuComponent implements OnInit {
         formData.append('refresh', refresh);
         this.auth.Logout(formData).subscribe(
           res => {
-            this.router.navigate(['/juego']);
+            this.router.navigate(['/login']);
             sessionStorage.removeItem('user_id')
             sessionStorage.removeItem('rol_id')
           },

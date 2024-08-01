@@ -11,6 +11,7 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { PublicityService } from 'src/app/servicios/publicity/publicity.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 @Component({
    selector: 'app-top-publicity',
@@ -27,7 +28,8 @@ export class TopPublicityComponent implements OnInit {
       private fb: FormBuilder,
       private dialog: ConfirmDialogService,
       private snackBar: SnackbarService,
-      private staticData: PuenteDatosService
+      private staticData: PuenteDatosService,
+      private gameSelectionService: GameSelectionService
    ) {
       this.form = this.fb.group({
          transition: ['', [Validators.required]],
@@ -35,9 +37,11 @@ export class TopPublicityComponent implements OnInit {
    }
 
    ngOnInit(): void {
-      this.staticData.setMenuTragamonedas();
-      this.chargePublicity();
-   }
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+          this.staticData.setMenu(game);
+          this.chargePublicity();
+      });
+    }
 
    regresar() {
       this.router.navigate(['/dashboard/juego/publicidad']);

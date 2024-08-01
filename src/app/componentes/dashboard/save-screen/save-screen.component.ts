@@ -8,6 +8,7 @@ import { ImageService } from 'src/app/servicios/image/image.service';
 
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 @Component({
    selector: 'app-save-screen',
    templateUrl: './save-screen.component.html',
@@ -31,27 +32,30 @@ export class SaveScreenComponent implements OnInit {
       private theme: ThemeService,
       private dashStyle: DashboardStyleService,
       private imageSrv: ImageService,
-      private staticData: PuenteDatosService
+      private staticData: PuenteDatosService,
+      private gameSelectionService: GameSelectionService
    ) {}
 
    ngOnInit(): void {
-      this.staticData.setMenuTragamonedas();
-      this.publicity.getPublicityTopList().subscribe((data) => {
-         this.dashboardPublicityService.loadTopData(data);
-         this.publicity
-            .getPublicityBottomList()
-            .subscribe((bottomPublicityList) => {
-               this.dashboardPublicityService.loadBottomData(
-                  bottomPublicityList
-               );
-            });
-         this.theme.getDesignInformation().subscribe((designData) => {
-            this.dashStyle.loadData(designData[0]);
-            this.buttonTitle = this.dashStyle.get_title_button_screensaver();
-            this.previsulizacion = this.dashStyle.get_video_screensaver();
-         });
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+          this.staticData.setMenu(game);
+          this.loadInitialData();
       });
-   }
+    }
+  
+    private loadInitialData() {
+      this.publicity.getPublicityTopList().subscribe((data) => {
+        this.dashboardPublicityService.loadTopData(data);
+        this.publicity.getPublicityBottomList().subscribe((bottomPublicityList) => {
+          this.dashboardPublicityService.loadBottomData(bottomPublicityList);
+        });
+        this.theme.getDesignInformation().subscribe((designData) => {
+          this.dashStyle.loadData(designData[0]);
+          this.buttonTitle = this.dashStyle.get_title_button_screensaver();
+          this.previsulizacion = this.dashStyle.get_video_screensaver();
+        });
+      });
+    }
 
    updateSaveScreen() {
       const options = {

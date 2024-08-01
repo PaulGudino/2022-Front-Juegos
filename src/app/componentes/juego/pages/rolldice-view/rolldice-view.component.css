@@ -1,0 +1,146 @@
+/* Ajustes para que el contenedor principal ocupe toda la pantalla */
+.container-fullscreen {
+  background-color: #0d1b2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-menu {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+
+.scan-shadow {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: #000000d4;
+  z-index: 2;
+}
+
+.scan_menu-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.information-game-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 7rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: white;
+}
+
+#back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin-top: 0;
+  color: white;
+}
+
+.instructions {
+  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.dice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Añadir margen inferior para separar el botón del dado */
+}
+
+.generic-button-container {
+  margin-top: 50px; /* Añadir margen superior para separar el botón del dado */
+  margin-bottom: 50px;
+}
+
+.dice {
+  width: 400px;
+  height: 400px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 2s; /* Reducir el tiempo de transición */
+}
+
+.dice.roll {
+  animation: roll linear infinite; /* Reducir la duración de la animación */
+}
+
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(3600deg) rotateY(3600deg); }
+}
+
+.face {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.one { transform: rotateY(0deg) translateZ(200px); }
+.two { transform: rotateY(180deg) translateZ(200px); }
+.three { transform: rotateX(-90deg) translateZ(200px); }
+.four { transform: rotateX(90deg) translateZ(200px); }
+.five { transform: rotateY(90deg) translateZ(200px); }
+.six { transform: rotateY(-90deg) translateZ(200px); }
+
+input[type="text"] {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  font-size: 2rem; /* Aumentar el tamaño de la fuente para mayor visibilidad */
+  text-align: center;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 500px; /* Ajustar el ancho para que no ocupe demasiado espacio */
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.cuadrotxt {
+  width: 100px;
+}

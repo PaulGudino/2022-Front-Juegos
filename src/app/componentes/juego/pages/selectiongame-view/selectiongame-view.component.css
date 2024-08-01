@@ -1,0 +1,118 @@
+/* Asegurarse de que el contenedor ocupe toda la pantalla */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0c1a32;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* Ajustes para que el contenedor principal ocupe toda la pantalla */
+.container-fullscreen {
+    background-color: #0c1a32;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container-menu {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+
+.scan-shadow {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: #000000d4;
+    z-index: 2;
+}
+
+.scan_menu-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+p {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+}
+
+.game {
+    background-color: #142850;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex: 1 1 calc(45%); /* Ajusta el tamaño de la columna aquí */
+    max-width: calc(45%); /* Ajusta el tamaño de la columna aquí */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+button {
+    background-color: rgba(45, 45, 45, 0.7); /* Fondo semi-transparente */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: none;
+    background-color: #00d084;
+}
+
+@media (max-width: 768px) {
+    .game {
+        flex: 1 1 calc(100% - 20px); /* Ajusta el tamaño de la columna para pantallas pequeñas */
+        max-width: calc(100% - 20px); /* Ajusta el tamaño de la columna para pantallas pequeñas */
+    }
+}

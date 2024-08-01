@@ -8,6 +8,7 @@ import {Publicity} from '../../../interfaces/publicity/publicity'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import {SnackbarService} from '../../../servicios/snackbar/snackbar.service'
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class ProbabilidadesComponent implements OnInit {
     private dialog:ConfirmDialogService,
     private snackBar:SnackbarService,
     private staticData: PuenteDatosService,
+    private gameSelectionService: GameSelectionService
 
   ) {
     this.form = this.fb.group({
@@ -61,21 +63,21 @@ export class ProbabilidadesComponent implements OnInit {
 
    }
 
-  ngOnInit(){
-    this.staticData.setMenuTragamonedas();
-    this.awards.getAward()
-      .subscribe(data => {
-        this.probability.getAwardsListGame().subscribe(
-          awardGameData =>{
-         this.getAwardsPerCategory(data,awardGameData)
+   ngOnInit() {
+    this.gameSelectionService.selectedGame$.subscribe(game => {
+        this.staticData.setMenu(game);
+        this.loadData();
+    });
+  }
 
-        })
-
-      this.getTragamonedasProbability()
-
-   })
-
-}
+  private loadData() {
+    this.awards.getAward().subscribe(data => {
+      this.probability.getAwardsListGame().subscribe(awardGameData => {
+        this.getAwardsPerCategory(data, awardGameData);
+      });
+      this.getProbability();
+    });
+  }
 
 
 
@@ -120,7 +122,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
           this.probability.putProbabilityConfig(formData)
           .subscribe(res =>{
             this.snackBar.mensaje('Configuracion Cambiada con exito');
-            this.getTragamonedasProbability()
+            this.getProbability()
           })
 
         }
@@ -174,7 +176,7 @@ private getAwardsPerCategory(awardsList:getAwardList[],awardGameList:any){
     return true;
 
   }
-  getTragamonedasProbability(){
+  getProbability(){
     this.probability.getProbabilites()
     .subscribe(data =>{
              this.probabilityData = data

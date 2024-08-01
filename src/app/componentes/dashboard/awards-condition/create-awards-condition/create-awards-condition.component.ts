@@ -9,6 +9,7 @@ import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { getAwardList } from 'src/app/interfaces/awards/getAwardList';
 import { map, Observable, startWith } from 'rxjs';
+import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 
 function autocompleteObjectValidator(): ValidatorFn {
    return (control: AbstractControl): { [key: string]: any } | null => {
@@ -56,6 +57,7 @@ export class CreateAwardsConditionComponent implements OnInit {
       private router: Router,
       private staticData: PuenteDatosService,
       private gameDataSrv: GameDateService,
+      private gameSelectionService: GameSelectionService,
    ) {
       this.form = this.fb.group({
          startTime: ['', Validators.required],
@@ -83,17 +85,19 @@ export class CreateAwardsConditionComponent implements OnInit {
       ]
     }
 
-   async ngOnInit(): Promise<void> {
-      this.staticData.setMenuTragamonedas();
-      this.getAward();
+    async ngOnInit(): Promise<void> {
+      this.gameSelectionService.selectedGame$.subscribe(game => {
+        this.staticData.setMenu(game);
+        this.getAward();
+      });
+  
       let currentYear = new Date().getFullYear();
       let currentMonth = new Date().getMonth();
       let currentDay = new Date().getDate();
       this.minDate = new Date(currentYear, currentMonth, currentDay);
       this.minDatefin = new Date(currentYear, currentMonth, currentDay);
       this.finishDate = new Date(currentYear, currentMonth, currentDay);
-
-   }
+    }
 
    async changetime() {
       let hora_inicio = this.form.value.startTime.hour;
@@ -136,7 +140,7 @@ export class CreateAwardsConditionComponent implements OnInit {
                if (confirmed) {
                   let formData: FormData = new FormData();
    
-                  let game = 1;
+                  let game = 2;
                   let user_register = sessionStorage.getItem('user_id');
                   
 

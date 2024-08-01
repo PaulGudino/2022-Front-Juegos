@@ -21,7 +21,7 @@ export class GameSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.staticData.setMenuTragamonedas()
+    this.staticData.setMenu('Tragamonedas');
     this.ticketSrv.getAll().subscribe(
       data =>{
         this.total_tickets = data.length
