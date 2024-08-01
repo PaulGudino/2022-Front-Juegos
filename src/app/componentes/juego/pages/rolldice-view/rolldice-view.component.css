@@ -82,19 +82,20 @@
 }
 
 .generic-button-container {
-  margin-top: 20px; /* Añadir margen superior para separar el botón del dado */
+  margin-top: 50px; /* Añadir margen superior para separar el botón del dado */
+  margin-bottom: 50px;
 }
 
 .dice {
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 2s;
+  transition: transform 2s; /* Reducir el tiempo de transición */
 }
 
 .dice.roll {
-  animation: roll linear infinite;
+  animation: roll linear infinite; /* Reducir la duración de la animación */
 }
 
 @keyframes roll {
@@ -104,23 +105,25 @@
 
 .face {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 400px;
   background-color: white;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .face img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-.one { transform: rotateY(0deg) translateZ(100px); }
-.two { transform: rotateX(180deg) translateZ(100px); }
-.three { transform: rotateX(-90deg) translateZ(100px); }
-.four { transform: rotateX(90deg) translateZ(100px); }
-.five { transform: rotateY(90deg) translateZ(100px); }
-.six { transform: rotateY(-90deg) translateZ(100px); }
+.one { transform: rotateY(0deg) translateZ(200px); }
+.two { transform: rotateY(180deg) translateZ(200px); }
+.three { transform: rotateX(-90deg) translateZ(200px); }
+.four { transform: rotateX(90deg) translateZ(200px); }
+.five { transform: rotateY(90deg) translateZ(200px); }
+.six { transform: rotateY(-90deg) translateZ(200px); }
 
 input[type="text"] {
   margin-top: 1rem;
@@ -132,17 +135,6 @@ input[type="text"] {
   border: none;
   border-radius: 5px;
   width: 500px; /* Ajustar el ancho para que no ocupe demasiado espacio */
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 button:hover {

@@ -8,8 +8,7 @@
                 <h1>¡Juegos disponibles!</h1>
                 <div class="games">
                     <div *ngFor="let game of allGames" class="game">
-                        <img [src]="'../../../../../assets/img/' + game.name + '.png'" [alt]="game.name">
-                        <button (click)="navigateTo(game.name, game.id)">{{ game.name }}</button>
+                        <img (click)="navigateTo(game.name, game.id)" [src]="'../../../../../assets/img/' + game.name + '.png'" [alt]="game.name">
                     </div>
                 </div>
             </div>

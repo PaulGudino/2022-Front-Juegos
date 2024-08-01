@@ -5,33 +5,46 @@
         <div class="scan-shadow"></div>
         <div class="scan_menu-container">
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-            <h2 class="subtitle">Juego de Puertas</h2>
-            <p class="instructions">{{ informationText }}</p>
+            <h2 class="subtitle">Escoge la Puerta</h2>
+            <p class="instructions">¡Abre una puerta y podrás llevarte el premio que contenga!</p>
+            <div class="information-game-container" [ngPlural]="gameLogicService.attempts" [ngStyle]="{
+                color: 'styles.get_color_text()'
+            }">
+            <ng-template ngPluralCase="=0">
+                <p class="info-game__text">Disponible 0 turnos /(U_U)\</p>
+            </ng-template>
+            <ng-template class="info-game__text" ngPluralCase="=1">
+                <p class="info-game__text">Disponible 1 turno más!</p>
+            </ng-template>
+            <ng-template class="info-game__text" ngPluralCase="other">
+                <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
+                    Disponible {{ gameLogicService.attempts }} turnos más!
+                </p>
+            </ng-template>
+        </div>
             <div class="doors">
-                <div *ngFor="let door of doors; let i = index" 
+                <div *ngFor="let door of animation.doors; let i = index" 
                      class="door" 
-                     [volume]="1"
                      [class.isOpen]="door.isOpen" 
-                     [class.disabled]="!isGameStarted || isDoorSelected && !door.isOpen" 
-                     (click)="openDoor(i); music();">
+                     [class.disabled]="(!animation.isGameStarted || animation.isDoorSelected) && !door.isOpen" 
+                     (click)="animation.openDoor(i); music();">
                     <div *ngIf="slot_music">
-                        <audio controls="None" hidden autoplay>
+                        <audio [volume]="0.5" controls="None" hidden autoplay>
                             <source src="./assets/audio/door_opened.mp3" />
                         </audio>
                     </div>
                     <div class="door-inner">
                         <div class="door-front">
-                            <img [src]="door.image" alt="Puerta {{ i + 1 }}">
+                            <img [src]="door.image">
                         </div>
                         <div class="door-back">
-                            <p *ngIf="door.isOpen">{{ door.prize }}</p>
+                            <img *ngIf="door.isOpen" [src]="door.prize" >
                         </div>
                     </div>
-                    <p class="door-label" *ngIf="!door.isOpen">Puerta {{ i + 1 }}</p>
                 </div>
             </div>
-            <p id="result">{{ resultMessage }}</p>
-            <app-generic-button *ngIf="!isGameStarted" title="Empezar" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="startGame(); this.backArrowEnabled = false">
+            
+            <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="animation.startGameDoor(); this.backArrowEnabled = false">
             </app-generic-button>
         </div>
     </div>

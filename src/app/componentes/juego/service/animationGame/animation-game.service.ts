@@ -2,7 +2,8 @@ import { GameLogicService } from "./../gameLogic/game-logic.service"
 import { ElementRef, Injectable } from "@angular/core"
 import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-dialog.service"
 import { KeyControllerService } from "../keyController/key-controller.service"
-import { PrecisionViewComponent } from "../../pages/precision-view/precision-view.component"
+import { getAwardList } from "src/app/interfaces/awards/getAwardList"
+import { AwardsService } from "src/app/servicios/awards/awards.service"
 
 @Injectable({
 	providedIn: "root",
@@ -20,23 +21,35 @@ export class AnimationGameService {
 	// ----------------- Rolldice -----------------
 	isRolling = false;
 	rollTime: number = 0;
-	finalTransform: string = 'rotateX(0deg) rotateY(0deg)';
+	finalTransformDice: string = 'rotateX(0deg) rotateY(0deg)';
 	currentFace: number = 1;
 
 
 	// ----------------- Puertas -----------------
-
+	finalTransformDoor: string = 'rotateY(0deg)';
+	openTime: number = 0;
+	currentDoor: number | null = null;
+	isOpening = false;
+	isGameStarted = false;
+	isDoorSelected = false;
+	doors = [
+		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' },
+		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' },
+		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' }
+	];
+	prizes: getAwardList[] = [];
+	
 	// ----------------- Precision -----------------
 	currentMinutes = 0;
 	clockRunning = false;
 	intervalId: any;
 	currentTime = '00:00';
-	resultMessage = '';
 	targetTime = this.generateRandomTime();
 	constructor(
 		private gameLogicService: GameLogicService,
 		private confirmDialog: ConfirmDialogService,
 		public keyController: KeyControllerService,
+		private awardsService: AwardsService
 
 	) { }
 
@@ -127,12 +140,7 @@ export class AnimationGameService {
 
 						this.gameLogicService.winFirstTime = true
 
-						let options = {
-							title: "HAS GANADO!!!",
-							image: this.gameLogicService.winAwardImage,
-							result_music: "./assets/audio/win.mp3",
-						}
-						this.confirmDialog.result_game(options)
+						this.showWinMessage(this.gameLogicService.winAwardImage);
 
 						clearInterval(intervalId)
 					}
@@ -244,63 +252,61 @@ export class AnimationGameService {
 			this.isRolling = true;
 			const randomFace = Math.floor(Math.random() * 6) + 1;
 			this.currentFace = randomFace;
-			this.rollTime = Math.random() * 1 + 1;
+			this.rollTime = Math.random() + 4;
 			console.log("cara random", this.currentFace)
 			if (this.gameLogicService.winner) {
 				this.gameLogicService.winFirstTime = true
-				setTimeout(() => {
-					this.isRolling = false;
-					this.finalTransform = this.getTransform(parseInt(this.keyController.getCode()));
-				}, this.rollTime * 1000);
 
-				let options = {
-					title: "HAS GANADO!!!",
-					image: this.gameLogicService.winAwardImage,
-					result_music: "./assets/audio/win.mp3",
-				}
-				this.confirmDialog.result_game(options)
-				//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
-				
+				const intervalId = setInterval(() => {
+					setTimeout(() => {
+						this.finalTransformDice = this.getTransformDice(parseInt(this.keyController.getCode()));
+					}, this.rollTime);
+					this.isRolling = false;
+					clearInterval(intervalId)
+					this.showWinMessage(this.gameLogicService.winAwardImage);
+					this.disabledPlayButton = false
+					//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
+				}, this.rollTime * 750)
 			} else {
-				setTimeout(() => {
+				const intervalId = setInterval(() => {
+					setTimeout(() => {
+
+						this.finalTransformDice = this.getTransformDice(this.currentFace);
+						while (parseInt(this.keyController.getCode()) === this.currentFace) {
+							const randomFace2 = Math.floor(Math.random() * 6) + 1;
+							this.currentFace = randomFace2
+							this.finalTransformDice = this.getTransformDice(this.currentFace);
+							console.log("salio la misma cara, se cambia a", this.currentFace)
+						}
+					}, this.rollTime);
 					this.isRolling = false;
-
-					console.log(this.gameLogicService.winner);
-
-
-					this.finalTransform = this.getTransform(this.currentFace);
-					while (parseInt(this.keyController.getCode()) === this.currentFace) {
-						const randomFace2 = Math.floor(Math.random() * 6) + 1;
-						this.currentFace = randomFace2
-						this.finalTransform = this.getTransform(this.currentFace);
-						console.log("salio la misma cara, se cambia a", this.currentFace)
+					clearInterval(intervalId)
+					if (this.gameLogicService.attempts === 0) {
+						const options = {
+							title: "Se terminó la partida",
+							image: "./assets/img/gameover.png",
+							result_music: "./assets/audio/lose.mp3",
+						}
+						this.confirmDialog.end_game(options)
+					} else {
+						let options = {
+							title: "INTENTA OTRA VEZ!!!",
+							image: "../../../../../assets/img/loseImage.png",
+							result_music: "../../../../../assets/audio/lose.mp3",
+						}
+						this.confirmDialog.result_game(options)
 					}
-				}, this.rollTime * 1000);
-				if (this.gameLogicService.attempts === 1) {
-					const options = {
-						title: "Se terminó la partida",
-						image: "./assets/img/gameover.png",
-						result_music: "./assets/audio/lose.mp3",
-					}
-					this.confirmDialog.end_game(options)
-				} else {
-					let options = {
-						title: "INTENTA OTRA VEZ!!!",
-						image: "../../../../../assets/img/loseImage.png",
-						result_music: "../../../../../assets/audio/lose.mp3",
-					}
-					this.confirmDialog.result_game(options)
-				}
-				
+					this.disabledPlayButton = false
+				}, this.rollTime * 750)
 			}
-			this.disabledPlayButton = false
+
 			this.gameLogicService.setWinnerState(false)
 			this.gameLogicService.decreaseAttemptCount()
 
 		}
 	}
 
-	getTransform(currentFace: number) {
+	getTransformDice(currentFace: number) {
 		switch (currentFace) {
 			case 1: return 'rotateX(0deg) rotateY(0deg)';
 			case 2: return 'rotateX(0deg) rotateY(180deg)';
@@ -324,6 +330,13 @@ export class AnimationGameService {
 		return this.formatTime(randomMinutes);
 	}
 
+	// Convertir hh:mm a segundos
+	convertToSeconds(time: string): number {
+		const [seconds, milliseconds] = time.split(':').map(Number);
+		return seconds
+	};
+
+
 	startClock(): void {
 		this.currentMinutes = 0;
 		this.clockRunning = true;
@@ -336,57 +349,182 @@ export class AnimationGameService {
 	}
 
 	stopClock(): void {
-		
-		this.gameLogicService.winFirstTime = false
+		this.gameLogicService.winFirstTime = false;
 		console.log("hora actual: ", this.currentTime, "hora objetivo: ", this.targetTime);
 		clearInterval(this.intervalId);
 
 		if (this.gameLogicService.attempts > 0) {
 
-			if (this.gameLogicService.winner) {
+			// Función auxiliar para verificar si currentTime está a 1 segundo de targetTime
+			const isOneSecondApart = (currentTime: string, targetTime: string): boolean => {
+				const currentSeconds = this.convertToSeconds(currentTime);
+				const targetSeconds = this.convertToSeconds(targetTime);
+				console.log("currentSeconds", currentSeconds, "targetSeconds", targetSeconds);
+				console.log("diferencia", Math.abs(currentSeconds - targetSeconds));
+				return Math.abs(currentSeconds - targetSeconds) >= 1;
+			};
+
+			if (this.gameLogicService.winner && !isOneSecondApart(this.currentTime, this.targetTime)) {
 				this.currentTime = this.formatTime(this.currentMinutes);
 				this.currentTime = this.targetTime;
 
-				this.gameLogicService.winFirstTime = true
-				let options = {
-					title: "HAS GANADO!!!",
-					image: this.gameLogicService.winAwardImage,
-					result_music: "./assets/audio/win.mp3",
-				}
-				this.confirmDialog.result_game(options)
-				
-				
+				this.gameLogicService.winFirstTime = true;
+				this.showWinMessage(this.gameLogicService.winAwardImage);
+				this.gameLogicService.setWinnerState(false);
+
 			} else {
 				if (this.currentTime === this.targetTime) {
 					this.currentMinutes = (this.currentMinutes + 1) % (24 * 60);
 					this.currentTime = this.formatTime(this.currentMinutes);
 				}
+
 				if (this.gameLogicService.attempts === 1) {
 					const options = {
 						title: "Se terminó la partida",
 						image: "./assets/img/gameover.png",
 						result_music: "./assets/audio/lose.mp3",
-					}
-					this.confirmDialog.end_game(options)
+					};
+					this.confirmDialog.end_game(options);
 				} else {
 					let options = {
-						title: "INTENTA OTRA VEZ!!!",
-						image: "../../../../../assets/img/loseImage.png",
+						title: isOneSecondApart(this.currentTime, this.targetTime) ? "PERDISTE EL TURNO!!!" : "INTENTA OTRA VEZ!!!",
+						image: isOneSecondApart(this.currentTime, this.targetTime) ? "../../../../../assets/img/loseImage.png" : "../../../../../assets/img/loseImage.png",
 						result_music: "../../../../../assets/audio/lose.mp3",
-					}
-					this.confirmDialog.result_game(options)
+					};
+					this.confirmDialog.result_game(options);
+				}
+			}
+
+			this.clockRunning = false;
+
+
+			this.gameLogicService.decreaseAttemptCount();
+		}
+	}
+
+	InitialTime() {
+		this.currentTime = '00:00';
+	}
+
+	// ----------------- Puertas -----------------
+	startGameDoor(): void {
+		this.gameLogicService.winFirstTime = false
+		this.isOpening = false;
+		this.isGameStarted = true;
+		this.isDoorSelected = false;
+		this.doors.forEach(door => door.isOpen = false);  // Reset doors state
+	}
+
+	openDoor(index: number): void {
+		if (this.isGameStarted && !this.doors[index].isOpen && !this.isOpening && !this.isDoorSelected) {
+			if (this.gameLogicService.attempts > 0) {
+				this.isOpening = true;
+				this.currentDoor = index;
+				this.openTime = Math.random() * 1 + 1;
+				this.doors[index].isOpen = true;
+				this.isDoorSelected = true;
+
+
+				if (this.gameLogicService.winner) {
+					this.doors[index].prize = this.gameLogicService.winAwardImage;
+					this.gameLogicService.winFirstTime = true;
+					setTimeout(() => {
+						this.finalTransformDoor = this.getTransformDoors();
+						this.isOpening = false;
+						// Abrir todas las otras puertas automáticamente después de que termine la animación de la puerta seleccionada
+						setTimeout(() => {
+							this.openRemainingDoors(index);
+						}, 1000); // Esperar 1.5 segundos antes de abrir las demás puertas
+
+						setTimeout(() => {
+							this.showWinMessage(this.doors[index].prize)
+						}, 2000)
+
+						setTimeout(() => {
+							this.isGameStarted = false;
+						}, 4500);
+					}, this.openTime * 1000);
+
+				} else {
+					this.doors[index].prize = './assets/img/loseImage.png';
+					setTimeout(() => {
+						this.finalTransformDoor = this.getTransformDoors();
+						this.isOpening = false;
+						// Abrir todas las otras puertas automáticamente después de que termine la animación de la puerta seleccionada
+						setTimeout(() => {
+							this.openRemainingDoors(index);
+						}, 1000); // Esperar 1.5 segundos antes de abrir las demás puertas
+
+						setTimeout(() => {
+							this.showLoseMessage()
+						}, 2000)
+
+						setTimeout(() => {
+							this.isGameStarted = false;
+						}, 4500);
+					}, this.openTime * 1000);
 				}
 
 
+				this.gameLogicService.decreaseAttemptCount()
+				this.gameLogicService.setWinnerState(false)
 			}
-			this.clockRunning = false;
-			
-			this.gameLogicService.setWinnerState(false)
-			this.gameLogicService.decreaseAttemptCount()
-
 
 		}
-		
+	}
+
+	openRemainingDoors(selectedIndex: number): void {
+
+		this.doors.forEach((door, i) => {
+			if (i !== selectedIndex) {
+				setTimeout(() => {
+					const randomPrizeIndex = Math.floor(Math.random() * this.prizes.length);
+					door.prize = this.prizes[randomPrizeIndex].imagen;
+					door.isOpen = true;
+				}, 100 * (i + 1)); // Temporizador escalonado para abrir las puertas restantes
+			}
+		});
 
 	}
+
+	closeDoors(): void {
+		this.doors.forEach((door, i) => {
+			door.isOpen = false;
+		});
+	}
+
+
+	showWinMessage(prize: string): void {
+		let options = {
+			title: "HAS GANADO!!!",
+			image: prize,
+			result_music: "./assets/audio/win.mp3",
+		};
+		this.confirmDialog.result_game(options);
+	}
+
+	showLoseMessage(): void {
+		let options = {
+			title: this.gameLogicService.attempts === 0 ? "Se terminó la partida" : "INTENTA OTRA VEZ!!!",
+			image: this.gameLogicService.attempts === 0 ? "./assets/img/gameover.png" : "./assets/img/loseImage.png",
+			result_music: "../../../../../assets/audio/lose.mp3",
+		};
+		if (this.gameLogicService.attempts === 0) {
+			this.confirmDialog.end_game(options);
+		} else {
+			this.confirmDialog.result_game(options);
+		}
+	}
+
+	getTransformDoors() {
+		return 'rotateY(180deg)';
+	}
+
+	getPrizes(): void {
+		this.awardsService.getAward().subscribe(prizes => {
+			this.prizes = prizes;
+		});
+	}
+
+
 }
