@@ -4,7 +4,7 @@ export interface Styles {
    color_text: string;
    font_letter: string;
 
-   image_machine_game?: string;
+   image_machine_game?: any;
    image_background_game?: string;
    image_logo_game: string;
    color_background_game: string;
