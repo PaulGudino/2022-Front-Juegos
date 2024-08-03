@@ -17,11 +17,26 @@ import { GameCurrentSession_Data } from 'src/app/interfaces/gameCurrentSession/g
 })
 export class PuertasViewComponent implements OnInit {
   backArrowEnabled: boolean = true;
+  informationText: string = "A JUGAR!";
   slot_music = false;
+  attemps = 3; // Número de intentos permitidos
+  resultMessage = '';
+  isOpening = false;
+  isGameStarted = false;
+  isDoorSelected = false; // Variable para controlar si una puerta ha sido seleccionada
+  doors = [
+    { isOpen: false, prize: 'Premio 1', image: '/assets/img/diseno_puerta.png' },
+    { isOpen: false, prize: 'Premio 2', image: '/assets/img/diseno_puerta.png'  },
+    { isOpen: false, prize: 'Premio 3', image: '/assets/img/diseno_puerta.png'  }
+  ];
+
   gameId: number | undefined;
   gamecurrentsession: GameCurrentSession_Data | undefined;
   probability: any = {};
-  attempts: number = 0;
+  currentDoor: number | null = null;
+  finalTransform: string = 'rotateY(0deg)';
+  openTime: number = 0;
+
   constructor(
     private router: Router,
     public publicity: DashboardPublicityService,
@@ -46,9 +61,6 @@ export class PuertasViewComponent implements OnInit {
         this.loadCurrentJuego(this.gameId.toString());
       }
     });
-
-    this.animation.closeDoors();
-    this.animation.getPrizes();
   }
 
   loadGameData(): void {
@@ -72,7 +84,6 @@ export class PuertasViewComponent implements OnInit {
       const juegoSeleccionado = await this.gameLogicService.verifyGameCurrent(gameId);
       if (juegoSeleccionado) {
         this.gamecurrentsession = juegoSeleccionado;
-        this.attempts = this.gameLogicService.attempts;
         console.log('Detalle de Juego Actual:', this.gamecurrentsession);
       } else {
         console.error('No se encontró juego.');
@@ -82,18 +93,44 @@ export class PuertasViewComponent implements OnInit {
     }
   }
 
-  
+  startGame(): void {
+    this.isGameStarted = true;
+    this.isDoorSelected = false;
+  }
+
+  openDoor(index: number): void {
+    if (this.isGameStarted && this.attemps > 0 && !this.doors[index].isOpen && !this.isOpening && !this.isDoorSelected) {
+      this.isOpening = true;
+      this.isDoorSelected = true;
+      this.currentDoor = index;
+      this.openTime = Math.random() * 1 + 1;
+      
+      setTimeout(() => {
+        this.doors[index].isOpen = true;
+        this.resultMessage = `¡Felicidades! Ganaste ${this.doors[index].prize}.`;
+        this.attemps -= 1;
+        this.isOpening = false;
+        this.finalTransform = this.getTransform();
+      }, this.openTime * 100);
+    } else if (this.attemps <= 0) {
+      this.resultMessage = "No tienes más intentos.";
+    }
+  }
+
+  getTransform() {
+    return 'rotateY(180deg)';
+  }
 
   doSomething() {
     sessionStorage.removeItem("juego_puertas");
   }
 
   music() {
-    if (this.attempts > 0) {
+    if (this.attemps > 0) {
       this.slot_music = true;
       setTimeout(() => {
         this.slot_music = false;
-      }, this.animation.openTime * 5000);
+      }, this.openTime * 10000);
     }
   }
 }

@@ -26,7 +26,7 @@
 			</p>
 			<div
 				class="information-game-container"
-				[ngPlural]="gameLogicService.attempts"
+				[ngPlural]="gameLogicService.attempts ?? 0" 
 				[ngStyle]="{
 					color: 'styles.get_color_text()'
 				}">

@@ -67,8 +67,6 @@ export class PrecisionViewComponent implements OnInit {
 			}
 		});
 
-    this.animation.InitialTime()
-
    /*  this.probalilitySrv.getProbabilites().subscribe(
       (data: any) => {
         this.attemps = data.attempts_limit;

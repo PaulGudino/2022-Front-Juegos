@@ -1,56 +1,60 @@
-    <div class="container-fullscreen">
-        <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
-        <div class="container-menu">
-            <app-logo [urlImage]="styles.getImageBackgroundGameFile()" [isBackground]="true" height="25rem"></app-logo>
-            <div class="scan-shadow"></div>
-            <div class="scan_menu-container">
-                <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-                <h2 class="subtitle">Tira el dado</h2>
-                <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
-                <div class="information-game-container" [ngPlural]="gameLogicService.attempts" [ngStyle]="{
-                        color: 'styles.get_color_text()'
-                    }">
-                    <ng-template ngPluralCase="=0">
-                        <p class="info-game__text">Disponible 0 giros /(U_U)\</p>
-                    </ng-template>
-                    <ng-template class="info-game__text" ngPluralCase="=1">
-                        <p class="info-game__text">Disponible 1 Giro más!</p>
-                    </ng-template>
-                    <ng-template class="info-game__text" ngPluralCase="other">
-                        <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
-                            Disponible {{ gameLogicService.attempts }} Giros más!
-                        </p>
-                    </ng-template>
-                </div>
-                <div class="dice-container">
-                    <div class="dice" [ngClass]="{'roll': animation.isRolling}"
-                        [ngStyle]="{'transform': !animation.isRolling ? animation.finalTransformDice : '', 'animation-duration': animation.rollTime + 's'}">
-                        <div class="face one"><img [src]="'./assets/img/dice/cara1.jpg'" alt="Face 1"></div>
-                        <div class="face two"><img [src]="'./assets/img/dice/cara2.jpg'" alt="Face 2"></div>
-                        <div class="face three"><img [src]="'./assets/img/dice/cara3.jpg'" alt="Face 3"></div>
-                        <div class="face four"><img [src]="'./assets/img/dice/cara4.jpg'" alt="Face 4"></div>
-                        <div class="face five"><img [src]="'./assets/img/dice/cara5.jpg'" alt="Face 5"></div>
-                        <div class="face six"><img [src]="'./assets/img/dice/cara6.jpg'" alt="Face 6"></div>
-                    </div>
+<div class="container-fullscreen">
+    <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
+    <div class="container-menu">
+        <app-logo [urlImage]="styles.getImageBackgroundGameFile()" [isBackground]="true" height="25rem"></app-logo>
+        <div class="scan-shadow"></div>
+        <div class="scan_menu-container">
+            <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
+            <h2 class="subtitle">Tira el dado</h2>
+            <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
+            <div
+				class="information-game-container"
+				[ngPlural]="gameLogicService.attempts"
+				[ngStyle]="{
+					color: 'styles.get_color_text()'
+				}">
+				<ng-template ngPluralCase="=0"> <p class="info-game__text">Disponible 0 giros /(U_U)\</p></ng-template>
+				<ng-template
+					class="info-game__text"
+					ngPluralCase="=1">
+					<p class="info-game__text">Disponible 1 Giro más!</p></ng-template
+				>
+				<ng-template
+					class="info-game__text"
+					ngPluralCase="other">
+					<p
+						class="info-game__text"
+						*ngIf="gameLogicService.winFirstTime == false">
+						Disponible {{ gameLogicService.attempts }} Giros más!
+					</p>
+				</ng-template>
+			</div>
+            <div class="dice-container">
+                <div class="dice" [ngClass]="{'roll': animation.isRolling}" [ngStyle]="{'transform': !animation.isRolling ? animation.finalTransform : '', 'animation-duration': animation.rollTime + 's'}">
+                    <div class="face one"><img [src]="'./assets/img/dice/cara1.jpg'" alt="Face 1"></div>
+                    <div class="face two"><img [src]="'./assets/img/dice/cara2.jpg'" alt="Face 2"></div>
+                    <div class="face three"><img [src]="'./assets/img/dice/cara3.jpg'" alt="Face 3"></div>
+                    <div class="face four"><img [src]="'./assets/img/dice/cara4.jpg'" alt="Face 4"></div>
+                    <div class="face five"><img [src]="'./assets/img/dice/cara5.jpg'" alt="Face 5"></div>
+                    <div class="face six"><img [src]="'./assets/img/dice/cara6.jpg'" alt="Face 6"></div>
                 </div>
                 <div class="generic-button-container">
-                    <app-generic-button title="Girar" [fontSize]="'2rem'" [disabled]="animation.disabledPlayButton"
-                        [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn"
-                        (click)="animation.startGameRolldice() ; music(); this.backArrowEnabled = false;">
+                    <app-generic-button title="Girar" 
+                    [fontSize]="'2rem'"
+                    [disabled]="animation.disabledPlayButton"
+                     [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="animation.startGameRolldice() ; music(); this.backArrowEnabled = false;">
                         <div *ngIf="slot_music">
-                            <audio controls="None" hidden autoplay [loop]="animation.isRolling">
-                                <source src="./assets/audio/roll_dice.mp3" 
-                                type="audio/mp3"/>
+                            <audio controls="None" hidden autoplay>
+                                <source src="./assets/audio/roll_dice.mp3" />
                             </audio>
                         </div>
                     </app-generic-button>
-                </div>  
-                <input class="btn menu__input" type="text" #codeInput="ngModel" [(ngModel)]="keyController.code"
-                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" (input)="validateInput($event)"
-                    placeholder="Ingresa el número a adivinar" pattern = "[0-9]{1}" maxlength = "1" />
-                <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', 'delete']"></app-keyboard>
-                <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
+                </div>
             </div>
+            <input class="btn menu__input" type="text" #codeInput="ngModel" [(ngModel)]="keyController.code" onkeypress="return event.charCode >= 48 && event.charCode <= 57" (input)="validateInput($event)" placeholder="Ingresa el número a adivinar" maxlength="1" />
+            <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', 'delete']"></app-keyboard>
+            <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
         </div>
-        <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
     </div>
+    <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
+</div>

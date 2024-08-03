@@ -1,6 +1,6 @@
 import { Usuarios } from '../../../../interfaces/usuarios/usuarios';
 import { ApiService } from '../../../../servicios/user/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Roles } from 'src/app/interfaces/roles/roles';
@@ -8,6 +8,8 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { map, Observable, startWith } from 'rxjs';
+
+
 
 function autocompleteObjectValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -18,11 +20,14 @@ function autocompleteObjectValidator(): ValidatorFn {
   }
 }
 
+
 @Component({
   selector: 'app-editar-usuarios',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+  styleUrls: ['./edit-user.component.css'],
 })
+
+
 export class EditarUsuariosComponent implements OnInit {
 
   listSex = [

@@ -168,9 +168,11 @@ public  set_scan_code_description(description:string){
 public get_description_winner() {
    return this.style.description_winner
 }
+
 public get_image_machine_game() {
    return this.style.image_machine_game;
-}
+} 
+
 
 public  set_description_winner(description:string){
    this.style.description_winner = description;

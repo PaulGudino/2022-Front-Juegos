@@ -62,6 +62,18 @@ import { GameSummaryPrecisionComponent } from './game-summary-precision/game-sum
 import { DesignRolldiceComponent } from './design-rolldice/design-rolldice.component';
 import { DesignDoorsComponent } from './design-doors/design-doors.component';
 import { DesignPrecisionComponent } from './design-precision/design-precision.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms'; // Asegúrate de importar esto
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 @NgModule({
    declarations: [
@@ -133,6 +145,16 @@ import { DesignPrecisionComponent } from './design-precision/design-precision.co
       CommonModule,
       DashboardRoutingModule,
       ComponentesCompartidosModule,
+      ReactiveFormsModule,
+      BrowserAnimationsModule,
+      MatSelectModule,
+      MatAutocompleteModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatSnackBarModule,
+      MatDialogModule,
+      MatDatepickerModule,
+      MatNativeDateModule
    ],
 })
 export class DashboardModule {}
