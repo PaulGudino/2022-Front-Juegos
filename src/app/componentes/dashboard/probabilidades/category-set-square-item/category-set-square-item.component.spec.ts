@@ -1,23 +1,18 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
 import { CategorySetSquareItemComponent } from './category-set-square-item.component';
 
 describe('CategorySetSquareItemComponent', () => {
-  let component: CategorySetSquareItemComponent;
-  let fixture: ComponentFixture<CategorySetSquareItemComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CategorySetSquareItemComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(CategorySetSquareItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      declarations: [CategorySetSquareItemComponent],
+      imports: [MatIconModule]
+    }).compileComponents();
   });
 
   it('should create', () => {
+    const fixture = TestBed.createComponent(CategorySetSquareItemComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

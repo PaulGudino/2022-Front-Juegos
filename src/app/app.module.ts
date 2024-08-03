@@ -1,6 +1,6 @@
 import { LoadingInterceptor } from './interceptores/spinner.interceptor';
 import { SharedModule } from './componentes/shared/shared.module';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,11 +10,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptores/auth.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-
 import { LoginComponent } from './componentes/login/login.component';
 import { RecuperarComponent } from './componentes/login/recuperar/recuperar.component';
 import { ResetComponent } from './componentes/login/reset/reset/reset.component';
 import { ComponentesCompartidosModule } from './componentes-compartidos/componentes-compartidos/componentes-compartidos.module';
+
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,11 @@ import { ComponentesCompartidosModule } from './componentes-compartidos/componen
     BrowserAnimationsModule,
     SharedModule,
     ComponentesCompartidosModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    
   ],
   providers: [
     {
@@ -46,6 +55,7 @@ import { ComponentesCompartidosModule } from './componentes-compartidos/componen
       useClass: HashLocationStrategy
     },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

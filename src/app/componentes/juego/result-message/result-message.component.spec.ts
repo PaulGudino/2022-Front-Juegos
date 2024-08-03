@@ -1,23 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ResultMessageComponent } from './result-message.component';
 
 describe('ResultMessageComponent', () => {
-  let component: ResultMessageComponent;
-  let fixture: ComponentFixture<ResultMessageComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResultMessageComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(ResultMessageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      declarations: [ResultMessageComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }
+      ]
+    }).compileComponents();
   });
 
   it('should create', () => {
+    const fixture = TestBed.createComponent(ResultMessageComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });
