@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AnimationGameService } from './animation-game.service';
 import { GameLogicService } from './../gameLogic/game-logic.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
@@ -16,6 +17,7 @@ describe('AnimationGameService', () => {
     const keyControllerSpy = jasmine.createSpyObj('KeyControllerService', ['getCode']);
 
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule], // Importa el módulo de pruebas de HttpClient
       providers: [
         AnimationGameService,
         { provide: GameLogicService, useValue: gameLogicSpy },
@@ -33,6 +35,5 @@ describe('AnimationGameService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
 
 });

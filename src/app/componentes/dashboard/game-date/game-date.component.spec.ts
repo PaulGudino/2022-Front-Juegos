@@ -10,6 +10,7 @@ import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/pu
 import { AwardsConditionService } from './../../../servicios/awards-condition/awards-condition.service';
 import { GameDateService } from './../../../servicios/game-date/game-date.service';
 import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('GameDateComponent', () => {
   let component: GameDateComponent;
@@ -22,37 +23,54 @@ describe('GameDateComponent', () => {
   let gameDateService: jasmine.SpyObj<GameDateService>;
   let gameSelectionService: jasmine.SpyObj<GameSelectionService>;
 
-  beforeEach(async () => {
-    snackbarService = jasmine.createSpyObj('SnackbarService', ['mensaje']);
-    confirmDialogService = jasmine.createSpyObj('ConfirmDialogService', ['open', 'confirmed']);
-    gameService = jasmine.createSpyObj('GameService', ['getById', 'putGame']);
-    puenteDatosService = jasmine.createSpyObj('PuenteDatosService', ['setMenu']);
-    awardsConditionService = jasmine.createSpyObj('AwardsConditionService', ['getAwardConditionFilter']);
-    gameDateService = jasmine.createSpyObj('GameDateService', ['DateFormat']);
-    gameSelectionService = jasmine.createSpyObj('GameSelectionService', ['selectedGame$']);
-
-    await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ReactiveFormsModule],
-      declarations: [ GameDateComponent ],
-      providers: [
-        FormBuilder,
-        { provide: SnackbarService, useValue: snackbarService },
-        { provide: ConfirmDialogService, useValue: confirmDialogService },
-        { provide: GameService, useValue: gameService },
-        { provide: PuenteDatosService, useValue: puenteDatosService },
-        { provide: AwardsConditionService, useValue: awardsConditionService },
-        { provide: GameDateService, useValue: gameDateService },
-        { provide: GameSelectionService, useValue: gameSelectionService }
-      ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(GameDateComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  describe('GameDateComponent', () => {
+    let component: GameDateComponent;
+    let fixture: ComponentFixture<GameDateComponent>;
+    let snackbarService: jasmine.SpyObj<SnackbarService>;
+    let confirmDialogService: jasmine.SpyObj<ConfirmDialogService>;
+    let gameService: jasmine.SpyObj<GameService>;
+    let puenteDatosService: jasmine.SpyObj<PuenteDatosService>;
+    let awardsConditionService: jasmine.SpyObj<AwardsConditionService>;
+    let gameDateService: jasmine.SpyObj<GameDateService>;
+    let gameSelectionService: jasmine.SpyObj<GameSelectionService>;
+  
+    beforeEach(async () => {
+      snackbarService = jasmine.createSpyObj('SnackbarService', ['mensaje']);
+      confirmDialogService = jasmine.createSpyObj('ConfirmDialogService', ['open', 'confirmed']);
+      gameService = jasmine.createSpyObj('GameService', ['getById', 'putGame']);
+      puenteDatosService = jasmine.createSpyObj('PuenteDatosService', ['setMenu']);
+      awardsConditionService = jasmine.createSpyObj('AwardsConditionService', ['getAwardConditionFilter']);
+      gameDateService = jasmine.createSpyObj('GameDateService', ['DateFormat']);
+      gameSelectionService = jasmine.createSpyObj('GameSelectionService', ['selectedGame$']);
+  
+      await TestBed.configureTestingModule({
+        imports: [
+          HttpClientTestingModule,
+          ReactiveFormsModule,
+          NgbTimepickerModule,  // Agregar el módulo de timepicker
+        ],
+        declarations: [ GameDateComponent ],
+        providers: [
+          FormBuilder,
+          { provide: SnackbarService, useValue: snackbarService },
+          { provide: ConfirmDialogService, useValue: confirmDialogService },
+          { provide: GameService, useValue: gameService },
+          { provide: PuenteDatosService, useValue: puenteDatosService },
+          { provide: AwardsConditionService, useValue: awardsConditionService },
+          { provide: GameDateService, useValue: gameDateService },
+          { provide: GameSelectionService, useValue: gameSelectionService }
+        ]
+      })
+      .compileComponents();
+  
+      fixture = TestBed.createComponent(GameDateComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

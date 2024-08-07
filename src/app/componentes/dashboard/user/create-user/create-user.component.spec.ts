@@ -15,6 +15,7 @@ import { Roles } from 'src/app/interfaces/roles/roles';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('CrearUsuariosComponent', () => {
@@ -37,7 +38,8 @@ describe('CrearUsuariosComponent', () => {
         MatAutocompleteModule,
         MatSelectModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        BrowserAnimationsModule 
       ],
       declarations: [ CrearUsuariosComponent ],
       providers: [

@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs'; // Asegúrate de importar 'of' para simular observables
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
 
 import { RolesComponent } from './roles.component';
 import { ApiService } from 'src/app/servicios/user/user.service';
@@ -13,35 +11,39 @@ import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { RolesService } from 'src/app/servicios/roles/roles.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
-import { Roles } from 'src/app/interfaces/roles/roles';
 
 describe('RolesComponent', () => {
   let component: RolesComponent;
   let fixture: ComponentFixture<RolesComponent>;
-  let mockApiService: jasmine.SpyObj<ApiService>;
-  let mockSnackbarService: jasmine.SpyObj<SnackbarService>;
-  let mockDialogService: jasmine.SpyObj<ConfirmDialogService>;
-  let mockRolesService: jasmine.SpyObj<RolesService>;
-  let mockPuenteDatosService: jasmine.SpyObj<PuenteDatosService>;
-  let matDialog: MatDialog;
+  let apiServiceSpy: jasmine.SpyObj<ApiService>;
+  let snackbarServiceSpy: jasmine.SpyObj<SnackbarService>;
+  let dialogServiceSpy: jasmine.SpyObj<ConfirmDialogService>;
+  let rolesServiceSpy: jasmine.SpyObj<RolesService>;
+  let puenteDatosServiceSpy: jasmine.SpyObj<PuenteDatosService>;
 
   beforeEach(async () => {
-    const apiServiceSpy = jasmine.createSpyObj('ApiService', ['getRolesFilter']);
-    const snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', ['mensaje']);
-    const dialogServiceSpy = jasmine.createSpyObj('ConfirmDialogService', ['open', 'confirmed']);
-    const rolesServiceSpy = jasmine.createSpyObj('RolesService', ['deleteRol']);
-    const puenteDatosServiceSpy = jasmine.createSpyObj('PuenteDatosService', ['setMenuGeneral', 'geturl']);
+    apiServiceSpy = jasmine.createSpyObj('ApiService', ['getRolesFilter']);
+    snackbarServiceSpy = jasmine.createSpyObj('SnackbarService', ['mensaje']);
+    dialogServiceSpy = jasmine.createSpyObj('ConfirmDialogService', ['open', 'confirmed']);
+    rolesServiceSpy = jasmine.createSpyObj('RolesService', ['deleteRol']);
+    puenteDatosServiceSpy = jasmine.createSpyObj('PuenteDatosService', ['setMenuGeneral', 'geturl']);
+
+    // Configura el observable simulado para 'getRolesFilter'
+    apiServiceSpy.getRolesFilter.and.returnValue(of([])); // Devuelve un observable de array vacío
 
     await TestBed.configureTestingModule({
       declarations: [ RolesComponent ],
-      imports: [ HttpClientTestingModule ],
+      imports: [ 
+        HttpClientTestingModule,
+        MatDialogModule
+      ],
       providers: [
-        MatDialog, // Agregado para que MatDialog esté disponible
         { provide: ApiService, useValue: apiServiceSpy },
         { provide: SnackbarService, useValue: snackbarServiceSpy },
         { provide: ConfirmDialogService, useValue: dialogServiceSpy },
         { provide: RolesService, useValue: rolesServiceSpy },
         { provide: PuenteDatosService, useValue: puenteDatosServiceSpy },
+        MatDialog
       ],
       schemas: [NO_ERRORS_SCHEMA] // Evita errores de esquema por elementos desconocidos
     })
@@ -49,12 +51,6 @@ describe('RolesComponent', () => {
 
     fixture = TestBed.createComponent(RolesComponent);
     component = fixture.componentInstance;
-    matDialog = TestBed.inject(MatDialog); // Inicializa MatDialog
-    mockApiService = TestBed.inject(ApiService) as jasmine.SpyObj<ApiService>;
-    mockSnackbarService = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
-    mockDialogService = TestBed.inject(ConfirmDialogService) as jasmine.SpyObj<ConfirmDialogService>;
-    mockRolesService = TestBed.inject(RolesService) as jasmine.SpyObj<RolesService>;
-    mockPuenteDatosService = TestBed.inject(PuenteDatosService) as jasmine.SpyObj<PuenteDatosService>;
     fixture.detectChanges();
   });
 

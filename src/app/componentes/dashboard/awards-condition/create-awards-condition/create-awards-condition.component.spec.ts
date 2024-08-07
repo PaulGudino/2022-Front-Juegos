@@ -3,6 +3,12 @@ import { CreateAwardsConditionComponent } from './create-awards-condition.compon
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { AwardsConditionService } from 'src/app/servicios/awards-condition/awards-condition.service';
 import { AwardsService } from 'src/app/servicios/awards/awards.service';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
@@ -10,12 +16,7 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Mock de los servicios
 const mockAwardsConditionService = {
@@ -62,6 +63,7 @@ describe('CreateAwardsConditionComponent', () => {
         MatFormFieldModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        NgbTimepickerModule  // Agregar esto
       ],
       providers: [
         FormBuilder,
