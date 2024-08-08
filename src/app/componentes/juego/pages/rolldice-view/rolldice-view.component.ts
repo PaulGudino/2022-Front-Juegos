@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DashboardPublicityService } from 'src/app/servicios/publicity/dashboardPublicity/dashboard-publicity.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 import { AnimationGameService } from '../../service/animationGame/animation-game.service';
-import { ThemeService } from '../../service/theme/theme.service';
+import { ThemeService } from 'src/app/servicios/theme/theme.service';
 import { PublicityGameService } from 'src/app/servicios/publicityGame/publicity-game.service';
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { ProbabilityService } from 'src/app/servicios/probability/probability/probability.service';
@@ -59,6 +59,10 @@ export class RolldiceViewComponent implements OnInit {
         this.loadCurrentJuego(this.gameId.toString());
       }
     });
+
+    this.theme.getDesignInformation().subscribe((designData) => {
+      this.styles.loadData(designData[0]);
+   })
   }
 
   changeView() {
@@ -106,7 +110,7 @@ export class RolldiceViewComponent implements OnInit {
     }
   }
   music() {
-    if (this.attemps > 0) {
+    if (this.attemps > 0 && this.keyController.getCode().length == 1) {
         this.slot_music = true;
         this.attemps -= 1;
         setTimeout(() => {

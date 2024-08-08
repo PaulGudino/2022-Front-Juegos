@@ -1,54 +1,40 @@
 <app-menu>
     <mat-toolbar class="background-navy-primary green-primary">
-        <span>Diseño Juego</span>
-        <span class="example-spacer"></span>
+      <span>DISEÑO DE JUEGOS</span>
+      <span class="example-spacer"></span>
     </mat-toolbar>
-
-    <div class="container">
-        <h2>ADIVINA LA PUERTA</h2>
-        <div class="doors-container">
-            <div class="door">
-                <div class="door-title">PUERTA IZQUIERDA</div>
-                <div class="door-image" id="door-left" style="background-color: #0051a3;"></div>
-                <button class="upload-button" onclick="document.getElementById('upload-door-left').click()">+</button>
-                <input type="file" id="upload-door-left" accept="image/*">
-            </div>
-            <div class="door">
-                <div class="door-title">PUERTA CENTRAL</div>
-                <div class="door-image" id="door-center" style="background-color: #8FCB9B;"></div>
-                <button class="upload-button" onclick="document.getElementById('upload-door-center').click()">+</button>
-                <input type="file" id="upload-door-center" accept="image/*">
-            </div>
-            <div class="door">
-                <div class="door-title">PUERTA DERECHA</div>
-                <div class="door-image" id="door-right" style="background-color: #ff6f7d;"></div>
-                <button class="upload-button" onclick="document.getElementById('upload-door-right').click()">+</button>
-                <input type="file" id="upload-door-right" accept="image/*">
-            </div>
+  
+    <div class="publicity-container">
+      <div class="publicity__changes">
+        <p class="publicity__title white-color">ADIVINA LA PUERTA</p>
+        <div class="door-container">
+          <div class="door-column">
+            <p>PUERTA IZQUIERDA</p>
+            <button class="plus-button">+</button>
+          </div>
+          <div class="door-column">
+            <p>PUERTA CENTRAL</p>
+            <button class="plus-button">+</button>
+          </div>
+          <div class="door-column">
+            <p>PUERTA DERECHA</p>
+            <button class="plus-button">+</button>
+          </div>
         </div>
-        <div class="settings">
-            <div class="image-scale">
-                <label for="image-scale">Escala de imagen 190x372</label>
-            </div>
-            <div class="attempts">
-                <label for="attempts">Numero de Intentos:</label>
-                <input type="number" id="attempts" name="attempts">
-            </div>
-            <div class="save-button">
-                <button>Guardar</button>
-            </div>
-        </div>
-        <div class="background-logo">
-            <div class="background">
-                <button id="select-background" onclick="document.getElementById('upload-background').click()">Seleccionar Fondo</button>
-                <input type="file" id="upload-background" accept="image/*" style="display:none;">
-            </div>
-            <div class="logo">
-                <button id="select-logo" onclick="document.getElementById('upload-logo').click()">Seleccionar Logo</button>
-                <input type="file" id="upload-logo" accept="image/*" style="display:none;">
-            </div>
-        </div>
+        <p class="publicity__title white-color">Escala de imagen 190x372</p>
+        <p class="publicity__title white-color">Numero de Intentos:</p>
+        <input type="text" placeholder="Inserte un número aquí" />
+        <label class="switch">
+            <input type="checkbox" placeholder="OFF">
+            <span class="slider round"></span>
+        </label>
+        <button mat-button class="save-button">Guardar</button>
+      </div>
+      <div class="publicity__view">
+        <img src="./assets/img/fondo_Puertas.png" alt="fondo_Puertas" />
+        <button mat-button class="select-button">Seleccionar Fondo</button>
+        <button mat-button class="select-button">Seleccionar Logo</button>
+      </div>
     </div>
-    <script src="script.js"></script>
-</app-menu>
+  </app-menu>
   

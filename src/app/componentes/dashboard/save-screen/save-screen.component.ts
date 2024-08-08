@@ -91,7 +91,7 @@ export class SaveScreenComponent implements OnInit {
             formData.append('is_active', 'true');
             formData.append('game_id', '1');
 
-            this.theme.updateDesgin(1, formData);
+            this.theme.updateDesign(1, formData);
 
             //this.router.navigate(['/dashboard/juego/fecha']);
             this.snackbar.mensaje('Salvapantallas Actualizado Exitosamente');
@@ -115,7 +115,7 @@ export class SaveScreenComponent implements OnInit {
             formData.append('is_active', 'true');
             formData.append('game_id', '1');
 
-            this.theme.updateDesgin(1, formData);
+            this.theme.updateDesign(1, formData);
 
             //this.router.navigate(['/dashboard/juego/fecha']);
             this.snackbar.mensaje('Salvapantallas Actualizado Exitosamente');

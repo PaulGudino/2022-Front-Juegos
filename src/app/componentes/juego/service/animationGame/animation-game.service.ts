@@ -4,6 +4,8 @@ import { ConfirmDialogService } from "src/app/servicios/confirm-dialog/confirm-d
 import { KeyControllerService } from "../keyController/key-controller.service"
 import { getAwardList } from "src/app/interfaces/awards/getAwardList"
 import { AwardsService } from "src/app/servicios/awards/awards.service"
+import { ThemeService } from "src/app/servicios/theme/theme.service"
+import { DashboardStyleService } from "src/app/servicios/theme/dashboardStyle/dashboard-style.service"
 
 @Injectable({
 	providedIn: "root",
@@ -33,12 +35,12 @@ export class AnimationGameService {
 	isGameStarted = false;
 	isDoorSelected = false;
 	doors = [
-		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' },
-		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' },
-		{ isOpen: false, prize: '', image: './assets/img/diseno_puerta.png' }
+		{ isOpen: false, prize: '', image: this.dashStyle.get_image_door_left() },
+		{ isOpen: false, prize: '', image: this.dashStyle.get_image_door_center() },
+		{ isOpen: false, prize: '', image: this.dashStyle.get_image_door_right() }
 	];
 	prizes: getAwardList[] = [];
-	
+
 	// ----------------- Precision -----------------
 	currentMinutes = 0;
 	clockRunning = false;
@@ -49,9 +51,17 @@ export class AnimationGameService {
 		private gameLogicService: GameLogicService,
 		private confirmDialog: ConfirmDialogService,
 		public keyController: KeyControllerService,
-		private awardsService: AwardsService
+		private awardsService: AwardsService,
+		public theme: ThemeService,
+		public dashStyle: DashboardStyleService
 
 	) { }
+
+	ngOnInit(): void {
+		this.theme.getDesignInformation().subscribe((designData) => {
+			this.dashStyle.loadData(designData[0]);
+		 })
+	}
 
 	// ----------------- Tragamonedas -----------------
 
@@ -206,14 +216,14 @@ export class AnimationGameService {
 						clearInterval(intervalId)
 						if (this.gameLogicService.attempts === 0) {
 							const options = {
-								title: "Se terminó la partida",
+								title: "./assets/img/palabras/perdio.png",
 								image: "./assets/img/gameover.png",
 								result_music: "./assets/audio/lose.mp3",
 							}
 							this.confirmDialog.end_game(options)
 						} else {
 							let options = {
-								title: "INTENTA OTRA VEZ!!!",
+								title: "./assets/img/palabras/sigue_participando.png",
 								image: "../../../../../assets/img/loseImage.png",
 								result_music: "../../../../../assets/audio/lose.mp3",
 							}
@@ -245,64 +255,77 @@ export class AnimationGameService {
 	startGameRolldice() {
 		this.gameLogicService.winFirstTime = false
 		console.log(this.gameLogicService.winner);
+		if (this.keyController.getCode().length === 0) {
+			let game_message = [
+				"Debes ingresar un número para jugar",
+			]
+			this.confirmDialog.error(game_message)
+		}
+		else if(this.keyController.getCode().length > 1){
+			let game_message = [
+				"Debes ingresar un número de un solo dígito",
+			]
+			this.confirmDialog.error(game_message)
+		} else {
 
-		if (this.gameLogicService.attempts > 0) {
-			//Logic return true if win
-			this.disabledPlayButton = true
-			this.isRolling = true;
-			const randomFace = Math.floor(Math.random() * 6) + 1;
-			this.currentFace = randomFace;
-			this.rollTime = Math.random() + 4;
-			console.log("cara random", this.currentFace)
-			if (this.gameLogicService.winner) {
-				this.gameLogicService.winFirstTime = true
+			if (this.gameLogicService.attempts > 0) {
+				//Logic return true if win
+				this.disabledPlayButton = true
+				this.isRolling = true;
+				const randomFace = Math.floor(Math.random() * 6) + 1;
+				this.currentFace = randomFace;
+				this.rollTime = Math.random() + 4;
+				console.log("cara random", this.currentFace)
+				if (this.gameLogicService.winner) {
+					this.gameLogicService.winFirstTime = true
 
-				const intervalId = setInterval(() => {
-					setTimeout(() => {
-						this.finalTransformDice = this.getTransformDice(parseInt(this.keyController.getCode()));
-					}, this.rollTime);
-					this.isRolling = false;
-					clearInterval(intervalId)
-					this.showWinMessage(this.gameLogicService.winAwardImage);
-					this.disabledPlayButton = false
-					//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
-				}, this.rollTime * 750)
-			} else {
-				const intervalId = setInterval(() => {
-					setTimeout(() => {
+					const intervalId = setInterval(() => {
+						setTimeout(() => {
+							this.finalTransformDice = this.getTransformDice(parseInt(this.keyController.getCode()));
+						}, this.rollTime);
+						this.isRolling = false;
+						clearInterval(intervalId)
+						this.showWinMessage(this.gameLogicService.winAwardImage);
+						this.disabledPlayButton = false
+						//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
+					}, this.rollTime * 750)
+				} else {
+					const intervalId = setInterval(() => {
+						setTimeout(() => {
 
-						this.finalTransformDice = this.getTransformDice(this.currentFace);
-						while (parseInt(this.keyController.getCode()) === this.currentFace) {
-							const randomFace2 = Math.floor(Math.random() * 6) + 1;
-							this.currentFace = randomFace2
 							this.finalTransformDice = this.getTransformDice(this.currentFace);
-							console.log("salio la misma cara, se cambia a", this.currentFace)
+							while (parseInt(this.keyController.getCode()) === this.currentFace) {
+								const randomFace2 = Math.floor(Math.random() * 6) + 1;
+								this.currentFace = randomFace2
+								this.finalTransformDice = this.getTransformDice(this.currentFace);
+								console.log("salio la misma cara, se cambia a", this.currentFace)
+							}
+						}, this.rollTime);
+						this.isRolling = false;
+						clearInterval(intervalId)
+						if (this.gameLogicService.attempts === 0) {
+							const options = {
+								title: "./assets/img/palabras/perdio.png",
+								image: "./assets/img/gameover.png",
+								result_music: "./assets/audio/lose.mp3",
+							}
+							this.confirmDialog.end_game(options)
+						} else {
+							let options = {
+								title: "./assets/img/palabras/sigue_participando.png",
+								image: "./assets/img/loseImage.png",
+								result_music: "./assets/audio/lose.mp3",
+							}
+							this.confirmDialog.result_game(options)
 						}
-					}, this.rollTime);
-					this.isRolling = false;
-					clearInterval(intervalId)
-					if (this.gameLogicService.attempts === 0) {
-						const options = {
-							title: "Se terminó la partida",
-							image: "./assets/img/gameover.png",
-							result_music: "./assets/audio/lose.mp3",
-						}
-						this.confirmDialog.end_game(options)
-					} else {
-						let options = {
-							title: "INTENTA OTRA VEZ!!!",
-							image: "../../../../../assets/img/loseImage.png",
-							result_music: "../../../../../assets/audio/lose.mp3",
-						}
-						this.confirmDialog.result_game(options)
-					}
-					this.disabledPlayButton = false
-				}, this.rollTime * 750)
+						this.disabledPlayButton = false
+					}, this.rollTime * 750)
+				}
+
+				this.gameLogicService.setWinnerState(false)
+				this.gameLogicService.decreaseAttemptCount()
+
 			}
-
-			this.gameLogicService.setWinnerState(false)
-			this.gameLogicService.decreaseAttemptCount()
-
 		}
 	}
 
@@ -380,16 +403,16 @@ export class AnimationGameService {
 
 				if (this.gameLogicService.attempts === 1) {
 					const options = {
-						title: "Se terminó la partida",
+						title: "./assets/img/palabras/perdio.png",
 						image: "./assets/img/gameover.png",
 						result_music: "./assets/audio/lose.mp3",
 					};
 					this.confirmDialog.end_game(options);
 				} else {
 					let options = {
-						title: isOneSecondApart(this.currentTime, this.targetTime) ? "PERDISTE EL TURNO!!!" : "INTENTA OTRA VEZ!!!",
-						image: isOneSecondApart(this.currentTime, this.targetTime) ? "../../../../../assets/img/loseImage.png" : "../../../../../assets/img/loseImage.png",
-						result_music: "../../../../../assets/audio/lose.mp3",
+						title: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/palabras/sigue_participando.png" : "./assets/img/palabras/sigue_participando.png",
+						image: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/loseImage.png" : "./assets/img/loseImage.png",
+						result_music: "./assets/audio/lose.mp3",
 					};
 					this.confirmDialog.result_game(options);
 				}
@@ -496,7 +519,7 @@ export class AnimationGameService {
 
 	showWinMessage(prize: string): void {
 		let options = {
-			title: "HAS GANADO!!!",
+			title: "./assets/img/palabras/gano.png",
 			image: prize,
 			result_music: "./assets/audio/win.mp3",
 		};
@@ -505,9 +528,9 @@ export class AnimationGameService {
 
 	showLoseMessage(): void {
 		let options = {
-			title: this.gameLogicService.attempts === 0 ? "Se terminó la partida" : "INTENTA OTRA VEZ!!!",
+			title: this.gameLogicService.attempts === 0 ? "./assets/img/palabras/perdio.png" : "./assets/img/palabras/sigue_participando.png",
 			image: this.gameLogicService.attempts === 0 ? "./assets/img/gameover.png" : "./assets/img/loseImage.png",
-			result_music: "../../../../../assets/audio/lose.mp3",
+			result_music: "./assets/audio/lose.mp3",
 		};
 		if (this.gameLogicService.attempts === 0) {
 			this.confirmDialog.end_game(options);

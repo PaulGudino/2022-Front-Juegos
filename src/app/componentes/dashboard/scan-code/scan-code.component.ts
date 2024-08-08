@@ -69,7 +69,7 @@ export class ScanCodeComponent implements OnInit {
             formData.append('date_modified', new Date().toISOString());
             formData.append('game_id', '1');
 
-            this.theme.updateDesgin(1, formData);
+            this.theme.updateDesign(1, formData);
             //this.router.navigate(['/dashboard/juego/fecha']);
             this.snackbar.mensaje(
                'Informacion Escaner Actualizada Exitosamente'

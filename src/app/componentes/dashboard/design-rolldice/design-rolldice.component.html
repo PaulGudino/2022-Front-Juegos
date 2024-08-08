@@ -1,65 +1,71 @@
 <app-menu>
-    <mat-toolbar class="background-navy-primary green-primary">
-       <span>Diseño Juego</span>
-       <span class="example-spacer"></span>
-    </mat-toolbar>
+  <mat-toolbar class="background-navy-primary green-primary">
+    <span>Diseño Juego</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
 
-    <div class="container">
-        <h2>TIRA LOS DADOS</h2>
-        <div class="dice-container">
-            <div class="dice-face">
-                <img id="face1" src="default-face1.png" alt="Face 1">
-                <button class="upload-button" onclick="document.getElementById('upload-face1').click()">+</button>
-                <input type="file" id="upload-face1" accept="image/*">
-            </div>
-            <div class="dice-face">
-                <img id="face2" src="default-face2.png" alt="Face 2">
-                <button class="upload-button" onclick="document.getElementById('upload-face2').click()">+</button>
-                <input type="file" id="upload-face2" accept="image/*">
-            </div>
-            <div class="dice-face">
-                <img id="face3" src="default-face3.png" alt="Face 3">
-                <button class="upload-button" onclick="document.getElementById('upload-face3').click()">+</button>
-                <input type="file" id="upload-face3" accept="image/*">
-            </div>
-            <div class="dice-face">
-                <img id="face4" src="default-face4.png" alt="Face 4">
-                <button class="upload-button" onclick="document.getElementById('upload-face4').click()">+</button>
-                <input type="file" id="upload-face4" accept="image/*">
-            </div>
-            <div class="dice-face">
-                <img id="face5" src="default-face5.png" alt="Face 5">
-                <button class="upload-button" onclick="document.getElementById('upload-face5').click()">+</button>
-                <input type="file" id="upload-face5" accept="image/*">
-            </div>
-            <div class="dice-face">
-                <img id="face6" src="default-face6.png" alt="Face 6">
-                <button class="upload-button" onclick="document.getElementById('upload-face6').click()">+</button>
-                <input type="file" id="upload-face6" accept="image/*">
-            </div>
+  <div class="publicity-container">
+    <div class="publicity__changes">
+      <p class="publicity__title white-color">TIRA LOS DADOS</p>
+      <div class="dice-container">
+        <div class="dice-column">
+          <p>Cara 1</p>
+          <img src="{{previsulizacionDiceFaceOne}}" alt="dado1" />
+          <button class="plus-button" (click)="takeInputFaceOne.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceOne (change)="capturarFileDiceFaces($event,'one')">
         </div>
-        <div class="settings">
-            <div class="image-scale">
-                <label for="image-scale">Escala de imagen 60x60</label>
-            </div>
-            <div class="attempts">
-                <label for="attempts">Numero de Intentos:</label>
-                <input type="number" id="attempts" name="attempts">
-            </div>
-            <div class="save-button">
-                <button>Guardar</button>
-            </div>
+        <div class="dice-column">
+          <p>Cara 2</p>
+          <img src="{{previsulizacionDiceFaceTwo}}" alt="dado2" />
+          <button class="plus-button" (click)="takeInputFaceTwo.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceTwo (change)="capturarFileDiceFaces($event,'two')">
         </div>
-        <div class="background-logo">
-            <div class="background">
-                <button id="select-background" onclick="dashStyle.setImageBackgroundGameFile()">Seleccionar Fondo</button>
-                <input type="file" id="upload-background" accept="image/*" style="display:none;">
-            </div>
-            <div class="logo">
-                <button id="select-logo" onclick="document.getElementById('upload-logo').click()">Seleccionar Logo</button>
-                <input type="file" id="upload-logo" accept="image/*" style="display:none;">
-            </div>
+        <div class="dice-column">
+          <p>Cara 3</p>
+          <img src="{{previsulizacionDiceFaceThree}}" alt="dado3" />
+          <button class="plus-button" (click)="takeInputFaceThree.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceThree (change)="capturarFileDiceFaces($event,'three')">
         </div>
+        <div class="dice-column">
+          <p>Cara 4</p>
+          <img src="{{previsulizacionDiceFaceFour}}" alt="dado4" />
+          <button class="plus-button" (click)="takeInputFaceFour.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceFour (change)="capturarFileDiceFaces($event,'four')">
+        </div>
+        <div class="dice-column">
+          <p>Cara 5</p>
+          <img src="{{previsulizacionDiceFaceFive}}" alt="dado65" />
+          <button class="plus-button" (click)="takeInputFaceFive.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceFive (change)="capturarFileDiceFaces($event,'five')">
+        </div>
+        <div class="dice-column">
+          <p>Cara 6</p>
+          <img src="{{previsulizacionDiceFaceSix}}" alt="dado6" />
+          <button class="plus-button" (click)="takeInputFaceSix.click()">+</button>
+          <input class="file-input" type="file" #takeInputFaceSix (change)="capturarFileDiceFaces($event,'six')">
+        </div>
+      </div>
+      <p class="publicity__title white-color">Escala de imagen 60x60</p>
+      <div class="buttons-container">
+        <app-button-primary (click)="updateDesign()" title="Guardar"></app-button-primary>
+        <app-button-primary (click)="cancel()" title="Cancelar" backgroundColor="#fff"></app-button-primary>
+      </div>
+
     </div>
-    <script src="script.js"></script>
+    <div class="publicity__view">
+      <div class="publicity__view-column">
+        <img id="background" src="{{previsulizacionBackground}}" alt="fondo_Dados" />
+        <button class="select-button" (click)="takeInputBackground.click()">Seleccionar Fondo</button>
+        <input class="file-input" type="file" #takeInputBackground (change)="capturarBackgroundFile($event)">
+      </div>
+
+      <div class="publicity__view-column">
+        <img id="logo" src="{{previsulizacionLogo}}" alt="logo_Dados" />
+        <button class="select-button" (click)="takeInputLogo.click()">Seleccionar Logo</button>
+        <input class="file-input" type="file" #takeInputLogo (change)="capturarFileLogo($event)">
+      </div>
+
+
+    </div>
+  </div>
 </app-menu>

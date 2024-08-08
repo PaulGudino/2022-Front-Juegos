@@ -1,9 +1,15 @@
 <div class="container-fullscreen">
     <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
     <div class="container-menu">
-        <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
+        <app-logo [urlImage]="styles.get_image_background_puertas()" [isBackground]="true" height="25rem"></app-logo>
         <div class="scan-shadow"></div>
         <div class="scan_menu-container">
+            <div class="menu-container_img-container">
+            <app-logo
+					[urlImage]="styles.get_image_logo_puertas()"
+					height="22rem"
+					[isHome]="false"></app-logo>
+            </div>
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
             <h2 class="subtitle">Escoge la Puerta</h2>
             <p class="instructions">¡Abre una puerta y podrás llevarte el premio que contenga!</p>

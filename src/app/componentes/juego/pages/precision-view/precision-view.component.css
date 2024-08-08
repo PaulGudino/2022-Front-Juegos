@@ -21,7 +21,12 @@ html, body {
     padding: 0;
     box-sizing: border-box;
 }
-
+.menu-container_img-container {
+    width: 39rem;
+    height: 19rem;
+    min-height: 4rem;
+    margin: 0 1rem 1rem 0;
+ }
 .container-menu {
     position: relative;
     height: 100%;

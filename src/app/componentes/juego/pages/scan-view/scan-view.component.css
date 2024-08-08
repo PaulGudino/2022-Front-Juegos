@@ -33,11 +33,11 @@
   font-size: 3.8rem;
 }
 .menu-container_img-container{
-   width: 39rem;
-   height: 19rem;
-   min-height: 4rem;
-   margin: 0 1rem 1rem 0;
+   width: 30%;
+   height: 20%;
+   justify-content: center;
 }
+
 .menu-info{
    display: flex;
    flex-direction: column;

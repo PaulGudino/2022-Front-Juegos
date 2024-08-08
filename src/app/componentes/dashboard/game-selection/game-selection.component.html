@@ -1,46 +1,55 @@
 <app-menu>
-    <!-- Toolbar -->
-    <mat-toolbar class="background-navy-primary green-primary">
-       <span>Seleccionar Juego</span>
-    </mat-toolbar>
- 
+   <!-- Toolbar -->
+   <mat-toolbar class="background-navy-primary green-primary">
+      <span>Seleccionar Juego</span>
+   </mat-toolbar>
 
-    <div class="container p-5 px-1 container_juego2">
-       <div
-          *ngFor="let game of allGames"
-          class="container container-juego2 background-navy-primary green-primary text-center pt-4 pb-1"
-       >
-            <figure class="logo-game-container background-green-primary">
-                <img
-                   src="../../../../assets/img/{{game.name}}.png"
-                   alt="no image"
-                />
-             </figure>
-          <div class="row mt-5">
-             <h3 class="col">{{ game.name }}</h3>
-          </div>
-          <div class="row">
-             <h3 class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players}}</h3>
-          </div>
-          <div class="row mb-4">
-             <app-button-primary
-                class="col"
-                title="Activado"
-             ></app-button-primary>
-          </div>
-          <div class="row">
-             <p class="col color-white">
-                Gira las casillas para ganar el premio.
-             </p>
-          </div>
-          <div class="row mb-2">
-             <app-button-primary
-                class="col"
-                title="Continuar"
-                backgroundColor="#fff"
-                (click)="onSelectGame(game.name)"
-             ></app-button-primary>
-          </div>
-       </div>
-    </div>
- </app-menu>
+
+   <div class="container p-5 px-1 container_juego2">
+      <div *ngFor="let game of allGames"
+         class="container container-juego2 background-navy-primary green-primary text-center pt-4 pb-1">
+         <figure class="logo-game-container">
+            <img *ngIf="game.name === 'Tragamonedas'" src ="{{dashStyle.get_image_logo_tragamonedas()}}" alt="no image" />
+            <img *ngIf="game.name === 'Precision'" src ="{{dashStyle.get_image_logo_precision()}}" alt="no image" />
+            <img *ngIf="game.name === 'Dados'" src ="{{dashStyle.get_image_logo_dados()}}" alt="no image" />
+            <img *ngIf="game.name === 'Puertas'" src ="{{dashStyle.get_image_logo_puertas()}}" alt="no image" />
+         </figure>
+         <div class="row mt-5">
+            <h3 class="col">{{ game.name }}</h3>
+         </div>
+         <div class="row">
+            <h3 class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players}}</h3>
+         </div>
+         <div class="row mb-4">
+            <app-button-primary class="col" title="Activado"></app-button-primary>
+         </div>
+         <div class="row">
+            <div *ngIf="game.name === 'Tragamonedas'">
+               <p class="col color-white">
+                  Gira las casillas para ganar el premio.
+               </p>
+            </div>
+            <div *ngIf="game.name === 'Precision'">
+               <p class="col color-white">
+                  Detén el reloj en la hora objetivo para ganar el premio.
+               </p>
+            </div>
+            <div *ngIf="game.name === 'Dados'">
+               <p class="col color-white">
+                  Gira el dado y adivina el número para ganar el premio.
+               </p>
+            </div>
+            <div *ngIf="game.name === 'Puertas'">
+               <p class="col color-white">
+                  Selecciona una puerta para ganar el premio.
+               </p>
+            </div>
+
+         </div>
+         <div class="row mb-2">
+            <app-button-primary class="col" title="Continuar" backgroundColor="#fff"
+               (click)="onSelectGame(game.name)"></app-button-primary>
+         </div>
+      </div>
+   </div>
+</app-menu>

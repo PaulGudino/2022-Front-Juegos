@@ -21,12 +21,12 @@
 .image_container{
     width: 50%;
 }
-.tragamonedas_img{
+.logo_img{
     width: 100%;
-    height: 150px;
+    height: 250px;
     display: flex;
 }
-.tragamonedas_img img{
+.logo_img img{
     width: 100%;
     height: 500px;
     margin-top: -150px;

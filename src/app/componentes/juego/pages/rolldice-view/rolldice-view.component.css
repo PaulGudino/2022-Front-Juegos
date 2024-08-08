@@ -4,27 +4,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* Cambiado para espacio entre elementos */
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
 }
 
 .container-menu {
   position: relative;
-  height: 100%;
+  flex: 1; /* Ocupar el espacio restante entre las publicidades */
   width: 100%;
   background-color: black;
+  z-index: 1;
 }
 
-.scan-shadow {
+.background-shadow {
   height: 100%;
   width: 100%;
   position: absolute;
-  background-color: #000000d4;
-  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: -1;
+}
+
+.background-shadow img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.5;
 }
 
 .scan_menu-container {
@@ -68,7 +79,7 @@
 }
 
 .instructions {
-  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
+  font-size: 2rem;
   margin-bottom: 2rem;
   color: white;
 }
@@ -78,24 +89,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Añadir margen inferior para separar el botón del dado */
+  margin-bottom: 20px;
+}
+
+.menu-container_img-container {
+  width: 39rem;
+  height: 19rem;
+  min-height: 4rem;
+  margin: 1rem 1rem 1rem 1rem;
 }
 
 .generic-button-container {
-  margin-top: 50px; /* Añadir margen superior para separar el botón del dado */
+  margin-top: 50px;
   margin-bottom: 50px;
 }
 
 .dice {
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 2s; /* Reducir el tiempo de transición */
+  transition: transform 2s;
 }
 
 .dice.roll {
-  animation: roll linear infinite; /* Reducir la duración de la animación */
+  animation: roll linear infinite;
 }
 
 @keyframes roll {
@@ -105,8 +123,8 @@
 
 .face {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   background-color: white;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -128,13 +146,13 @@
 input[type="text"] {
   margin-top: 1rem;
   padding: 0.5rem;
-  font-size: 2rem; /* Aumentar el tamaño de la fuente para mayor visibilidad */
+  font-size: 2rem;
   text-align: center;
   background-color: #333;
   color: white;
   border: none;
   border-radius: 5px;
-  width: 500px; /* Ajustar el ancho para que no ocupe demasiado espacio */
+  width: 500px;
 }
 
 button:hover {
