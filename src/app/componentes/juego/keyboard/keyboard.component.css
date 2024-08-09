@@ -11,13 +11,12 @@
 .keyboard-row {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
 }
 
 .btn {
   width: 60px;
   height: 60px;
-  margin: 10px;
+  margin: 5px;
   background-color: rgb(49, 49, 49);
   border: none;
   color: white;

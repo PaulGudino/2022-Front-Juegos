@@ -11,63 +11,82 @@ import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/da
   styleUrls: ['./design-precision.component.css']
 })
 export class DesignPrecisionComponent implements OnInit {
-  @ViewChild('uploadTime1', { static: false }) uploadTime1!: ElementRef;
-  @ViewChild('uploadTime2', { static: false }) uploadTime2!: ElementRef;
-  @ViewChild('uploadTime3', { static: false }) uploadTime3!: ElementRef;
-  @ViewChild('uploadBackground', { static: false }) uploadBackground!: ElementRef;
-  @ViewChild('uploadLogo', { static: false }) uploadLogo!: ElementRef;
+  @ViewChild('takeInputBackground', { static: false }) InputVarBackground!: ElementRef;
+  @ViewChild('takeInputLogo', { static: false }) InputVarLogo!: ElementRef;
+  @ViewChild('takeInputBoxWatch', { static: false }) InputVarBoxWatch!: ElementRef;
 
-  previewTime1: string = './assets/img/cajon_reloj.png';
-  previewTime2: string = 'default-time2.png';
-  previewTime3: string = 'default-time3.png';
-  previewBackground: string = 'default.png';
-  previewLogo: string = './assets/img/logo_Precision.png';
+  previewWatchBox: string = '';
+  previewBackground?: string = '';
+  previewLogo: string = '';
 
-  fileToUploadTime1!: File | null;
-  fileToUploadTime2!: File | null;
-  fileToUploadTime3!: File | null;
-  fileToUploadBackground!: File | null;
+  
   fileToUploadLogo!: File | null;
+  imageLogo!: File;
+
+  fileToUploadBackground!: File | null;
+  imageBackground!: File | null;
+
+  fileToUploadBoxWatch!: File | null;
+  imageBoxWatch!: File;
 
   constructor(
     private snackbar: SnackbarService,
     private theme: ThemeService,
-    private imageService: ImageService,
+    private imageSrv: ImageService,
     private dialogService: ConfirmDialogService,
-    private dashstyle: DashboardStyleService
+    private dashStyle: DashboardStyleService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.theme.getDesignInformation().subscribe((designData) => {
+      this.dashStyle.loadData(designData[0]);
+      this.previewWatchBox = this.dashStyle.get_image_box_watch();
+      this.previewBackground = this.dashStyle.get_image_background_precision();
+      this.previewLogo = this.dashStyle.get_image_logo_precision();
+    });
+  }
 
-  handleFileInput(event: any, previewType: string): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.imageService.extraerBase64(file).then((image: any) => {
-        switch (previewType) {
-          case 'time1':
-            this.previewTime1 = image.base;
-            this.fileToUploadTime1 = file;
-            break;
-          case 'time2':
-            this.previewTime2 = image.base;
-            this.fileToUploadTime2 = file;
-            break;
-          case 'time3':
-            this.previewTime3 = image.base;
-            this.fileToUploadTime3 = file;
-            break;
-          case 'background':
-            this.previewBackground = image.base;
-            this.fileToUploadBackground = file;
-            this.dashstyle.setImageBackgroundPrecisionFile(this.fileToUploadBackground)
-            break;
-          case 'logo':
-            this.previewLogo = image.base;
-            this.fileToUploadLogo = file;
-            this.dashstyle.setImageLogoFile(this.fileToUploadLogo)
-            break;
-        }
+  capturarBackgroundFile(event: any): void {
+    this.fileToUploadBackground = this.imageSrv.captureFile(event);
+    if (this.fileToUploadBackground) {
+      this.imageBackground = this.fileToUploadBackground;
+      this.imageSrv
+        .extraerBase64(this.fileToUploadBackground)
+        .then((imagenBackground: any) => {
+          this.previewBackground = imagenBackground.base;
+          this.dashStyle.setImageBackgroundPrecisionFile(this.fileToUploadBackground);
+        });
+    } else {
+      this.InputVarBackground.nativeElement.value = '';
+      this.snackbar.mensaje('Solo se permiten imagenes');
+    }
+  }
+
+  capturarFileLogo(event: any): void {
+    this.fileToUploadLogo = this.imageSrv.captureFile(event);
+    if (this.fileToUploadLogo) {
+      this.imageLogo = this.fileToUploadLogo;
+      this.imageSrv.extraerBase64(this.fileToUploadLogo).then((imagenLogo: any) => {
+        this.previewLogo = imagenLogo.base;
+        this.dashStyle.setImageLogoPrecisionFile(this.fileToUploadLogo);
       });
+    } else {
+      this.InputVarLogo.nativeElement.value = '';
+      this.snackbar.mensaje('Solo se permiten imágenes');
+    }
+  }
+
+  capturarFileBoxWatch(event: any): void {
+    this.fileToUploadBoxWatch = this.imageSrv.captureFile(event);
+    if (this.fileToUploadBoxWatch) {
+      this.imageBoxWatch = this.fileToUploadBoxWatch;
+      this.imageSrv.extraerBase64(this.fileToUploadBoxWatch).then((imagenBoxWatch: any) => {
+        this.previewWatchBox = imagenBoxWatch.base;
+        this.dashStyle.setImageBoxWatchFile(this.fileToUploadBoxWatch);
+      });
+    } else {
+      this.InputVarBoxWatch.nativeElement.value = '';
+      this.snackbar.mensaje('Solo se permiten imágenes');
     }
   }
 
@@ -81,29 +100,64 @@ export class DesignPrecisionComponent implements OnInit {
     this.dialogService.open(options);
     this.dialogService.confirmed().subscribe((confirmed) => {
       if (confirmed) {
-        let formData: FormData = new FormData();
-        formData.append('id', '2');
-        formData.append('date_modified', new Date().toISOString());
-        formData.append('is_active', 'true');
-        formData.append('game_id', '2');
-        if (this.fileToUploadTime1) {
-          formData.append('time1', this.fileToUploadTime1, this.fileToUploadTime1.name);
-        }
-        if (this.fileToUploadTime2) {
-          formData.append('time2', this.fileToUploadTime2, this.fileToUploadTime2.name);
-        }
-        if (this.fileToUploadTime3) {
-          formData.append('time3', this.fileToUploadTime3, this.fileToUploadTime3.name);
-        }
         if (this.fileToUploadBackground) {
-          formData.append('background', this.fileToUploadBackground, this.fileToUploadBackground.name);
+          this.theme.updateDesign(1, this.updateBackgroundImage());
+          this.snackbar.mensaje('Fondo Actualizado exitosamente');
+        } else if (this.fileToUploadLogo) {
+          this.theme.updateDesign(1, this.updateLogoImage());
+          this.snackbar.mensaje('Logo Actualizado exitosamente');
+        } else if (this.fileToUploadBoxWatch) {
+          this.theme.updateDesign(1, this.updateBoxWatchImage());
+          this.snackbar.mensaje('Caja de Reloj Actualizada exitosamente');
         }
-        if (this.fileToUploadLogo) {
-          formData.append('logo', this.fileToUploadLogo, this.fileToUploadLogo.name);
-        }
-        this.theme.updateDesign(1, formData)
-          this.snackbar.mensaje('Diseño actualizado exitosamente');
       }
     });
+  }
+
+  private updateLogoImage(): FormData {
+    let formData: FormData = new FormData();
+    formData.append('id', '1');
+    formData.append(
+      'image_logo_precision',
+      this.dashStyle.getImageLogoPrecisionFile(),
+      this.dashStyle.getImageLogoPrecisionFile().name
+    );
+    formData.append('date_modified', new Date().toISOString());
+    formData.append('is_active', 'true');
+    formData.append('game_id', '1');
+    return formData;
+
+  }
+
+  updateBackgroundImage(): FormData {
+    let formData: FormData = new FormData();
+    formData.append('id', '1');
+    formData.append(
+      'image_background_precision',
+      this.dashStyle.getImageBackgroundPrecisionFile(),
+      this.dashStyle.getImageBackgroundPrecisionFile().name
+    );
+    formData.append('date_modified', new Date().toISOString());
+    formData.append('is_active', 'true');
+    formData.append('game_id', '1');
+    return formData;
+  }
+
+  updateBoxWatchImage(): FormData {
+    let formData: FormData = new FormData();
+    formData.append('id', '1');
+    formData.append(
+      'image_box_watch',
+      this.dashStyle.getImageBoxWatchFile(),
+      this.dashStyle.getImageBoxWatchFile().name
+    );
+    formData.append('date_modified', new Date().toISOString());
+    formData.append('is_active', 'true');
+    formData.append('game_id', '1');
+    return formData;
+  }
+
+  cancel() {
+    window.location.reload();
   }
 }

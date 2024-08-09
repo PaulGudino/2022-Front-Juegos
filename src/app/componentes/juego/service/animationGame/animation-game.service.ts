@@ -60,7 +60,7 @@ export class AnimationGameService {
 	ngOnInit(): void {
 		this.theme.getDesignInformation().subscribe((designData) => {
 			this.dashStyle.loadData(designData[0]);
-		 })
+		})
 	}
 
 	// ----------------- Tragamonedas -----------------
@@ -261,7 +261,7 @@ export class AnimationGameService {
 			]
 			this.confirmDialog.error(game_message)
 		}
-		else if(this.keyController.getCode().length > 1){
+		else if (this.keyController.getCode().length > 1) {
 			let game_message = [
 				"Debes ingresar un número de un solo dígito",
 			]

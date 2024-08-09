@@ -1,68 +1,65 @@
 <div class="container-fullscreen" contenteditable="true" (window:beforeunload)="doSomething()">
     <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
     <div class="container-menu">
-        <app-logo [urlImage]="styles.get_image_background_precision()" [isBackground]="true" height="25rem"></app-logo>
+        <div class="background-shadow"><img src="{{styles.get_image_background_precision()}}" alt="background"></div>
         <div class="scan-shadow"></div>
         <div class="scan_menu-container">
             <div class="menu-container_img-container">
-				<app-logo
-					[urlImage]="styles.get_image_logo_precision()"
-					height="22rem"
-					[isHome]="false"></app-logo>
-			</div>
+                <app-logo [urlImage]="styles.get_image_logo_precision()" height="22rem" [isHome]="false"></app-logo>
+            </div>
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
             <h1 class="subtitle">Juego de precisión</h1>
             <p class="instructions">
                 ¡Selecciona el botón verde para detener el contador! Si aciertas, ¡ganas!
             </p>
-            
-            <div
-				class="information-game-container"
-				[ngPlural]="gameLogicService.attempts"
-				[ngStyle]="{
-					color: 'styles.get_color_text()'
-				}">
-				<ng-template ngPluralCase="=0"> <p class="info-game__text">Disponible 0 Turnos /(U_U)\</p></ng-template>
-				<ng-template
-					class="info-game__text"
-					ngPluralCase="=1">
-					<p class="info-game__text">Disponible 1 Turno más!</p></ng-template
-				>
-				<ng-template
-					class="info-game__text"
-					ngPluralCase="other">
-					<p
-						class="info-game__text"
-						*ngIf="gameLogicService.winFirstTime == false">
-						Disponible {{ gameLogicService.attempts }} Turnos más!
-					</p>
-				</ng-template>
-			</div>
-            <div id="target-time" class="clock">{{ animation.targetTime }}</div>
-            <button (click)="animation.startClock(); this.backArrowEnabled = false; this.slot_music = true;" [disabled]="animation.clockRunning">Iniciar</button>
-            
-            <app-generic-button title="Detener" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="animation.stopClock(); this.slot_music = false;" [disabled]="!animation.clockRunning">
-            </app-generic-button>
+
+            <div class="information-game-container" [ngPlural]="gameLogicService.attempts"
+                [ngStyle]="{color: 'styles.get_color_text()'}">
+                <ng-template ngPluralCase="=0">
+                    <p class="info-game__text">Disponible 0 Turnos /(U_U)\</p>
+                </ng-template>
+                <ng-template class="info-game__text" ngPluralCase="=1">
+                    <p class="info-game__text">Disponible 1 Turno más!</p>
+                </ng-template>
+                <ng-template class="info-game__text" ngPluralCase="other">
+                    <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
+                        Disponible {{ gameLogicService.attempts }} Turnos más!
+                    </p>
+                </ng-template>
+            </div>
+
+            <!-- Contenedor para la imagen con la hora objetivo -->
+            <div class="clock-container">
+                <img src="{{styles.get_image_box_watch()}}" alt="Contenedor de la hora" class="clock-box">
+                <div id="target-time" class="clock">{{ animation.targetTime }}</div>
+            </div>
+
+            <div class="buttons">
+
+                <app-generic-button class="start-button" title="Iniciar" [fontSize]="'3rem'"
+                    [styledPadding]="'1rem 2rem'"
+                    (click)="animation.startClock(); this.backArrowEnabled = false; this.slot_music = true;"
+                    [disabled]="animation.clockRunning">
+                </app-generic-button>
+
+                <app-generic-button title="Detener" [fontSize]="'3rem'" [styledPadding]="'1rem 2rem'"
+                    class="mb-2 container_play-btn stop-button"
+                    (click)="animation.stopClock(); this.slot_music = false;" [disabled]="!animation.clockRunning">
+                </app-generic-button>
+            </div>
+
+
+
             <div *ngIf="slot_music">
                 <audio controls="None" hidden autoplay loop [volume]="1">
                     <source src="./assets/audio/ticking_timer.mp3" />
                 </audio>
             </div>
-            
-            <div class="clock" id="clock">{{ animation.currentTime }}</div>
-            <div class="prizes">
-                <div class="prize">
-                    <img src="./assets/img/regalo.png" alt="Premio 1">
-                    <div id="nido">Regalo</div>
-                </div>
-                <div class="prize">
-                    <img src="./assets/img/regalo.png" alt="Premio 2">
-                    <div id="nido">Regalo</div>
-                </div>
-                <div class="prize">
-                    <img src="./assets/img/regalo.png" alt="Premio 3">
-                    <div id="nido">Regalo</div>
-                </div>
+
+            <!-- Contenedor para la imagen con la hora actual -->
+            <div class="clock-container">
+                <img src="{{styles.get_image_box_watch()}}" alt="Contenedor de la hora" class="clock-box">
+                <div id="clock" class="clock">{{ animation.currentTime }}</div>
             </div>
         </div>
     </div>

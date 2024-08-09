@@ -1,5 +1,6 @@
-/* Asegurarse de que el contenedor ocupe toda la pantalla */
-html, body {
+/* Ajustes generales */
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -8,7 +9,7 @@ html, body {
     font-family: 'Arial', sans-serif;
 }
 
-/* Ajustes para que el contenedor principal ocupe toda la pantalla */
+/* Contenedor principal ocupando toda la pantalla */
 .container-fullscreen {
     background-color: #0d1b2a;
     display: flex;
@@ -21,25 +22,31 @@ html, body {
     padding: 0;
     box-sizing: border-box;
 }
-.menu-container_img-container {
-    width: 39rem;
-    height: 19rem;
-    min-height: 4rem;
-    margin: 0 1rem 1rem 0;
- }
+
 .container-menu {
     position: relative;
-    height: 100%;
+    flex: 1;
+    /* Ocupar el espacio restante entre las publicidades */
     width: 100%;
-    background-color: #0d1b2a;
+    background-color: black;
+    z-index: 1;
 }
 
-.scan-shadow {
+.background-shadow {
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: #000000d4;
-    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: -1;
+}
+
+.background-shadow img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.5;
 }
 
 .scan_menu-container {
@@ -52,6 +59,13 @@ html, body {
     justify-content: center;
     z-index: 3;
     box-sizing: border-box;
+}
+
+.menu-container_img-container {
+    width: 39rem;
+    height: 19rem;
+    min-height: 4rem;
+    margin: 0 1rem 1rem 0;
 }
 
 #back-arrow {
@@ -79,137 +93,6 @@ p {
     text-align: center;
 }
 
-#target-time, #result {
-    font-size: 2em;
-    color: #ffffff;
-    text-align: center;
-}
-
-button {
-    background-color: #28a745;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.5em;
-    margin: 10px 5px;
-    cursor: pointer;
-    border-radius: 8px;
-    width: 200px; /* Ajustar el ancho para que todos los botones tengan el mismo tamaño */
-}
-
-button[disabled] {
-    background-color: #6c757d;
-}
-
-.clock {
-    font-size: 6em; /* Aumentar el tamaño de la fuente */
-    margin: 20px 0;
-    background-color: #000000;
-    color: #00ff00; /* Cambiar el color del texto para que sea verde como en la imagen */
-    border-radius: 10px;
-    padding: 30px 60px; /* Aumentar el padding */
-    display: inline-block;
-    text-align: center; /* Asegurar que el texto esté centrado */
-}
-
-#result {
-    font-size: 2em;
-    color: #ffffff;
-    text-align: center;
-}
-
-/* Nuevos estilos para que se asemeje al segundo diseño */
-.container-fullscreen {
-    background-color: #0d1b2a;
-}
-
-h1 {
-    font-size: 2.5em;
-    color: #ffffff;
-    text-align: center;
-    margin-top: 20px;
-}
-
-p {
-    font-size: 1.2em;
-    color: #ffffff;
-    text-align: center;
-    margin: 10px 0;
-    max-width: 90%; /* Asegurarse de que el texto no se salga del contenedor */
-    line-height: 1.4;
-}
-
-#target-time {
-    font-size: 6em; /* Aumentar el tamaño de la fuente */
-    color: #00ff00;
-    background-color: #000;
-    padding: 30px 60px; /* Aumentar el padding */
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-#result {
-    font-size: 6em; /* Aumentar el tamaño de la fuente */
-    color: #00ff00;
-    background-color: #000;
-    padding: 30px 60px; /* Aumentar el padding */
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-button {
-    background-color: #28a745;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.5em;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-button[disabled] {
-    background-color: #6c757d;
-}
-
-.clock {
-    font-size: 6em; /* Aumentar el tamaño de la fuente */
-    color: #00ff00;
-    background-color: #000;
-    padding: 30px 60px; /* Aumentar el padding */
-    border-radius: 10px;
-}
-
-.prizes {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.prize {
-    margin: 0 10px;
-    text-align: center;
-    color: white;
-}
-
-.prize img {
-    max-width: 100px;
-    border-radius: 10px;
-}
-
-#nido {
-    background-color: #ffe600;
-    color: black;
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 5px;
-    display: inline-block;
-    margin-top: 5px;
-}
-
 .information-game-container {
     width: 100%;
     display: flex;
@@ -219,16 +102,62 @@ button[disabled] {
     margin-bottom: 1rem;
     font-size: 2rem;
     color: white;
-  }
-  
-  .subtitle {
-  font-size: 2rem;
-  margin-top: 0;
-  color: white;
+}
+
+/* Estilo para la caja del reloj */
+.clock-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px; /* Ancho basado en la imagen proporcionada */
+    height: 200px; /* Alto basado en la imagen proporcionada */
+    margin: 20px 0;
+    padding: 0;
+    z-index: 1;
+}
+
+/* Imagen de fondo para el reloj */
+.clock-box {
+    width: 400px;
+    height: 150px;
+}
+
+/* Estilo para el texto del reloj */
+.clock {
+    position: absolute;
+    font-size: 5em;
+    /* Ajusta el tamaño de la fuente según sea necesario */
+    color: black;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+    /* Para que el texto esté centrado dentro de la caja */
+    top: 50%;
+    transform: translateY(-50%);
+    /* Centra verticalmente el texto dentro de la caja */
+    padding: 0 20px;
+    /* Añade padding si es necesario para ajustar el texto */
+}
+
+.subtitle {
+    font-size: 2rem;
+    margin-top: 0;
+    color: white;
 }
 
 .instructions {
-  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
-  margin-bottom: 2rem;
-  color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: white;
 }
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio adicional en la parte superior */
+}
+
+

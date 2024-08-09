@@ -1,10 +1,9 @@
-/* Ajustes para que el contenedor principal ocupe toda la pantalla */
 .container-fullscreen {
   background-color: #0d1b2a;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* Cambiado para espacio entre elementos */
+  justify-content: flex-start;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -15,7 +14,7 @@
 
 .container-menu {
   position: relative;
-  flex: 1; /* Ocupar el espacio restante entre las publicidades */
+  flex: 1;
   width: 100%;
   background-color: black;
   z-index: 1;
@@ -45,9 +44,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 3;
+  justify-content: flex-start;
+  padding-top: 5.5rem;
   box-sizing: border-box;
+  z-index: 3;
+}
+
+.menu-container_img-container {
+  width: 39rem;
+  height: 15rem;
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin-top: 2rem;
+  color: white;
+  text-align: center;
+}
+
+.instructions {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: white;
+  text-align: center;
 }
 
 .information-game-container {
@@ -61,55 +80,21 @@
   color: white;
 }
 
-#back-arrow {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.subtitle {
-  font-size: 2rem;
-  margin-top: 0;
-  color: white;
-}
-
-.instructions {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: white;
-}
-
 .dice-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-}
-
-.menu-container_img-container {
-  width: 39rem;
-  height: 19rem;
-  min-height: 4rem;
-  margin: 1rem 1rem 1rem 1rem;
-}
-
-.generic-button-container {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 1.5rem;
 }
 
 .dice {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 2s;
+  background-color: white;
 }
 
 .dice.roll {
@@ -123,8 +108,8 @@
 
 .face {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   background-color: white;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -136,29 +121,60 @@
   object-fit: cover;
 }
 
-.one { transform: rotateY(0deg) translateZ(200px); }
-.two { transform: rotateY(180deg) translateZ(200px); }
-.three { transform: rotateX(-90deg) translateZ(200px); }
-.four { transform: rotateX(90deg) translateZ(200px); }
-.five { transform: rotateY(90deg) translateZ(200px); }
-.six { transform: rotateY(-90deg) translateZ(200px); }
+.one { transform: rotateY(0deg) translateZ(125px); }
+.two { transform: rotateY(180deg) translateZ(125px); }
+.three { transform: rotateX(-90deg) translateZ(125px); }
+.four { transform: rotateX(90deg) translateZ(125px); }
+.five { transform: rotateY(90deg) translateZ(125px); }
+.six { transform: rotateY(-90deg) translateZ(125px); }
 
 input[type="text"] {
-  margin-top: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 2rem;
   text-align: center;
   background-color: #333;
   color: white;
   border: none;
-  border-radius: 5px;
-  width: 500px;
+  width: 450px;
+  margin-bottom: 1rem; /* Añadido para separar el input del teclado */
+}
+
+.generic-button-container {
+  margin-top: 2rem; /* Ajustado para que el botón no esté tan separado del dado */
+  margin-bottom: 2rem;
+}
+
+app-keyboard {
+  margin-top: -125px;
+  margin-bottom: -125px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+app-keyboard button {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  border: none;
 }
 
 button:hover {
   background-color: #218838;
 }
 
-.cuadrotxt {
-  width: 100px;
+#back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
 }

@@ -9,28 +9,32 @@
         <p class="publicity__title white-color">PRECISIÓN</p>
         <div class="time-container">
           <div class="time-column">
-            <p>4:15</p>
-            <button class="plus-button">+</button>
-          </div>
-          <div class="time-column">
-            <p>4:15</p>
-            <button class="plus-button">+</button>
+            <img src="{{previewWatchBox}}" alt="puerta izquierda" />
+          <button class="plus-button" (click)="takeInputDoorLeft.click()">+</button>
+          <input class="file-input" type="file" #takeInputDoorLeft (change)="capturarFileBoxWatch($event)">
           </div>
         </div>
         <p class="publicity__title white-color">Escala de imagen 200x60</p>
-        <p class="publicity__title white-color">Numero de Intentos:</p>
-        <input type="text" placeholder="Inserte un número aquí" />
-        <label class="switch">
-            <input type="checkbox" placeholder="OFF">
-            <span class="slider round"></span>
-        </label>
-        <button mat-button class="save-button">Guardar</button>
+        
+        <div class="buttons-container">
+          <app-button-primary (click)="updateDesign()" title="Guardar"></app-button-primary>
+          <app-button-primary (click)="cancel()" title="Cancelar" backgroundColor="#fff"></app-button-primary>
+        </div>
+
       </div>
       <div class="publicity__view">
-        <img src="./assets/img/fondo_Precision.png" alt="fondo_Precision" />
-        <button mat-button class="select-button">Seleccionar Fondo</button>
-        <button mat-button class="select-button">Seleccionar Logo</button>
+      <div class="publicity__view-column">
+        <img id="background" src="{{previewBackground}}" alt="fondo puertas" />
+        <button class="select-button" (click)="takeInputBackground.click()">Seleccionar Fondo</button>
+        <input class="file-input" type="file" #takeInputBackground (change)="capturarBackgroundFile($event)">
       </div>
+
+      <div class="publicity__view-column">
+        <img id="logo" src="{{previewLogo}}" alt="logo puertas" />
+        <button class="select-button" (click)="takeInputLogo.click()">Seleccionar Logo</button>
+        <input class="file-input" type="file" #takeInputLogo (change)="capturarFileLogo($event)">
+      </div>
+    </div>
     </div>
   </app-menu>
   

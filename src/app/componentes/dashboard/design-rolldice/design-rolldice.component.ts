@@ -16,11 +16,16 @@ import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/pu
   styleUrls: ['./design-rolldice.component.css'],
 })
 export class DesignRolldiceComponent implements OnInit {
-  fontFamily: string = '';
-  colorText: string = '';
 
   @ViewChild('takeInputLogo', { static: false }) InputVarLogo!: ElementRef;
   @ViewChild('takeInputBackground', { static: false }) InputVarBackground!: ElementRef;
+  @ViewChild('takeInputDiceFaceOne', { static: false }) InputVarDiceFaceOne!: ElementRef;
+  @ViewChild('takeInputDiceFaceTwo', { static: false }) InputVarDiceFaceTwo!: ElementRef;
+  @ViewChild('takeInputDiceFaceThree', { static: false }) InputVarDiceFaceThree!: ElementRef;
+  @ViewChild('takeInputDiceFaceFour', { static: false }) InputVarDiceFaceFour!: ElementRef;
+  @ViewChild('takeInputDiceFaceFive', { static: false }) InputVarDiceFaceFive!: ElementRef;
+  @ViewChild('takeInputDiceFaceSix', { static: false }) InputVarDiceFaceSix!: ElementRef;
+
 
   fileToUploadLogo!: File | null;
   imageLogo!: File;
@@ -132,6 +137,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceOneFile(this.fileToUploadDiceFaceOne);
           });
         } else {
+          this.InputVarDiceFaceOne.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
@@ -144,6 +150,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceTwoFile(this.fileToUploadDiceFaceTwo);
           });
         } else {
+          this.InputVarDiceFaceTwo.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
@@ -156,6 +163,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceThreeFile(this.fileToUploadDiceFaceThree);
           });
         } else {
+          this.InputVarDiceFaceThree.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
@@ -168,6 +176,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceFourFile(this.fileToUploadDiceFaceFour);
           });
         } else {
+          this.InputVarDiceFaceFour.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
@@ -180,6 +189,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceFiveFile(this.fileToUploadDiceFaceFive);
           });
         } else {
+          this.InputVarDiceFaceFive.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
@@ -192,6 +202,7 @@ export class DesignRolldiceComponent implements OnInit {
             this.dashStyle.setImageDiceFaceSixFile(this.fileToUploadDiceFaceSix);
           });
         } else {
+          this.InputVarDiceFaceSix.nativeElement.value = '';
           this.snackbar.mensaje('Solo se permiten imágenes');
         }
         break;
