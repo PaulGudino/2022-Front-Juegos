@@ -8,19 +8,19 @@
             </div>
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
             <h2 class="subtitle">Tira el dado</h2>
-            <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ganas!</p>
+            <p class="instructions">Ingresa un número y haz girar el dado, si coinciden ¡ganas!</p>
             <div class="information-game-container" [ngPlural]="gameLogicService.attempts" [ngStyle]="{
                         color: 'styles.get_color_text()'
                     }">
                 <ng-template ngPluralCase="=0">
-                    <p class="info-game__text">Disponible 0 giros /(U_U)\</p>
+                    <p class="info-game__text">¡Sin Giros Disponibles!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="=1">
-                    <p class="info-game__text">Disponible 1 Giro más!</p>
+                    <p class="info-game__text">¡Disponible 1 Giro más!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="other">
                     <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
-                        Disponible {{ gameLogicService.attempts }} Giros más!
+                        ¡Disponibles {{ gameLogicService.attempts }} Giros más!
                     </p>
                 </ng-template>
             </div>
@@ -36,8 +36,8 @@
                 </div>
             </div>
             <div class="generic-button-container">
-                <app-generic-button title="Girar" [fontSize]="'2rem'" [disabled]="animation.disabledPlayButton"
-                    [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn"
+                <app-generic-button title="Girar" [fontSize]="'4rem'" [disabled]="animation.disabledPlayButton"
+                    [styledPadding]="'2rem 2.5rem'" class="mb-2 container_play-btn"
                     (click)="animation.startGameRolldice() ; music(); this.backArrowEnabled = false;">
                     <div *ngIf="slot_music">
                         <audio controls="None" hidden autoplay [loop]="animation.isRolling">
@@ -47,7 +47,7 @@
                 </app-generic-button>
             </div>
             <input class="btn menu__input" type="text" #codeInput="ngModel" [(ngModel)]="keyController.code"
-                onkeypress="return event.charCode >= 48 && event.charCode <= 57" (input)="validateInput($event)"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                 placeholder="Ingresa el número a adivinar" pattern="[0-9]{1}" maxlength="1" />
             <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', 'delete']"></app-keyboard>
             <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>

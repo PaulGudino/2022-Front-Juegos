@@ -99,8 +99,8 @@ export class JuegoComponent {
 		let formData: FormData = new FormData()
 		//formData.append("username", "sistemaskioskoto")
 		//formData.append("password", "Root@123")
-		formData.append("username", "admin")
-		formData.append("password", "admin123789")
+		formData.append("username", "root")
+		formData.append("password", "root")
 		this.AuthSrv.auth_token(formData).subscribe((data: any) => {
 			sessionStorage.setItem("token", data.access)
 			sessionStorage.setItem("refresh", data.refresh)

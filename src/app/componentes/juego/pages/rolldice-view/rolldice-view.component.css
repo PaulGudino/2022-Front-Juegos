@@ -64,20 +64,23 @@
 
 .instructions {
   font-size: 2rem;
-  margin-bottom: 1rem;
   color: white;
   text-align: center;
 }
 
+
+.info-game__text{
+  color: white;
+  font-size: 4rem;
+}
 .information-game-container {
+  background-color: #ffae0017;
   width: 100%;
   display: flex;
   justify-content: center;
   height: 7rem;
   align-items: center;
   margin-bottom: 1rem;
-  font-size: 2rem;
-  color: white;
 }
 
 .dice-container {
@@ -103,7 +106,7 @@
 
 @keyframes roll {
   0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(3600deg) rotateY(3600deg); }
+  100% { transform: rotateX(6000deg) rotateY(6000deg); }
 }
 
 .face {
@@ -111,7 +114,7 @@
   width: 250px;
   height: 250px;
   background-color: white;
-  border: 1px solid #ccc;
+  border: 1px #ccc;
   box-sizing: border-box;
 }
 

@@ -203,7 +203,7 @@ export class CreateTicketComponent implements OnInit {
     }
     while(exist_code.length > 0);
     
-    this.Ticket_data = this.game_id+'|'+this.invoiceNumber+'|'+this.clientId+'|'+this.qr_code_digits
+    this.Ticket_data = this.qr_code_digits
   }
 
   newForm(){

@@ -26,16 +26,20 @@ export class ResultMessageComponent implements OnInit {
   }
   cerrar(){
     this.dialogRef.close();
-    if (this.gameLogicService.attempts === 0){
-      this.navigateTo("")
-    }
-    if(this.gameLogicService.winFirstTime){
-      this.navigateTo("")
+    if (this.gameLogicService.attempts === 0 || this.gameLogicService.winFirstTime){
+      this.navigateTo("juego")
+      setTimeout(() => {
+        this.recargar()
+      }, 100);
     }
   }
 
   navigateTo(gameName: string) {
     this.router.navigate([`/${gameName}`]);
+  }
+
+  recargar(){
+    location.reload()
   }
 
 }

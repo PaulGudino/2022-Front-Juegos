@@ -18,7 +18,7 @@
 				[ngStyle]="{
 					color: 'styles.color_text'
 				}">
-				A JUGAR!!!
+				¡¡¡A JUGAR!!!
 			</p>
 			<div
 				class="information-game-container"
@@ -26,11 +26,11 @@
 				[ngStyle]="{
 					color: 'styles.get_color_text()'
 				}">
-				<ng-template ngPluralCase="=0"> <p class="info-game__text">Disponible 0 giros /(U_U)\</p></ng-template>
+				<ng-template ngPluralCase="=0"> <p class="info-game__text">¡Sin Giros Disponibles!</p></ng-template>
 				<ng-template
 					class="info-game__text"
 					ngPluralCase="=1">
-					<p class="info-game__text">Disponible 1 Giro más!</p></ng-template
+					<p class="info-game__text">¡Disponible 1 Giro más!</p></ng-template
 				>
 				<ng-template
 					class="info-game__text"
@@ -38,7 +38,7 @@
 					<p
 						class="info-game__text"
 						*ngIf="gameLogicService.winFirstTime == false">
-						Disponible {{ gameLogicService.attempts }} Giros más!
+						¡Disponibles {{ gameLogicService.attempts }} Giros más!
 					</p>
 				</ng-template>
 			</div>

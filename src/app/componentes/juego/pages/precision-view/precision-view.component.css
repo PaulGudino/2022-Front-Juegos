@@ -93,16 +93,19 @@ p {
     text-align: center;
 }
 
-.information-game-container {
+ .info-game__text{
+    color: white;
+    font-size: 4rem;
+ }
+ .information-game-container {
+    background-color: #ffae0017;
     width: 100%;
     display: flex;
     justify-content: center;
     height: 7rem;
     align-items: center;
     margin-bottom: 1rem;
-    font-size: 2rem;
-    color: white;
-}
+ }
 
 /* Estilo para la caja del reloj */
 .clock-container {

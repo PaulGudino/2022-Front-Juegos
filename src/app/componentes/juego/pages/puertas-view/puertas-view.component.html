@@ -13,17 +13,21 @@
                 color: 'styles.get_color_text()'
             }">
                 <ng-template ngPluralCase="=0">
-                    <p class="info-game__text">Disponible 0 turnos /(U_U)\</p>
+                    <p class="info-game__text">¡Sin Turnos Disponibles!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="=1">
-                    <p class="info-game__text">Disponible 1 turno más!</p>
+                    <p class="info-game__text">¡Disponible 1 Turno Más!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="other">
                     <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
-                        Disponible {{ gameLogicService.attempts }} turnos más!
+                        ¡Disponibles {{ gameLogicService.attempts }} Turnos Más!
                     </p>
                 </ng-template>
             </div>
+            <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'4rem'"
+                [styledPadding]="'2rem 2.5rem'" class="mb-2 container_play-btn"
+                (click)="animation.startGameDoor(); this.backArrowEnabled = false">
+            </app-generic-button>
             <div class="doors">
                 <div *ngFor="let door of animation.doors; let i = index" class="door" [class.isOpen]="door.isOpen"
                     [class.disabled]="(!animation.isGameStarted || animation.isDoorSelected) && !door.isOpen"
@@ -43,11 +47,6 @@
                     </div>
                 </div>
             </div>
-
-            <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'2rem'"
-                [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn"
-                (click)="animation.startGameDoor(); this.backArrowEnabled = false">
-            </app-generic-button>
         </div>
     </div>
     <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>

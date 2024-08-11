@@ -51,7 +51,7 @@
    font-size: 4rem;
 }
 .information-game-container {
-   background-color: #ffaf00;
+   background-color: #ffae0017;
    width: 100%;
    display: flex;
    justify-content: center;
@@ -72,8 +72,8 @@
    position: absolute;
    top: 111px;
    height: 469px;
-   left: calc(50% - 374px);
-   right: calc(50% - 374px);
+   left: calc(50% - 415px);
+   right: calc(50% - 415px);
    display: flex;
    justify-content: center;
    align-items: center;

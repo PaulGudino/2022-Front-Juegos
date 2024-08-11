@@ -10,20 +10,20 @@
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
             <h1 class="subtitle">Juego de precisión</h1>
             <p class="instructions">
-                ¡Selecciona el botón verde para detener el contador! Si aciertas, ¡ganas!
+                ¡Selecciona el botón para detener el contador! Si aciertas, ¡ganas!
             </p>
 
             <div class="information-game-container" [ngPlural]="gameLogicService.attempts"
                 [ngStyle]="{color: 'styles.get_color_text()'}">
                 <ng-template ngPluralCase="=0">
-                    <p class="info-game__text">Disponible 0 Turnos /(U_U)\</p>
+                    <p class="info-game__text">¡Sin Turnos Disponibles!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="=1">
-                    <p class="info-game__text">Disponible 1 Turno más!</p>
+                    <p class="info-game__text">¡Disponible 1 Turno Más!</p>
                 </ng-template>
                 <ng-template class="info-game__text" ngPluralCase="other">
                     <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
-                        Disponible {{ gameLogicService.attempts }} Turnos más!
+                        ¡Disponibles {{ gameLogicService.attempts }} Turnos Más!
                     </p>
                 </ng-template>
             </div>
@@ -47,8 +47,6 @@
                     (click)="animation.stopClock(); this.slot_music = false;" [disabled]="!animation.clockRunning">
                 </app-generic-button>
             </div>
-
-
 
             <div *ngIf="slot_music">
                 <audio controls="None" hidden autoplay loop [volume]="1">

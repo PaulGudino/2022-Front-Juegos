@@ -67,15 +67,7 @@ export class RolldiceViewComponent implements OnInit {
 
   changeView() {
     this.scanState = false;
-    this.keyController.setCode("");
-  }
-
-  validateInput(event: any): void {
-    const input = event.target;
-    if (input.value.length > 1) {
-      input.value = input.value.slice(0, 1);
-      this.keyController.code = input.value; // Actualiza el modelo si es necesario
-    }
+    this.keyController.clearCode();
   }
 
 
