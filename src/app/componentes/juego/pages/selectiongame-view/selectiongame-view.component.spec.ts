@@ -29,7 +29,7 @@ const mockDashboardPublicityService = {
 };
 
 const mockDashboardStyleService = {
-  get_image_logo_game: () => 'mockLogoUrl' // Devuelve una URL ficticia para las pruebas
+  get_image_logo: () => 'mockLogoUrl' // Añadido el método get_image_logo
 };
 
 const mockActivatedRoute = {

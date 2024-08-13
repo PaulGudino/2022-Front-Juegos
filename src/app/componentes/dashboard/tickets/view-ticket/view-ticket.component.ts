@@ -53,7 +53,7 @@ export class ViewTicketComponent implements OnInit {
     let ticketId = this.activedRoute.snapshot.paramMap.get('id');
     this.ticketAPI.getById(Number(ticketId)).subscribe((data) => {
       this.ticket = data;
-      this.QRdata = data.game_id+'|'+data.invoice_number+'|'+data.client_id+'|'+data.qr_code_digits
+      this.QRdata = data.qr_code_digits.toString();
       if (this.ticket.date_created == this.ticket.date_ticket_played){
         this.samedate = true;
       }

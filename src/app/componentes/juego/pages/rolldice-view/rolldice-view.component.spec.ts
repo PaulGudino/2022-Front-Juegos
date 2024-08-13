@@ -12,20 +12,32 @@ import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { GameCurrentSessionService } from 'src/app/servicios/gameCurrentSession/game-current-session.service';
 import { KeyControllerService } from '../../service/keyController/key-controller.service';
 
+// Mock de ActivatedRoute
 const mockActivatedRoute = {
   queryParams: of({ gameId: '1' })
 };
 
+// Mock de DashboardPublicityService
 const mockDashboardPublicityService = {
   getTopPublicityList: jasmine.createSpy('getTopPublicityList').and.returnValue([]),
   getBottomPublicityList: jasmine.createSpy('getBottomPublicityList').and.returnValue([])
 };
 
+// Mock de DashboardStyleService con los métodos añadidos
 const mockDashboardStyleService = {
   getImageBackgroundGameFile: jasmine.createSpy('getImageBackgroundGameFile').and.returnValue(''),
-  get_color_text: jasmine.createSpy('get_color_text').and.returnValue('')
+  get_color_text: jasmine.createSpy('get_color_text').and.returnValue(''),
+  get_image_background_dados: jasmine.createSpy('get_image_background_dados').and.returnValue('mock-image-background-dados-url'),
+  get_image_logo_dados: jasmine.createSpy('get_image_logo_dados').and.returnValue('mock-image-logo-dados-url'),
+  get_image_dice_face_one: jasmine.createSpy('get_image_dice_face_one').and.returnValue('mock-image-dice-face-one-url'),
+  get_image_dice_face_two: jasmine.createSpy('get_image_dice_face_two').and.returnValue('mock-image-dice-face-two-url'),
+  get_image_dice_face_three: jasmine.createSpy('get_image_dice_face_three').and.returnValue('mock-image-dice-face-three-url'),
+  get_image_dice_face_four: jasmine.createSpy('get_image_dice_face_four').and.returnValue('mock-image-dice-face-four-url'),
+  get_image_dice_face_five: jasmine.createSpy('get_image_dice_face_five').and.returnValue('mock-image-dice-face-five-url'),
+  get_image_dice_face_six: jasmine.createSpy('get_image_dice_face_six').and.returnValue('mock-image-dice-face-six-url')
 };
 
+// Mock de AnimationGameService
 const mockAnimationGameService = {
   isRolling: false,
   finalTransformDice: '',
@@ -34,16 +46,19 @@ const mockAnimationGameService = {
   disabledPlayButton: false
 };
 
+// Mock de GameLogicService
 const mockGameLogicService = {
   attempts: 0,
   winFirstTime: false,
   verifyGameCurrent: jasmine.createSpy('verifyGameCurrent').and.returnValue(Promise.resolve(null))
 };
 
+// Mock de GameCurrentSessionService
 const mockGameCurrentSessionService = {
   updateGameId: jasmine.createSpy('updateGameId').and.returnValue(of({}))
 };
 
+// Mock de KeyControllerService
 const mockKeyControllerService = {
   code: '',
   clearCode: jasmine.createSpy('clearCode'),

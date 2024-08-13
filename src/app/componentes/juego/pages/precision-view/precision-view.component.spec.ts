@@ -23,7 +23,10 @@ const mockDashboardPublicityService = {
 
 const mockDashboardStyleService = {
   get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue(''),
-  get_color_text: jasmine.createSpy('get_color_text').and.returnValue('')
+  get_color_text: jasmine.createSpy('get_color_text').and.returnValue(''),
+  get_image_background_precision: jasmine.createSpy('get_image_background_precision').and.returnValue(''),
+  get_image_logo_precision: jasmine.createSpy('get_image_logo_precision').and.returnValue(''),
+  get_image_box_watch: jasmine.createSpy('get_image_box_watch').and.returnValue('') // Añadir esta línea
 };
 
 const mockAnimationGameService = {

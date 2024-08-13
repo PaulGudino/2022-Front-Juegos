@@ -1,14 +1,19 @@
 <div class="container-fluid text-center">
 	<div class="keyboard-container">
-	  <div class="row keyboard-row" *ngFor="let row of getRows()">
+	  <div class="row keyboard-row" *ngFor="let row of getRows(); trackBy: trackByFn">
 		<button
 		  class="col btn"
-		  *ngFor="let key of row"
+		  *ngFor="let key of row; trackBy: trackByFn"
 		  [attr.value]="key"
 		  (click)="isDeleteKey(key) ? deleteValue() : getButtonValue($event)">
 		  <ng-container *ngIf="!isDeleteKey(key)">{{ key }}</ng-container>
 		  <ng-container *ngIf="isDeleteKey(key)">
-			<mat-icon [ngStyle]="{ 'font-size': '56px', height: '43px', width: '68px' }">keyboard_backspace</mat-icon>
+			<svg xmlns="http://www.w3.org/2000/svg" [ngStyle]="{ 'font-size': '56px', height: '43px', width: '68px' }" viewBox="0 -960 960 960" fill="#e8eaed">
+			  <path d="M360-240 120-480l240-240 56 56-144 144h568v80H272l144 144-56 56Z"/>
+			</svg>
 		  </ng-container>
 		</button>
 	  </div>
+	</div>
+  </div>
+  

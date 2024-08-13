@@ -19,7 +19,7 @@ export class ThemeService {
    return this.http.get<Styles[]>(`${this.url}api/design/`)
   }
 
-  updateDesgin(id:number,data:FormData){
+  updateDesign(id:number,data:FormData){
    return this.http.put(this.url+'api/design/'+id+'/', data).subscribe((data) => {
       console.log('data');
    })

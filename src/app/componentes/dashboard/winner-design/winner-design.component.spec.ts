@@ -43,6 +43,7 @@ describe('WinnerDesignComponent', () => {
     get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue(''),
     get_color_text: jasmine.createSpy('get_color_text').and.returnValue(''),
     get_image_machine_game: jasmine.createSpy('get_image_machine_game').and.returnValue(''),
+    get_image_logo: jasmine.createSpy('get_image_logo').and.returnValue('mock-image-logo') // Agregado aquí
   };
 
   const mockImageService = {
@@ -82,4 +83,6 @@ describe('WinnerDesignComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Puedes agregar más pruebas específicas aquí si es necesario
 });

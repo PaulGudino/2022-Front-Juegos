@@ -7,18 +7,31 @@
    align-items: center;
    z-index: 3;
 }
+
 .container-menu {
    position: relative;
-   height: 70vh;
+   flex: 1;
+   /* Ocupar el espacio restante entre las publicidades */
    width: 100%;
    background-color: black;
+   z-index: 1;
 }
-.scan-shadow {
-   height: 70vh;
+
+.background-shadow {
+   height: 100%;
    width: 100%;
    position: absolute;
-   background-color: #000000d4;
-   z-index: 2;
+   top: 0;
+   left: 0;
+   background-color: rgba(0, 0, 0, 0.8);
+   z-index: -1;
+}
+
+.background-shadow img {
+   height: 100%;
+   width: 100%;
+   object-fit: cover;
+   opacity: 0.5;
 }
 .menu-container_img-container {
    width: 39rem;
@@ -38,7 +51,7 @@
    font-size: 4rem;
 }
 .information-game-container {
-   background-color: #ffaf00;
+   background-color: #ffae0017;
    width: 100%;
    display: flex;
    justify-content: center;
@@ -52,14 +65,16 @@
    display: flex;
    justify-content: center;
    height: 671px;
-    width: 1080px;
+   width: 1080px;
+   margin-bottom: 32px;
 
 }
 .awards-container {
    position: absolute;
    top: 111px;
    height: 469px;
-   left: calc(50% - 374px);
+   left: calc(50% - 415px);
+   right: calc(50% - 415px);
    display: flex;
    justify-content: center;
    align-items: center;
@@ -94,13 +109,12 @@ ocupa 900 px de altura la columna en negativo
 
 .award-image-container {
    min-height: 160px;
-   width: 187px;
+   width: 100%;
 }
 .award-box-container {
    position: relative;
-   width: 100%;
+   width: 95%;
    height: 100%;
-   max-width: 1309px;
 }
 .winner-container {
    position: absolute;

@@ -6,6 +6,8 @@ import { Game } from 'src/app/interfaces/game/Game';
 import { Router } from '@angular/router';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
+import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
+import { ThemeService } from 'src/app/servicios/theme/theme.service';
 
 @Component({
    selector: 'app-game-selection',
@@ -18,14 +20,15 @@ export class GameSelectionComponent implements OnInit {
    actionName: string = 'Seleccionar';
    allGames: Game[] = [];
    total_players = 0
-
    constructor(
       private GameAPI: GameService,
       private staticData: PuenteDatosService,
       private router: Router,
       private snackbar: SnackbarService,
       private matchSrv: MatchService,
-      private gameSelectionService: GameSelectionService
+      private gameSelectionService: GameSelectionService,
+      public dashStyle: DashboardStyleService,
+      private theme: ThemeService,
    ) {
       this.GameAPI.getAll().subscribe((data) => {
          this.allGames = data;
@@ -35,28 +38,32 @@ export class GameSelectionComponent implements OnInit {
    onSelectGame(gameName: string) {
       this.gameSelectionService.setSelectedGame(gameName);
       this.juego_settings(gameName);
-    }
+   }
 
    ngOnInit(): void {
       // this.loadGames();
       this.staticData.setMenuGeneral();
       this.matchSrv.getAllMatch().subscribe(
-         (data:any)=>{
+         (data: any) => {
             this.total_players = Object.keys(data).length;
          }
       )
+
+      this.theme.getDesignInformation().subscribe((designData) => {
+         this.dashStyle.loadData(designData[0]);
+      })
    }
 
    juego_settings(name: string) {
 
-      
+
       const rutas: { [key: string]: string } = {
-        'Tragamonedas': '/dashboard/juego/resumen',
-        'Dados': '/dashboard/juego/resumen/rolldice',
-        'Puertas': '/dashboard/juego/resumen/puertas',
-        'Precision': '/dashboard/juego/resumen/precision'
+         'Tragamonedas': '/dashboard/juego/resumen',
+         'Dados': '/dashboard/juego/resumen/rolldice',
+         'Puertas': '/dashboard/juego/resumen/puertas',
+         'Precision': '/dashboard/juego/resumen/precision'
       };
-    
+
       const ruta = rutas[name];
       this.router.navigate([ruta]);
    }

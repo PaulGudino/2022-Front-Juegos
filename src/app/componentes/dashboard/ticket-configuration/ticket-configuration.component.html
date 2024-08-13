@@ -1,6 +1,6 @@
 <app-menu>
     <mat-toolbar>
-        <span>Configuracón del Ticket</span>
+        <span>Configuración del Ticket</span>
         <span class="example-spacer"></span>
     </mat-toolbar>
     <div class="container_general">
@@ -19,9 +19,9 @@
             <div class="container_form">
                 <form [formGroup]="form">
                     <mat-form-field>
-                        <label>Titulo</label>
+                        <label>Título</label>
                         <div class="input_form"><input autocomplete="off" formControlName="title" type="text" matInput></div>
-                        <mat-hint>Titulo del Ticket</mat-hint>
+                        <mat-hint>Título del Ticket</mat-hint>
                         <mat-error *ngIf="form.controls['title'].hasError('required')" >
                             Campo requerido
                         </mat-error>

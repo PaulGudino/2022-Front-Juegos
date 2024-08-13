@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { ScanViewComponent } from './scan-view.component';
@@ -17,21 +17,22 @@ const mockRouter = {
 };
 
 const mockDashboardPublicityService = {
-  getTopPublicityList: jasmine.createSpy('getTopPublicityList').and.returnValue([]),
-  getBottomPublicityList: jasmine.createSpy('getBottomPublicityList').and.returnValue([])
+  getTopPublicityList: jasmine.createSpy('getTopPublicityList').and.returnValue(of([])),
+  getBottomPublicityList: jasmine.createSpy('getBottomPublicityList').and.returnValue(of([]))
 };
 
 const mockDashboardStyleService = {
-  get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue(''),
-  get_scan_code_title: jasmine.createSpy('get_scan_code_title').and.returnValue(''),
-  get_scan_code_description: jasmine.createSpy('get_scan_code_description').and.returnValue('')
+  get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue('mock-logo-url'),
+  get_scan_code_title: jasmine.createSpy('get_scan_code_title').and.returnValue('mock-title'),
+  get_scan_code_description: jasmine.createSpy('get_scan_code_description').and.returnValue('mock-description'),
+  get_image_logo: jasmine.createSpy('get_image_logo').and.returnValue('mock-image-logo') // Agregado aquí
 };
 
 const mockKeyControllerService = {
-  getCode: jasmine.createSpy('getCode').and.returnValue(''),
+  getCode: jasmine.createSpy('getCode').and.returnValue('mock-code'),
   setCode: jasmine.createSpy('setCode'),
   clearCode: jasmine.createSpy('clearCode'),
-  code: ''
+  code: 'mock-code'
 };
 
 const mockGameLogicService = {
@@ -52,8 +53,8 @@ describe('ScanViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ 
-        HttpClientTestingModule, // Añadir HttpClientTestingModule aquí
-        FormsModule // Añadir FormsModule aquí
+        HttpClientTestingModule,
+        FormsModule
       ],
       declarations: [ ScanViewComponent ],
       providers: [

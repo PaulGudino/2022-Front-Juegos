@@ -11,20 +11,18 @@
 .keyboard-row {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
 }
 
 .btn {
   width: 60px;
   height: 60px;
-  margin: 10px;
+  margin: 5px;
   background-color: rgb(49, 49, 49);
   border: none;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   border-radius: 45px;
   padding: 1.3rem 0.2rem;
   font-size: 2.8rem;

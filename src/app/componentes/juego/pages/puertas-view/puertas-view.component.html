@@ -1,33 +1,37 @@
 <div class="container-fullscreen">
     <app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
     <div class="container-menu">
-        <app-logo [urlImage]="styles.get_image_logo_game()" [isBackground]="true" height="25rem"></app-logo>
-        <div class="scan-shadow"></div>
+        <div class="background-shadow"><img src="{{styles.get_image_background_puertas()}}" alt="background"></div>
         <div class="scan_menu-container">
+            <div class="menu-container_img-container">
+                <app-logo [urlImage]="styles.get_image_logo_puertas()" height="22rem" [isHome]="false"></app-logo>
+            </div>
             <app-back-arrow id="back-arrow" [enabled]="backArrowEnabled"></app-back-arrow>
-            <h2 class="subtitle">Escoge la Puerta</h2>
+            <h2 class="subtitle">Adivina la Puerta</h2>
             <p class="instructions">¡Abre una puerta y podrás llevarte el premio que contenga!</p>
             <div class="information-game-container" [ngPlural]="gameLogicService.attempts" [ngStyle]="{
                 color: 'styles.get_color_text()'
             }">
-            <ng-template ngPluralCase="=0">
-                <p class="info-game__text">Disponible 0 turnos /(U_U)\</p>
-            </ng-template>
-            <ng-template class="info-game__text" ngPluralCase="=1">
-                <p class="info-game__text">Disponible 1 turno más!</p>
-            </ng-template>
-            <ng-template class="info-game__text" ngPluralCase="other">
-                <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
-                    Disponible {{ gameLogicService.attempts }} turnos más!
-                </p>
-            </ng-template>
-        </div>
+                <ng-template ngPluralCase="=0">
+                    <p class="info-game__text">¡Sin Turnos Disponibles!</p>
+                </ng-template>
+                <ng-template class="info-game__text" ngPluralCase="=1">
+                    <p class="info-game__text">¡Disponible 1 Turno Más!</p>
+                </ng-template>
+                <ng-template class="info-game__text" ngPluralCase="other">
+                    <p class="info-game__text" *ngIf="gameLogicService.winFirstTime == false">
+                        ¡Disponibles {{ gameLogicService.attempts }} Turnos Más!
+                    </p>
+                </ng-template>
+            </div>
+            <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'4rem'"
+                [styledPadding]="'2rem 2.5rem'" class="mb-2 container_play-btn"
+                (click)="animation.startGameDoor(); this.backArrowEnabled = false">
+            </app-generic-button>
             <div class="doors">
-                <div *ngFor="let door of animation.doors; let i = index" 
-                     class="door" 
-                     [class.isOpen]="door.isOpen" 
-                     [class.disabled]="(!animation.isGameStarted || animation.isDoorSelected) && !door.isOpen" 
-                     (click)="animation.openDoor(i); music();">
+                <div *ngFor="let door of animation.doors; let i = index" class="door" [class.isOpen]="door.isOpen"
+                    [class.disabled]="(!animation.isGameStarted || animation.isDoorSelected) && !door.isOpen"
+                    (click)="animation.openDoor(i); music();">
                     <div *ngIf="slot_music">
                         <audio [volume]="0.5" controls="None" hidden autoplay>
                             <source src="./assets/audio/door_opened.mp3" />
@@ -35,17 +39,14 @@
                     </div>
                     <div class="door-inner">
                         <div class="door-front">
-                            <img [src]="door.image">
+                            <img [src]="door.image" alt="brandeo puerta">
                         </div>
                         <div class="door-back">
-                            <img *ngIf="door.isOpen" [src]="door.prize" >
+                            <img *ngIf="door.isOpen" [src]="door.prize">
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'2rem'" [styledPadding]="'0.5rem 2rem'" class="mb-2 container_play-btn" (click)="animation.startGameDoor(); this.backArrowEnabled = false">
-            </app-generic-button>
         </div>
     </div>
     <app-publicity [publicityList]="publicity.getBottomPublicityList()" [isTop]="false"></app-publicity>

@@ -1,75 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Precision Interface</title>
-    <link rel="stylesheet" href="design-precision.component.css">
-</head>
-<body>
-    <app-menu>
-        <mat-toolbar class="background-navy-primary green-primary">
-            <span>Diseño Juego</span>
-            <span class="example-spacer"></span>
-        </mat-toolbar>
-        
-        <div class="container">
-            <div class="left-section">
-                <div class="precision-section">
-                    <h2>PRECISIÓN</h2>
-                    <div class="time-container">
-                        <div class="time-box blue">
-                            <input type="file" accept="image/*" onchange="previewImage(this, 'time1')">
-                            <img id="time1" src="default.png" alt="4:15">
-                            <button class="plus-button">+</button>
-                        </div>
-                        <div class="time-box green">
-                            <input type="file" accept="image/*" onchange="previewImage(this, 'time2')">
-                            <img id="time2" src="default.png" alt="4:15">
-                            <button class="plus-button">+</button>
-                        </div>
-                        <div class="time-box red">
-                            <input type="file" accept="image/*" onchange="previewImage(this, 'time3')">
-                            <img id="time3" src="default.png" alt="4:15">
-                            <button class="plus-button">+</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="attempt-section">
-                    <label for="attempts">Numero de Intentos:</label>
-                    <input type="text" id="attempts" placeholder="Inserte un número aquí">
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <button class="save-button">Guardar</button>
-                </div>
-            </div>
-            <div class="right-section">
-                <img id="background-image" src="default.png" alt="Casino Image">
-                <div class="buttons">
-                    <label for="background-upload" class="upload-button">Seleccionar Fondo</label>
-                    <input type="file" id="background-upload" accept="image/*" onchange="previewImage(this, 'background-image')" style="display: none;">
-                    <label for="logo-upload" class="upload-button">Seleccionar Logo</label>
-                    <input type="file" id="logo-upload" accept="image/*" onchange="previewImage(this, 'logo-image')" style="display: none;">
-                </div>
-                <img id="logo-image" src="default.png" alt="Logo Image">
-            </div>
+<app-menu>
+    <mat-toolbar class="background-navy-primary green-primary">
+      <span>DISEÑO DE JUEGOS</span>
+      <span class="example-spacer"></span>
+    </mat-toolbar>
+  
+    <div class="publicity-container">
+      <div class="publicity__changes">
+        <p class="publicity__title white-color">PRECISIÓN</p>
+        <div class="time-container">
+          <div class="time-column">
+            <img src="{{previewWatchBox}}" alt="Caja de Reloj" />
+          <button class="plus-button" (click)="takeInputDoorLeft.click()">+</button>
+          <input class="file-input" type="file" #takeInputDoorLeft (change)="capturarFileBoxWatch($event)">
+          </div>
         </div>
-    </app-menu>
+        <p class="publicity__title white-color">Escala de imagen 200x60</p>
+        
+        <div class="buttons-container">
+          <app-button-primary (click)="updateDesign()" title="Guardar"></app-button-primary>
+          <app-button-primary (click)="cancel()" title="Cancelar" backgroundColor="#fff"></app-button-primary>
+        </div>
 
-    <script>
-        function previewImage(input, imageId) {
-            const file = input.files[0];
-            const reader = new FileReader();
+      </div>
+      <div class="publicity__view">
+      <div class="publicity__view-column">
+        <img id="background" src="{{previewBackground}}" alt="Fondo Precisión" />
+        <button class="select-button" (click)="takeInputBackground.click()">Seleccionar Fondo</button>
+        <input class="file-input" type="file" #takeInputBackground (change)="capturarBackgroundFile($event)">
+      </div>
 
-            reader.onload = function(e) {
-                const img = document.getElementById(imageId);
-                img.src = e.target.result;
-            };
-
-            reader.readAsDataURL(file);
-        }
-    </script>
-</body>
-</html>
+      <div class="publicity__view-column">
+        <img id="logo" src="{{previewLogo}}" alt="logo Precisión"/>
+        <button class="select-button" (click)="takeInputLogo.click()">Seleccionar Logo</button>
+        <input class="file-input" type="file" #takeInputLogo (change)="capturarFileLogo($event)">
+      </div>
+    </div>
+    </div>
+  </app-menu>
+  

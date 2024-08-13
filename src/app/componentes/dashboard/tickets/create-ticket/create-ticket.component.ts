@@ -11,6 +11,7 @@ import { Game } from 'src/app/interfaces/game/Game';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
 import { map, Observable, startWith } from 'rxjs';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
+import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 
 function autocompleteObjectValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -27,55 +28,59 @@ function autocompleteObjectValidator(): ValidatorFn {
 })
 export class CreateTicketComponent implements OnInit {
 
-  singularName : string = 'Ticket'
-  pluralName : string = 'Tickets'
-  actionName : string = 'Crear'
-  formGroup : FormGroup;
+  singularName: string = 'Ticket'
+  pluralName: string = 'Tickets'
+  actionName: string = 'Crear'
+  formGroup: FormGroup;
   filteredOptions!: Observable<Client[]>;
-  allClients : Client[] = [];
-  allGames : Game[] = [];
+  allClients: Client[] = [];
+  allGames: Game[] = [];
 
-  invoiceNumber : string = '';
-  qr_code_digits : string = '';
-  clientId : string = '';
+  invoiceNumber: string = '';
+  qr_code_digits: string = '';
+  clientId: string = '';
   game_id: string = '';
 
   Ticket_data: string = ''
   CanPrint = false
 
-  start_date_game : Date = new Date();
-  end_date_game : Date = new Date();
+  start_date_game: Date = new Date();
+  end_date_game: Date = new Date();
+
+  start_date: any
+  end_date: any
 
   constructor(
-    private router : Router,
-    private formBuilder : FormBuilder,
+    private router: Router,
+    private formBuilder: FormBuilder,
     // Dialog and snackBar services
-    private snackBar : SnackbarService,
-    private confirmDialog : ConfirmDialogService,
-    private ticketAPI : TicketService,
-    private ClientAPI : ClientService,
-    private GameAPI : GameService,
-    private staticData : PuenteDatosService,
+    private snackBar: SnackbarService,
+    private confirmDialog: ConfirmDialogService,
+    private ticketAPI: TicketService,
+    private ClientAPI: ClientService,
+    private GameAPI: GameService,
+    private staticData: PuenteDatosService,
     private gameDataSrv: GameDateService,
+    private style: DashboardStyleService,
   ) {
     // Building the form with the formBuilder
 
     // id refers to cedula
 
     this.formGroup = this.formBuilder.group({
-      qr_code_digits : [''],
-      invoice_number : ['', Validators.required],
-      client : new FormControl('', [Validators.required, autocompleteObjectValidator()]),
-      game : ['', Validators.required],
+      qr_code_digits: [''],
+      invoice_number: ['', Validators.required],
+      client: new FormControl('', [Validators.required, autocompleteObjectValidator()]),
+      game: ['', Validators.required],
     });
 
     this.ClientAPI.getAll().subscribe(
       (data) => {
         this.allClients = data;
-        if (data.length == 0){
+        if (data.length == 0) {
           let client_message = ['No hay un cliente creado']
           this.confirmDialog.error(client_message);
-       }
+        }
       }
     );
     this.GameAPI.getAll().subscribe(
@@ -116,8 +121,8 @@ export class CreateTicketComponent implements OnInit {
   }
 
   create() {
-    this.formGroup.valid ? this.showDialog() : 
-    this.snackBar.mensaje('Llene el formulario correctamente');
+    this.formGroup.valid ? this.showDialog() :
+      this.snackBar.mensaje('Llene el formulario correctamente');
   }
 
   showDialog() {
@@ -131,15 +136,15 @@ export class CreateTicketComponent implements OnInit {
     this.sendForm()
   }
 
-  sendForm () {
+  sendForm() {
     this.dateGame();
     this.confirmDialog.confirmed().subscribe(
       confirmed => {
         if (confirmed) {
           this.generateQRCode();
           let formData = this.fillForm();
-          this.ticketAPI.post(formData).subscribe ({
-            next : (res) => {
+          this.ticketAPI.post(formData).subscribe({
+            next: (res) => {
               this.formGroup.get('client')?.disable()
               this.formGroup.get('invoice_number')?.disable()
               this.formGroup.get('game')?.disable()
@@ -147,7 +152,7 @@ export class CreateTicketComponent implements OnInit {
               this.CanPrint = true;
               // this.toList();
             },
-            error : (res) => {
+            error: (res) => {
               this.confirmDialog.error(res.error);
               this.Ticket_data = 'Ticket de Prueba';
               this.qr_code_digits = ''
@@ -158,18 +163,18 @@ export class CreateTicketComponent implements OnInit {
     )
   }
 
-   fillForm() {
+  fillForm() {
     let user_register = sessionStorage.getItem('user_id');
-    let formData : FormData = new FormData();
+    let formData: FormData = new FormData();
     formData.append('invoice_number', this.formGroup.get('invoice_number')?.value);
     formData.append('client', this.formGroup.get('client')?.value.id);
     formData.append('game', this.formGroup.get('game')?.value);
     formData.append('user_register', user_register!);
     formData.append('qr_code_digits', this.qr_code_digits);
-    let start_date = this.gameDataSrv.DateFormat(this.start_date_game)
-    formData.append('game_start', start_date);
-    let end_date = this.gameDataSrv.DateFormat(this.end_date_game)
-    formData.append('game_end', end_date);
+    this.start_date = this.gameDataSrv.DateFormat(this.start_date_game)
+    formData.append('game_start', this.start_date);
+    this.end_date = this.gameDataSrv.DateFormat(this.end_date_game)
+    formData.append('game_end', this.end_date);
 
     return formData;
   }
@@ -185,55 +190,161 @@ export class CreateTicketComponent implements OnInit {
     if (!check_qr_code_digits) {
       return;
     }
-    
+
     this.invoiceNumber = this.formGroup.get('invoice_number')?.value;
     this.clientId = this.formGroup.get('client')?.value.id;
     this.game_id = this.formGroup.get('game')?.value;
-    
-    let exist_code : any[] = [];
 
-    do{
+    let exist_code: any[] = [];
+
+    do {
       this.qr_code_digits = (Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000).toString(10);
-      let search_code = '?state=Disponible&qr_code_digits='+this.qr_code_digits
+      let search_code = '?state=Disponible&qr_code_digits=' + this.qr_code_digits
       this.ticketAPI.getFilter(search_code).subscribe({
-        next : (res) => {
+        next: (res) => {
           exist_code = res
         },
       });
     }
-    while(exist_code.length > 0);
-    
-    this.Ticket_data = this.game_id+'|'+this.invoiceNumber+'|'+this.clientId+'|'+this.qr_code_digits
+    while (exist_code.length > 0);
+
+    this.Ticket_data = this.qr_code_digits
   }
 
-  newForm(){
+  newForm() {
     window.location.reload();
   }
-  print(){
-    alert('imprimiendo')
+
+  printTicket() {
+    this.generateQRCode();
+    const printWindow = window.open('', '', 'width=600,height=400');
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+
+        <head>
+            <title>Ticket de Promoción</title>
+            <style>
+                .ticket_container {
+                    width: 100%;
+                    max-width: 600px; /* Ajustar el ancho máximo del contenedor */
+                    margin: 0 auto; /* Centrar el contenedor en la página */
+                    padding: 15px;
+                    background: #fff;
+                    text-align: center;
+                    page-break-inside: avoid; /* Evitar saltos de página dentro del contenedor */
+                }
+
+                .logo_container {
+                    margin-bottom: 10px;
+                    width: 100%;
+                    height: auto;
+                }
+
+                .logo_container img {
+                    width: 150px;
+                    height: auto; /* Mantener la proporción de la imagen */
+                    border-radius: 10px;
+                    object-fit: contain;
+                }
+
+                .container_img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 10px;
+                }
+
+                #qrcode img {
+                    width: 200px;
+                    height: 200px;
+                }
+
+                .title_container {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                h2 {
+                    font-size: 25px;
+                    margin: 10px 0;
+                }
+                p{
+                    font-size: 10px;
+                }
+
+                @media print {
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        box-shadow: none;
+                    }
+                }
+            </style>
+        </head>
+
+        <body onload="window.print(); window.close();">
+            <div class="ticket_container">
+                <div class="logo_container">
+                    <img src="${this.style.get_image_logo()}" alt="logo">
+                </div>
+                <div class="title_container">
+                    <h2>Código Qr:&nbsp;&nbsp; ${this.qr_code_digits}</h2>
+                </div>
+                <div class="container_img">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="text_default">
+                  <p>
+                    Promoción válida del ${this.start_date} al ${this.end_date}
+                  </p>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+            <script>
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: '${this.qr_code_digits}',
+                    width: 200,  // Ancho del QR ajustado
+                    height: 200, // Altura del QR ajustada
+                    colorDark: "#000000", // Color oscuro (negro)
+                    colorLight: "#ffffff", // Fondo (blanco)
+                    correctLevel: QRCode.CorrectLevel.H // Nivel de corrección de errores
+                });
+            </script>
+        </body>
+
+        </html>
+        `);
+      printWindow.document.close();
+      printWindow.focus();
+    } else {
+      console.error('No se pudo abrir la ventana de impresión.');
+    }
   }
 
-  async dateGame(){
-  this.GameAPI.getById(1).subscribe(
-    (data:any) => {
-      let [dia_i, mes_i , año_i] = data.start_date.split(' ')[0].split('/')
-      this.start_date_game = new Date(
-        parseInt(año_i),
-        parseInt(mes_i) - 1,
-        parseInt(dia_i),
-        parseInt('00'),
-        parseInt('00')
-      );
-      let [dia_f, mes_f , año_f] = data.end_date.split(' ')[0].split('/')
-      this.end_date_game = new Date(
-        parseInt(año_f),
-        parseInt(mes_f) - 1,
-        parseInt(dia_f),
-        parseInt('00'),
-        parseInt('00')
-      );
-    }
-  )
-}
+  async dateGame() {
+    this.GameAPI.getById(1).subscribe(
+      (data: any) => {
+        let [dia_i, mes_i, año_i] = data.start_date.split(' ')[0].split('/')
+        this.start_date_game = new Date(
+          parseInt(año_i),
+          parseInt(mes_i) - 1,
+          parseInt(dia_i),
+          parseInt('00'),
+          parseInt('00')
+        );
+        let [dia_f, mes_f, año_f] = data.end_date.split(' ')[0].split('/')
+        this.end_date_game = new Date(
+          parseInt(año_f),
+          parseInt(mes_f) - 1,
+          parseInt(dia_f),
+          parseInt('00'),
+          parseInt('00')
+        );
+      }
+    )
+  }
 
 }

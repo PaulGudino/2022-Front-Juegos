@@ -27,11 +27,13 @@ describe('PuertasViewComponent', () => {
 
   let mockDashboardPublicityService = {
     getTopPublicityList: jasmine.createSpy('getTopPublicityList').and.returnValue(of([])),
-    getBottomPublicityList: jasmine.createSpy('getBottomPublicityList').and.returnValue(of([])) // Added method
+    getBottomPublicityList: jasmine.createSpy('getBottomPublicityList').and.returnValue(of([]))
   };
 
   let mockDashboardStyleService = {
-    get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue('mock-image-url')
+    get_image_logo_game: jasmine.createSpy('get_image_logo_game').and.returnValue('mock-image-url'),
+    get_image_background_puertas: jasmine.createSpy('get_image_background_puertas').and.returnValue('mock-background-url'),
+    get_image_logo_puertas: jasmine.createSpy('get_image_logo_puertas').and.returnValue('mock-logo-url') // Añadir esta línea
   };
 
   let mockAnimationGameService = {
@@ -39,6 +41,7 @@ describe('PuertasViewComponent', () => {
     getPrizes: jasmine.createSpy('getPrizes'),
     openTime: 2
   };
+  
   let mockThemeService = {};
   let mockPublicityGameService = {};
   let mockGameLogicService = {

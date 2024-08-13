@@ -18,12 +18,12 @@ export class PuenteDatosService {
    /**
     * For testing environments
     */
-  url = 'http://localhost:8000/';
+   url = 'http://localhost:8000/';
    /**
     * For deployment environmnets
     */
    //
-   //url = 'https://sistemaskioskotouch.pythonanywhere.com/';
+   //url = 'https://kioskotouch.pythonanywhere.com/';
 
    constructor(private http: HttpClient, private gameSelectionService: GameSelectionService) {
       this.gameSelectionService.selectedGame$.subscribe(game => {

@@ -1,30 +1,40 @@
-/* Ajustes para que el contenedor principal ocupe toda la pantalla */
 .container-fullscreen {
   background-color: #0d1b2a;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
 }
 
 .container-menu {
   position: relative;
-  height: 100%;
+  flex: 1;
   width: 100%;
   background-color: black;
+  z-index: 1;
 }
 
-.scan-shadow {
+.background-shadow {
   height: 100%;
   width: 100%;
   position: absolute;
-  background-color: #000000d4;
-  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: -1;
+}
+
+.background-shadow img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.5;
 }
 
 .scan_menu-container {
@@ -34,20 +44,130 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 3;
+  justify-content: flex-start;
+  padding-top: 5.5rem;
   box-sizing: border-box;
+  z-index: 3;
 }
 
+.menu-container_img-container {
+  width: 39rem;
+  height: 15rem;
+}
+
+.subtitle {
+  font-size: 2rem;
+  margin-top: 2rem;
+  color: white;
+  text-align: center;
+}
+
+.instructions {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+}
+
+
+.info-game__text{
+  color: white;
+  font-size: 3rem;
+}
 .information-game-container {
+  background-color: #ffae0017;
   width: 100%;
   display: flex;
   justify-content: center;
   height: 7rem;
   align-items: center;
-  margin-bottom: 1rem;
+}
+
+.dice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.dice {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 2s;
+  background-color: white;
+}
+
+.dice.roll {
+  animation: roll linear infinite;
+}
+
+@keyframes roll {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(6000deg) rotateY(6000deg); }
+}
+
+.face {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  border: 1px #ccc;
+  box-sizing: border-box;
+}
+
+.face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.one { transform: rotateY(0deg) translateZ(125px); }
+.two { transform: rotateY(180deg) translateZ(125px); }
+.three { transform: rotateX(-90deg) translateZ(125px); }
+.four { transform: rotateX(90deg) translateZ(125px); }
+.five { transform: rotateY(90deg) translateZ(125px); }
+.six { transform: rotateY(-90deg) translateZ(125px); }
+
+input[type="text"] {
+  padding: 1rem;
   font-size: 2rem;
+  text-align: center;
+  background-color: #333;
   color: white;
+  border: none;
+  width: 450px;
+  margin-bottom: 1rem; /* Añadido para separar el input del teclado */
+}
+
+.generic-button-container {
+  margin-top: 2rem; /* Ajustado para que el botón no esté tan separado del dado */
+  margin-bottom: 2rem;
+}
+
+app-keyboard {
+  margin-top: -125px;
+  margin-bottom: -125px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+app-keyboard button {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background-color: #218838;
 }
 
 #back-arrow {
@@ -59,88 +179,4 @@
   color: white;
   font-size: 2rem;
   cursor: pointer;
-}
-
-.subtitle {
-  font-size: 2rem;
-  margin-top: 0;
-  color: white;
-}
-
-.instructions {
-  font-size: 2rem; /* Ajustado para que coincida con "Disponible 2 Giros más!" */
-  margin-bottom: 2rem;
-  color: white;
-}
-
-.dice-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px; /* Añadir margen inferior para separar el botón del dado */
-}
-
-.generic-button-container {
-  margin-top: 50px; /* Añadir margen superior para separar el botón del dado */
-  margin-bottom: 50px;
-}
-
-.dice {
-  width: 400px;
-  height: 400px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 2s; /* Reducir el tiempo de transición */
-}
-
-.dice.roll {
-  animation: roll linear infinite; /* Reducir la duración de la animación */
-}
-
-@keyframes roll {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(3600deg) rotateY(3600deg); }
-}
-
-.face {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.face img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.one { transform: rotateY(0deg) translateZ(200px); }
-.two { transform: rotateY(180deg) translateZ(200px); }
-.three { transform: rotateX(-90deg) translateZ(200px); }
-.four { transform: rotateX(90deg) translateZ(200px); }
-.five { transform: rotateY(90deg) translateZ(200px); }
-.six { transform: rotateY(-90deg) translateZ(200px); }
-
-input[type="text"] {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  font-size: 2rem; /* Aumentar el tamaño de la fuente para mayor visibilidad */
-  text-align: center;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  width: 500px; /* Ajustar el ancho para que no ocupe demasiado espacio */
-}
-
-button:hover {
-  background-color: #218838;
-}
-
-.cuadrotxt {
-  width: 100px;
 }

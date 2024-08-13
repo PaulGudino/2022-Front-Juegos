@@ -34,8 +34,12 @@ describe('PlayViewComponent', () => {
         { 
           provide: DashboardStyleService, 
           useValue: {
-            get_image_logo_game: () => 'mocked-logo-url', // Mock para get_image_logo_game
-            get_image_machine_game: () => 'mocked-machine-image-url' // Mock para get_image_machine_game
+            get_image_background_tragamonedas: () => 'mock-background-url', // Mock para get_image_background_tragamonedas
+            set_image_background_tragamonedas: (image: any) => {}, // Mock para set_image_background_tragamonedas
+            get_image_logo_tragamonedas: () => 'mock-logo-url', // Mock para get_image_logo_tragamonedas
+            set_image_logo_tragamonedas: (image: any) => {}, // Mock para set_image_logo_tragamonedas
+            get_image_machine_game: () => 'mock-machine-image-url', // Mock para get_image_machine_game
+            set_image_machine_game: (image: any) => {} // Mock para set_image_machine_game
           }
         },
         { 

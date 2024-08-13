@@ -23,7 +23,7 @@ export class DesignComponent implements OnInit {
    previsulizacionMachine: string = '';
    previsulizacionLogo: string = '';
    @ViewChild('takeInput', { static: false })
-   InputVar!: ElementRef;
+   InputVarMachine!: ElementRef;
 
    @ViewChild('takeInputLogo', { static: false })
    InputVarLogo!: ElementRef;
@@ -49,7 +49,7 @@ export class DesignComponent implements OnInit {
       private imageSrv: ImageService,
       private publicityGame: PublicityGameService,
       private staticData: PuenteDatosService
-   ) {}
+   ) { }
 
    ngOnInit(): void {
       this.staticData.setMenu('Tragamonedas');
@@ -66,7 +66,7 @@ export class DesignComponent implements OnInit {
             this.dashStyle.loadData(designData[0]);
             this.previsulizacionMachine =
                this.dashStyle.get_image_machine_game();
-            this.previsulizacionLogo = this.dashStyle.get_image_logo_game();
+            this.previsulizacionLogo = this.dashStyle.get_image_logo_tragamonedas();
             this.fontFamily = this.dashStyle.get_font_letter();
             this.colorText = this.dashStyle.get_color_text();
 
@@ -82,9 +82,9 @@ export class DesignComponent implements OnInit {
          });
       });
    }
-   goEditGamePublicity() {}
+   goEditGamePublicity() { }
 
-   capturarFile(event: any): void {
+   capturarFileMachineTragamonedas(event: any): void {
       this.fileToUploadMachine = this.imageSrv.captureFile(event);
 
       if (this.fileToUploadMachine) {
@@ -93,10 +93,10 @@ export class DesignComponent implements OnInit {
             .extraerBase64(this.fileToUploadMachine)
             .then((imagenMachine: any) => {
                this.previsulizacionMachine = imagenMachine.base;
-               this.dashStyle.setImageMchineGameFile(this.fileToUploadMachine);
+               this.dashStyle.setImageMachineGameFile(this.fileToUploadMachine);
             });
       } else {
-         this.InputVar.nativeElement.value = '';
+         this.InputVarMachine.nativeElement.value = '';
          this.InputVarLogo.nativeElement.value = '';
          this.snackbar.mensaje('Solo se permiten imagenes');
       }
@@ -131,15 +131,15 @@ export class DesignComponent implements OnInit {
             if (this.fileToUploadMachine && this.fileToUploadLogo) {
                let formMachine: FormData = this.updateMachineImage();
                formMachine.append(
-                  'image_logo_game',
-                  this.dashStyle.getImageLogoFile(),
-                  this.dashStyle.getImageLogoFile().name
+                  'image_logo_tragamonedas',
+                  this.dashStyle.getImageLogoTragamonedasFile(),
+                  this.dashStyle.getImageLogoTragamonedasFile().name
                );
-               this.theme.updateDesgin(1, formMachine);
+               this.theme.updateDesign(1, formMachine);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             } else if (this.fileToUploadMachine) {
                let form = this.updateMachineImage();
-               this.theme.updateDesgin(1, form);
+               this.theme.updateDesign(1, form);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             } else if (this.fileToUploadLogo) {
                this.updateLogoImage();
@@ -151,7 +151,7 @@ export class DesignComponent implements OnInit {
                formData.append('date_modified', new Date().toISOString());
                formData.append('is_active', 'true');
                formData.append('game_id', '1');
-               this.theme.updateDesgin(1, formData);
+               this.theme.updateDesign(1, formData);
 
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             }
@@ -173,16 +173,14 @@ export class DesignComponent implements OnInit {
       formData.append('is_active', 'true');
       formData.append('game_id', '1');
       return formData;
-
-
    }
    private updateLogoImage() {
       let formData: FormData = new FormData();
       formData.append('id', '1');
       formData.append(
          'image_logo_game',
-         this.dashStyle.getImageLogoFile(),
-         this.dashStyle.getImageLogoFile().name
+         this.dashStyle.getImageLogoTragamonedasFile(),
+         this.dashStyle.getImageLogoTragamonedasFile().name
       );
       formData.append('color_text', this.colorText);
       formData.append('font_letter', this.fontFamily);
@@ -190,7 +188,7 @@ export class DesignComponent implements OnInit {
       formData.append('is_active', 'true');
       formData.append('game_id', '1');
 
-      this.theme.updateDesgin(1, formData);
+      this.theme.updateDesign(1, formData);
       this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
    }
 

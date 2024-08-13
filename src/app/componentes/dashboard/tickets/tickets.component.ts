@@ -6,43 +6,44 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { Ticket } from 'src/app/interfaces/ticket/Ticket';
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Observable } from 'rxjs';
 import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
 import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
+import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 
 @Component({
   selector: 'app-tickets',
   styleUrls: ['./tickets.component.css'],
   templateUrl: './tickets.component.html',
 })
-export class TicketsComponent implements OnInit{
+export class TicketsComponent implements OnInit {
 
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
-  
+
   Filters = [
-    {id: '?state=Disponible', name: 'Tickets Disponibles'},
-    {id: '?state=Reclamado', name: 'Tickets Reclamados'},
-    {id: '?ordering=-date_created', name: 'Ultimos Tickets Creados'},
-    {id: '?ordering=date_created', name: 'Primeros Tickets Creados'},
+    { id: '?state=Disponible', name: 'Tickets Disponibles' },
+    { id: '?state=Reclamado', name: 'Tickets Reclamados' },
+    { id: '?ordering=-date_created', name: 'Ultimos Tickets Creados' },
+    { id: '?ordering=date_created', name: 'Primeros Tickets Creados' },
   ]
 
   filter_default = '?ordering=-date_created'
 
-  singularName : string = 'ticket';
-  pluralName : string = 'tickets';
+  singularName: string = 'ticket';
+  pluralName: string = 'tickets';
 
-  actionName : string = 'eliminar';
-  permissions : any = [];
+  actionName: string = 'eliminar';
+  permissions: any = [];
 
-  total_tickets : number = 0
+  total_tickets: number = 0
 
-  displayedColumns : string[] = [
+  displayedColumns: string[] = [
     'id',
     'invoice_number',
     'qr_code_digits',
@@ -58,20 +59,23 @@ export class TicketsComponent implements OnInit{
 
   constructor(
     // Atributes of the user component
-    private router : Router,
-    private ticketAPI : TicketService,
-    private permissionsAPI : PermisosService,
-    private confirmDialog : ConfirmDialogService,
-    private snackBar : SnackbarService,
+    private router: Router,
+    private ticketAPI: TicketService,
+    private permissionsAPI: PermisosService,
+    private confirmDialog: ConfirmDialogService,
+    private snackBar: SnackbarService,
     private statickData: PuenteDatosService,
     private gameDataSrv: GameDateService,
-  ) {}
+    private style: DashboardStyleService,
+  ) { }
 
-  ngOnInit() : void {
+  
+
+  ngOnInit(): void {
     this.loadAll(this.filter_default);
   }
-  
-  loadAll(filter : string) {
+
+  loadAll(filter: string) {
     this.statickData.setMenuGeneral();
     this.ticketAPI.getFilter(filter).subscribe(
       (data) => {
@@ -83,24 +87,24 @@ export class TicketsComponent implements OnInit{
     )
   }
 
-  applyFilter(event : Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLocaleLowerCase();
-    
-    if ( this.dataSource.paginator ) {
+
+    if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  view(id : number) {
-    this.router.navigate(['/dashboard/' + this.pluralName +  '/vizualizar/' + id]);
+  view(id: number) {
+    this.router.navigate(['/dashboard/' + this.pluralName + '/vizualizar/' + id]);
   }
 
-  edit(id : number) {
+  edit(id: number) {
     this.router.navigate(['/dashboard/' + this.pluralName + '/editar/' + id]);
   }
 
-  async delete(id : number) {
+  async delete(id: number) {
     this.permissions = await this.Permisos('Eliminar Ticket');
     if (this.permissions.length > 0) {
       this.showDeleteDialog();
@@ -123,24 +127,127 @@ export class TicketsComponent implements OnInit{
     }
   }
 
-  async print(id:string){
+ 
+
+  async printTicket(ticket: Observable<Ticket>): Promise<void> {
+    const printWindow = window.open('', '', 'width=600,height=400');
+    const data = await firstValueFrom(ticket);
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+
+        <head>
+            <title>Ticket de Promoción</title>
+            <style>
+                .ticket_container {
+                    width: 100%;
+                    max-width: 600px; /* Ajustar el ancho máximo del contenedor */
+                    margin: 0 auto; /* Centrar el contenedor en la página */
+                    padding: 15px;
+                    background: #fff;
+                    text-align: center;
+                    page-break-inside: avoid; /* Evitar saltos de página dentro del contenedor */
+                }
+
+                .logo_container {
+                    margin-bottom: 10px;
+                    width: 100%;
+                    height: auto;
+                }
+
+                .logo_container img {
+                    width: 150px;
+                    height: auto; /* Mantener la proporción de la imagen */
+                    border-radius: 10px;
+                    object-fit: contain;
+                }
+
+                .container_img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 10px;
+                }
+
+                #qrcode img {
+                    width: 200px;
+                    height: 200px;
+                }
+
+                .title_container {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+
+                h2 {
+                    font-size: 25px;
+                    margin: 10px 0;
+                }
+
+                @media print {
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        box-shadow: none;
+                    }
+                }
+            </style>
+        </head>
+
+        <body onload="window.print(); window.close();">
+            <div class="ticket_container">
+                <div class="logo_container">
+                    <img src="${this.style.get_image_logo()}" alt="logo">
+                </div>
+                <div class="title_container">
+                    <h2>Código Qr:&nbsp;&nbsp; ${data.qr_code_digits}</h2>
+                </div>
+                <div class="container_img">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+            <script>
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: '${data.qr_code_digits}',
+                    width: 200,  // Ancho del QR ajustado
+                    height: 200, // Altura del QR ajustada
+                    colorDark: "#000000", // Color oscuro (negro)
+                    colorLight: "#ffffff", // Fondo (blanco)
+                    correctLevel: QRCode.CorrectLevel.H // Nivel de corrección de errores
+                });
+            </script>
+        </body>
+
+        </html>
+        `);
+      printWindow.document.close();
+      printWindow.focus();
+    } else {
+      console.error('No se pudo abrir la ventana de impresión.');
+    }
+  }
+
+  async print(id: string) {
     let promise = await this.Permisos('Imprimir Ticket')
-    if (promise.length > 0){
-        alert('Imprimiendo Ticket '+id)
-    }else{
+    if (promise.length > 0) {
+      this.printTicket(this.ticketAPI.getById(Number(id)));
+    } else {
       this.snackBar.mensaje('No tienes permisos para Imprimir Ticket');
     }
   }
 
   showDeleteDialog() {
-      const DIALOGINFO = {
-        title : this.actionName.toUpperCase() + ' ' + this.singularName.toUpperCase(),
-        message : '¿Está seguro de que desea eliminar el ' + this.singularName + ' ?',
-        cancelText : 'CANCELAR',
-        confirmText : this.actionName.toUpperCase()
-      };
+    const DIALOGINFO = {
+      title: this.actionName.toUpperCase() + ' ' + this.singularName.toUpperCase(),
+      message: '¿Está seguro de que desea eliminar el ' + this.singularName + ' ?',
+      cancelText: 'CANCELAR',
+      confirmText: this.actionName.toUpperCase()
+    };
 
-      this.confirmDialog.open(DIALOGINFO);
+    this.confirmDialog.open(DIALOGINFO);
 
   }
 
@@ -152,7 +259,7 @@ export class TicketsComponent implements OnInit{
   //   this.permissions = promise;
   // }
 
-  async Permisos(name:string){
+  async Permisos(name: string) {
     let rolId = Number(sessionStorage.getItem('rol_id'));
     let permiso = await lastValueFrom(this.permissionsAPI.getPermisosbyName(name));
     let permissionId = Number(permiso[0].id);
@@ -161,7 +268,7 @@ export class TicketsComponent implements OnInit{
   }
 
   toCreation() {
-    this.router.navigate(['dashboard/'+ this.pluralName +'/crear']);
+    this.router.navigate(['dashboard/' + this.pluralName + '/crear']);
   }
 
   toList() {
@@ -171,22 +278,22 @@ export class TicketsComponent implements OnInit{
   filter(filter: string) {
     this.loadAll(filter);
   }
-  toTicketConfiguration(){
+  toTicketConfiguration() {
     this.router.navigate(['dashboard/tickets/configuracion']);
   }
-  date_filter(){
-    if(this.range.value.start || this.range.value.end){
-      let start : any = this.range.get('start')?.value;
-      let end : any = this.range.get('end')?.value;
+  date_filter() {
+    if (this.range.value.start || this.range.value.end) {
+      let start: any = this.range.get('start')?.value;
+      let end: any = this.range.get('end')?.value;
       let start_date = this.gameDataSrv.DateFormat(start).split('T')[0];
       let end_date = this.gameDataSrv.DateFormat(end).split('T')[0];
-      let filter = '?date_created__date__range='+start_date+'%2C'+end_date
+      let filter = '?date_created__date__range=' + start_date + '%2C' + end_date
       this.loadAll(filter);
-    }else{
+    } else {
       this.loadAll(this.filter_default);
     }
   }
-  date_filter2(){
+  date_filter2() {
     this.range.get('start')?.setValue(null);
     this.range.get('end')?.setValue(null);
     this.loadAll(this.filter_default);
