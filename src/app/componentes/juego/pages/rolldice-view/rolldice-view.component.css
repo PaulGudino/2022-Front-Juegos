@@ -71,7 +71,7 @@
 
 .info-game__text{
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 .information-game-container {
   background-color: #ffae0017;
@@ -80,7 +80,6 @@
   justify-content: center;
   height: 7rem;
   align-items: center;
-  margin-bottom: 1rem;
 }
 
 .dice-container {

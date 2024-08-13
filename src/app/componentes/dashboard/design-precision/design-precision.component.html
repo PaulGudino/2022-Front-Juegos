@@ -9,7 +9,7 @@
         <p class="publicity__title white-color">PRECISIÓN</p>
         <div class="time-container">
           <div class="time-column">
-            <img src="{{previewWatchBox}}" alt="puerta izquierda" />
+            <img src="{{previewWatchBox}}" alt="Caja de Reloj" />
           <button class="plus-button" (click)="takeInputDoorLeft.click()">+</button>
           <input class="file-input" type="file" #takeInputDoorLeft (change)="capturarFileBoxWatch($event)">
           </div>
@@ -24,13 +24,13 @@
       </div>
       <div class="publicity__view">
       <div class="publicity__view-column">
-        <img id="background" src="{{previewBackground}}" alt="fondo puertas" />
+        <img id="background" src="{{previewBackground}}" alt="Fondo Precisión" />
         <button class="select-button" (click)="takeInputBackground.click()">Seleccionar Fondo</button>
         <input class="file-input" type="file" #takeInputBackground (change)="capturarBackgroundFile($event)">
       </div>
 
       <div class="publicity__view-column">
-        <img id="logo" src="{{previewLogo}}" alt="logo puertas" />
+        <img id="logo" src="{{previewLogo}}" alt="logo Precisión"/>
         <button class="select-button" (click)="takeInputLogo.click()">Seleccionar Logo</button>
         <input class="file-input" type="file" #takeInputLogo (change)="capturarFileLogo($event)">
       </div>
