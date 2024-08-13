@@ -218,6 +218,15 @@ export class CreateTicketComponent implements OnInit {
   printTicket() {
     this.generateQRCode();
     const printWindow = window.open('', '', 'width=600,height=400');
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+
+    // Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
+    const dia = String(fechaActual.getDate()).padStart(2, '0');
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
+    const anio = fechaActual.getFullYear();
+
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
     if (printWindow) {
       printWindow.document.write(`
         <html>
@@ -269,9 +278,6 @@ export class CreateTicketComponent implements OnInit {
                     font-size: 25px;
                     margin: 10px 0;
                 }
-                p{
-                    font-size: 10px;
-                }
 
                 @media print {
                     body {
@@ -296,7 +302,10 @@ export class CreateTicketComponent implements OnInit {
                 </div>
                 <div class="text_default">
                   <p>
-                    Promoción válida del ${this.start_date} al ${this.end_date}
+                    Promoción válida únicamente el ${fechaFormateada}
+                  </p>
+                  <p>
+                    Gana premios jugando
                   </p>
                 </div>
             </div>
