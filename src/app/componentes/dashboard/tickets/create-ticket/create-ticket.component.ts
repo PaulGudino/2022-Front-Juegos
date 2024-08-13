@@ -270,7 +270,7 @@ export class CreateTicketComponent implements OnInit {
                     margin: 10px 0;
                 }
                 p{
-                    font-size: 10px;
+                    font-size: 20px;
                 }
 
                 @media print {
