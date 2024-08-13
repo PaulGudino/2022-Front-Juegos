@@ -518,18 +518,7 @@ export class AnimationGameService {
 	}
 
 
-	generateTicketContent(options: any): string {
-		return `
-			<div style="text-align: center; font-size: 18px; padding: 20px;">
-            <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
-            <p style="margin: 20px 0;">¡Felicidades! Has ganado:</p>
-            <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
-            <p style="margin: 20px 0;">Gracias por jugar.</p>
-        </div>
-		`;
-	}
-	
-	printTicket(content: string): void {
+	printTicket(options: any): void {
 		const printWindow = window.open('', '', 'width=600,height=400');
 		if (printWindow) {
 			printWindow.document.write(`
@@ -538,7 +527,12 @@ export class AnimationGameService {
 						<title>Ticket de Premio</title>
 					</head>
 					<body onload="window.print(); window.close();">
-						${content}
+						<div style="text-align: center; font-size: 18px; padding: 20px;">
+            <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
+            <p style="margin: 20px 0;">¡Felicidades! Has ganado:</p>
+            <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
+            <p style="margin: 20px 0;">Gracias por jugar.</p>
+        </div>
 					</body>
 				</html>
 			`);
@@ -558,8 +552,7 @@ export class AnimationGameService {
 		this.confirmDialog.result_game(options);
 	
 		// Lógica para imprimir ticket si ganó el juego
-		const ticketContent = this.generateTicketContent(options);
-		this.printTicket(ticketContent);
+		this.printTicket(options);
 	}
 
 	showLoseMessage(): void {
