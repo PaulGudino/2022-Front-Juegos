@@ -39,6 +39,7 @@
 			</figure>
 			<app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', '7', '8', '9','0', 'delete']"></app-keyboard>
 			<input
+				autofocus
 				placeholder="Ingrese el código"
 				(click)="changeView()"
 				class="btn menu__input ng-pristine ng-valid ng-touched"

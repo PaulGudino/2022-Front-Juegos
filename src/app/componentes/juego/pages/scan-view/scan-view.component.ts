@@ -62,6 +62,7 @@ export class ScanViewComponent implements OnInit {
 				"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
 			]
 			this.confirmDialog.error(game_message)
+			this.keyController.clearCode();
 		}
 	}
 	doSomething() {

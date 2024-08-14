@@ -28,6 +28,7 @@ export class GameLogicService {
 	public winner: boolean = false
 	public winFirstTime: boolean = false
 	public winAwardImage: string = ""
+	public nameAwardImage: string = ""
 
 	constructor(
 		private ticketService: TicketService,
@@ -103,6 +104,7 @@ export class GameLogicService {
 				(data:any)=>{
 					this.winCase(awardConditioned.award_id, awardConditioned.id, true)
 					this.winAwardImage = data.imagen
+					this.nameAwardImage = data.name
 				}
 			)
 			// let award: any = this.winnedAward(awardConditioned)
@@ -121,6 +123,7 @@ export class GameLogicService {
 
 				this.winCase(award.id, null, false)
 				this.winAwardImage = award.imagen
+				this.nameAwardImage = award.name
 				this.createGameSession(this.ticket.id,award.id,this.winner)
 
 			} else {

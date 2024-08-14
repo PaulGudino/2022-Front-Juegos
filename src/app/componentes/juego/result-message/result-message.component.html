@@ -2,18 +2,19 @@
   <div mat-dialog-content class="container_title">
     <img src={{data.title}} alt="titulo.png">
   </div>
+    <p>Nombre del premio: {{data.prize_name}}</p>
     <div mat-dialog-content class="container_img">
         <img src={{data.image}} alt="resultado.png">
     </div>
     <div>
       <audio
-							controls="None"
-							hidden
-							autoplay>
-							<source
-								src={{data.result_music}}
-								type="audio/mp3" />
-						</audio>
+        controls="None"
+        hidden
+        autoplay>
+        <source
+          src={{data.result_music}}
+          type="audio/mp3" />
+      </audio>
     </div>
     <div mat-dialog-actions class="button_container">
       <button mat-button (click)="cerrar()">Cerrar</button>

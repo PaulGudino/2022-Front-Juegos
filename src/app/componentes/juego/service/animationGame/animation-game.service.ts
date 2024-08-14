@@ -150,7 +150,7 @@ export class AnimationGameService {
 
 						this.gameLogicService.winFirstTime = true
 
-						this.showWinMessage(this.gameLogicService.winAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 
 						clearInterval(intervalId)
 					}
@@ -224,6 +224,7 @@ export class AnimationGameService {
 						} else {
 							let options = {
 								title: "./assets/img/palabras/sigue_participando.png",
+								prize_name: "",
 								image: "../../../../../assets/img/loseImage.png",
 								result_music: "../../../../../assets/audio/lose.mp3",
 							}
@@ -285,7 +286,7 @@ export class AnimationGameService {
 						}, this.rollTime);
 						this.isRolling = false;
 						clearInterval(intervalId)
-						this.showWinMessage(this.gameLogicService.winAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 						//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
 					}, this.rollTime * 750)
 				} else {
@@ -312,6 +313,7 @@ export class AnimationGameService {
 						} else {
 							let options = {
 								title: "./assets/img/palabras/sigue_participando.png",
+								prize_name: "",
 								image: "./assets/img/loseImage.png",
 								result_music: "./assets/audio/lose.mp3",
 							}
@@ -393,7 +395,7 @@ export class AnimationGameService {
 				this.currentTime = this.targetTime;
 
 				this.gameLogicService.winFirstTime = true;
-				this.showWinMessage(this.gameLogicService.winAwardImage);
+				this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 				this.gameLogicService.setWinnerState(false);
 
 			} else {
@@ -412,6 +414,7 @@ export class AnimationGameService {
 				} else {
 					let options = {
 						title: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/palabras/sigue_participando.png" : "./assets/img/palabras/sigue_participando.png",
+						prize_name: "",
 						image: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/loseImage.png" : "./assets/img/loseImage.png",
 						result_music: "./assets/audio/lose.mp3",
 					};
@@ -461,7 +464,7 @@ export class AnimationGameService {
 						}, 1000); // Esperar 1.5 segundos antes de abrir las demás puertas
 
 						setTimeout(() => {
-							this.showWinMessage(this.doors[index].prize)
+							this.showWinMessage(this.doors[index].prize,this.gameLogicService.nameAwardImage)
 						}, 2000)
 
 						setTimeout(() => {
@@ -529,7 +532,7 @@ export class AnimationGameService {
 					<body onload="window.print(); window.close();">
 						<div style="text-align: center; font-size: 18px; padding: 20px;">
             <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
-            <p style="margin: 20px 0;">¡Felicidades! Has ganado:</p>
+            <p style="margin: 20px 0;">¡Felicidades! Has ganado: ${options.prize_name}</p>
             <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
             <p style="margin: 20px 0;">Gracias por jugar.</p>
         </div>
@@ -543,9 +546,10 @@ export class AnimationGameService {
 		}
 	}
 	
-	showWinMessage(prize: string): void {
+	showWinMessage(prize: string, name: string): void {
 		let options = {
 			title: "./assets/img/palabras/gano.png",
+			prize_name: name,
 			image: prize,
 			result_music: "./assets/audio/win.mp3",
 		};
@@ -558,6 +562,7 @@ export class AnimationGameService {
 	showLoseMessage(): void {
 		let options = {
 			title: this.gameLogicService.attempts === 0 ? "./assets/img/palabras/perdio.png" : "./assets/img/palabras/sigue_participando.png",
+			prize_name: "",
 			image: this.gameLogicService.attempts === 0 ? "./assets/img/gameover.png" : "./assets/img/loseImage.png",
 			result_music: "./assets/audio/lose.mp3",
 		};
