@@ -1,5 +1,6 @@
 /* Asegurarse de que el contenedor ocupe toda la pantalla */
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -31,12 +32,20 @@ html, body {
     background-color: black;
 }
 
-.scan-shadow {
+.background-shadow {
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: #000000d4;
-    z-index: 2;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.background-shadow img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.5;
 }
 
 .scan_menu-container {
@@ -75,8 +84,10 @@ p {
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    flex: 1 1 calc(45%); /* Ajusta el tamaño de la columna aquí */
-    max-width: calc(45%); /* Ajusta el tamaño de la columna aquí */
+    flex: 1 1 calc(45%);
+    /* Ajusta el tamaño de la columna aquí */
+    max-width: calc(45%);
+    /* Ajusta el tamaño de la columna aquí */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,7 +100,8 @@ p {
 }
 
 button {
-    background-color: rgba(45, 45, 45, 0.7); /* Fondo semi-transparente */
+    background-color: rgba(45, 45, 45, 0.7);
+    /* Fondo semi-transparente */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -112,7 +124,9 @@ button:focus {
 
 @media (max-width: 768px) {
     .game {
-        flex: 1 1 calc(100% - 20px); /* Ajusta el tamaño de la columna para pantallas pequeñas */
-        max-width: calc(100% - 20px); /* Ajusta el tamaño de la columna para pantallas pequeñas */
+        flex: 1 1 calc(100% - 20px);
+        /* Ajusta el tamaño de la columna para pantallas pequeñas */
+        max-width: calc(100% - 20px);
+        /* Ajusta el tamaño de la columna para pantallas pequeñas */
     }
 }

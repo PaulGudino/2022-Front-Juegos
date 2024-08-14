@@ -19,7 +19,7 @@ export class ResultMessageComponent implements OnInit {
       image : string;
       result_music : string;
     },
-    private gameLogicService: GameLogicService
+    public gameLogicService: GameLogicService
   ) { }
 
   ngOnInit(): void {

@@ -212,7 +212,7 @@ export class AnimationGameService {
 						refCol3.style.filter = "blur(0px)"
 
 						this.animationCountCol1 = 5
-						this.disabledPlayButton = false
+						
 						clearInterval(intervalId)
 						if (this.gameLogicService.attempts === 0) {
 							const options = {
@@ -230,6 +230,9 @@ export class AnimationGameService {
 							}
 							this.confirmDialog.result_game(options)
 						}
+						setTimeout(() => {
+							this.disabledPlayButton = false
+						}, 3000);
 					}
 				}, 2030)
 				// }, 2500)
@@ -439,6 +442,7 @@ export class AnimationGameService {
 		this.isOpening = false;
 		this.isGameStarted = true;
 		this.isDoorSelected = false;
+		this.disabledPlayButton = true
 		this.doors.forEach(door => door.isOpen = false);  // Reset doors state
 	}
 
@@ -488,6 +492,7 @@ export class AnimationGameService {
 
 						setTimeout(() => {
 							this.isGameStarted = false;
+							this.disabledPlayButton = false
 						}, 4500);
 					}, this.openTime * 1000);
 				}
@@ -501,7 +506,9 @@ export class AnimationGameService {
 	}
 
 	openRemainingDoors(selectedIndex: number): void {
-
+		this.isOpening = true;
+		this.isDoorSelected = true;
+		this.isGameStarted = false;
 		this.doors.forEach((door, i) => {
 			if (i !== selectedIndex) {
 				setTimeout(() => {
@@ -522,6 +529,15 @@ export class AnimationGameService {
 
 
 	printTicket(options: any): void {
+		// Obtener la fecha actual
+		const fechaActual = new Date();
+
+		// Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
+		const dia = String(fechaActual.getDate()).padStart(2, '0');
+		const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
+		const anio = fechaActual.getFullYear();
+	
+		const fechaFormateada = `${dia}/${mes}/${anio}`;
 		const printWindow = window.open('', '', 'width=600,height=400');
 		if (printWindow) {
 			printWindow.document.write(`
@@ -535,6 +551,7 @@ export class AnimationGameService {
             <p style="margin: 20px 0;">¡Felicidades! Has ganado: ${options.prize_name}</p>
             <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
             <p style="margin: 20px 0;">Gracias por jugar.</p>
+			<p style="margin: 20px 0;">Ticket válido únicamente el día ${fechaFormateada}</p>
         </div>
 					</body>
 				</html>

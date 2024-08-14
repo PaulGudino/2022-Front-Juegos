@@ -292,7 +292,7 @@ export class CreateTicketComponent implements OnInit {
         <body onload="window.print(); window.close();">
             <div class="ticket_container">
                 <div class="logo_container">
-                    <img src="${this.style.get_image_logo()}" alt="logo">
+                    <img src="${this.style.get_image_logo_kiosco()}" alt="logo">
                 </div>
                 <div class="title_container">
                     <h2>Código Qr:&nbsp;&nbsp; ${this.qr_code_digits}</h2>

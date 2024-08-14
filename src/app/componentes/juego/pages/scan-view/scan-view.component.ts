@@ -6,6 +6,7 @@ import { DashboardStyleService } from "../../../../servicios/theme/dashboardStyl
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { KeyControllerService } from "../../service/keyController/key-controller.service"
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';	
+import { ThemeService } from "src/app/servicios/theme/theme.service"
 
 @Component({
 	selector: "app-scan-view",
@@ -17,7 +18,7 @@ export class ScanViewComponent implements OnInit {
 	scanState: boolean = true
 	explication: String = "Puedes escanear el código QR de tu ticket"
 	code: string = this.keyController.getCode()
-
+	image_background?: string = "";
 	constructor(
 		private router: Router,
 		public publicity: DashboardPublicityService,
@@ -25,11 +26,15 @@ export class ScanViewComponent implements OnInit {
 		public keyController: KeyControllerService,
 		private gameLogic: GameLogicService,
 		private confirmDialog: ConfirmDialogService,
-		private ticketService: TicketService
+		private ticketService: TicketService,
+		private theme: ThemeService,
 	) {}
 
 	ngOnInit(): void {
 		this.keyController.clearCode()
+		this.theme.getDesignInformation().subscribe((designData) => {
+			this.styles.loadData(designData[0]);
+		  });
 	}
 
 	changeView() {
