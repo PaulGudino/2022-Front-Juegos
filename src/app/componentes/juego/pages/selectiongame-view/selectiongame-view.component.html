@@ -1,16 +1,24 @@
-
-    <div class="container-fullscreen">
-        <app-publicity [publicityList]="dashPublicity.getTopPublicityList()"></app-publicity>
-        <div class="container-menu">
-            <div class="background-shadow"><img src="{{styles.get_image_background_kiosco()}}" alt="background"></div>
-            <div class="scan_menu-container">
-                <h1>¡Juegos disponibles!</h1>
-                <div class="games">
-                    <div *ngFor="let game of allGames" class="game">
-                        <img (click)="navigateTo(game.name, game.id)" [src]="'./assets/img/'+game.name+'.png'" [alt]="game.name">
+<div class="container-fullscreen">
+    <app-publicity [publicityList]="dashPublicity.getTopPublicityList()"></app-publicity>
+    <div class="container-menu">
+        <div class="background-shadow"><img src="{{styles.get_image_background_kiosco()}}" alt="background"></div>
+        <div class="scan_menu-container">
+            <div class="menu-container_img-container">
+                <app-logo
+                    [urlImage]="styles.get_image_logo_kiosco()"
+                    height="22rem"
+                    [isHome]="false"></app-logo>
+            </div>
+            <h1>¡Juegos disponibles!</h1>
+            <div class="games">
+                <ng-container *ngFor="let game of allGames">
+                    <div *ngIf="game.state == 'Activado'" class="game">
+                            <img (click)="navigateTo(game.name, game.id)"
+                                 [src]="'./assets/img/'+game.name+'.png'" [alt]="game.name">
                     </div>
-                </div>
+                </ng-container>
             </div>
         </div>
-        <app-publicity [publicityList]="dashPublicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
     </div>
+    <app-publicity [publicityList]="dashPublicity.getBottomPublicityList()" [isTop]="false"></app-publicity>
+</div>
