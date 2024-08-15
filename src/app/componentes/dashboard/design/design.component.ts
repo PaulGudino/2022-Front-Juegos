@@ -157,6 +157,11 @@ export class DesignComponent implements OnInit {
                   this.dashStyle.getImageLogoTragamonedasFile(),
                   this.dashStyle.getImageLogoTragamonedasFile().name
                );
+               formMachine.append(
+                  'image_background_tragamonedas',
+                  this.dashStyle.getImageBackgroundTragamonedasFile(),
+                  this.dashStyle.getImageBackgroundTragamonedasFile().name,
+               );
                this.theme.updateDesign(1, formMachine);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             }else if (this.fileToUploadBackground) {
