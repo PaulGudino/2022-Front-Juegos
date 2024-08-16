@@ -25,6 +25,7 @@
                 </ng-template>
             </div>
             <app-generic-button *ngIf="!animation.isGameStarted" title="Empezar" [fontSize]="'4rem'"
+                [disabled]="animation.disabledPlayButton"
                 [styledPadding]="'2rem 2.5rem'" class="mb-2 container_play-btn"
                 (click)="animation.startGameDoor(); this.backArrowEnabled = false">
             </app-generic-button>

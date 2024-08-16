@@ -19,7 +19,11 @@ export class GameSelectionComponent implements OnInit {
    pluralName: string = 'Juegos';
    actionName: string = 'Seleccionar';
    allGames: Game[] = [];
+   state: string = '';
    total_players = 0
+   total_players_precision = 0
+   total_players_puertas = 0
+   total_players_dados = 0
    constructor(
       private GameAPI: GameService,
       private staticData: PuenteDatosService,
@@ -40,12 +44,20 @@ export class GameSelectionComponent implements OnInit {
       this.juego_settings(gameName);
    }
 
+   getState(gameId: number) : String{
+      let game: Game[] = this.allGames.filter(
+         (game: Game) => game.id == String(gameId)
+      );
+      return game[0].state;
+   }
+
    ngOnInit(): void {
       // this.loadGames();
       this.staticData.setMenuGeneral();
       this.matchSrv.getAllMatch().subscribe(
          (data: any) => {
             this.total_players = Object.keys(data).length;
+
          }
       )
 
@@ -73,7 +85,9 @@ export class GameSelectionComponent implements OnInit {
       let game: Game[] = this.allGames.filter(
          (game: Game) => game.id == String(gameId)
       );
+      console.log(game[0])
       let state = game[0].state;
+      console.log(state)
       let newState;
       if (state == 'Activado') {
          newState = 'Desactivado';
@@ -90,6 +104,10 @@ export class GameSelectionComponent implements OnInit {
       this.GameAPI.putGame(gameId, gamePut).subscribe((res) => {
          console.log(res);
       });
+      
       this.snackbar.mensaje('Se a actualizado el estado del juego');
+
+      window.location.reload();
+
    }
 }

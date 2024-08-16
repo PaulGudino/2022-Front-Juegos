@@ -12,6 +12,10 @@
     background: var(--color-ventanas);
     color: var(--color-letras);
 }
+
+.container_prize{
+    font-size: large;
+}	
 .button_container button{
     border-radius: 15px;
     background: var(--color-principal);
@@ -38,6 +42,10 @@
         align-items: center;
         justify-content: center;
     }
+    .container_prize{
+        align-items: center;
+        justify-content: center;
+    }	
     .button_container button{
         margin-top: 25px;
         height: 75px;

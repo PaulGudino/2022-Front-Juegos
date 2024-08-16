@@ -29,8 +29,12 @@ const mockDashboardPublicityService = {
 };
 
 const mockDashboardStyleService = {
-  get_image_logo: () => 'mockLogoUrl' // Añadido el método get_image_logo
+  get_image_logo: () => 'mockLogoUrl', // Mock existente
+  get_image_background_kiosco: () => 'mockBackgroundUrl', // Mock existente
+  get_image_logo_kiosco: () => 'mockLogoKioscoUrl' // Añade este método mock
 };
+
+
 
 const mockActivatedRoute = {
   queryParams: of({ gameId: 1 }) // Simula los parámetros de consulta

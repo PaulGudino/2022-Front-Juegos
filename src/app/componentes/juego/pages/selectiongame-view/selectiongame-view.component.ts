@@ -7,6 +7,7 @@ import { Ticket } from 'src/app/interfaces/ticket/Ticket'; // Asegúrate de impo
 import { GameLogicService } from '../../service/gameLogic/game-logic.service';
 import { DashboardPublicityService } from 'src/app/servicios/publicity/dashboardPublicity/dashboard-publicity.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
+import { ThemeService } from 'src/app/servicios/theme/theme.service';
 
 @Component({
   selector: 'app-selectiongame-view',
@@ -19,6 +20,8 @@ export class SelectiongameViewComponent implements OnInit {
   gameId: number | undefined;
   ticket: Ticket | undefined;
   ticketId: Number | undefined;
+
+  image_background?: string = "";
 
   gameRoutes: { [key: string]: string } = {
     "Dados": "rolldice",
@@ -35,12 +38,17 @@ export class SelectiongameViewComponent implements OnInit {
     private gameLogicService: GameLogicService,
     public dashPublicity: DashboardPublicityService,
     public styles: DashboardStyleService,
+    private theme: ThemeService,
   ) {}
 
   ngOnInit(): void {
       this.gameService.getAll().subscribe((data) => {
       this.allGames = data;
-    });
+      });
+
+      this.theme.getDesignInformation().subscribe((designData) => {
+        this.styles.loadData(designData[0]);
+      });
   }
 
   

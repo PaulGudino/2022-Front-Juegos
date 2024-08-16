@@ -26,12 +26,13 @@ export interface Styles {
    image_logo_precision?: any;
    
 
-   image_background_tragamonedas?: string;
-   image_background_dados?: string;
-   image_background_puertas?: string;
-   image_background_precision?: string;
+   image_background_tragamonedas?: any;
+   image_background_dados?: any;
+   image_background_puertas?: any;
+   image_background_precision?: any;
 
-   image_logo?: string;
+   image_logo_kiosco?: any;
+   image_background_kiosco?: any;
    
    video_screensaver?: any;
    video_autoplay: boolean;

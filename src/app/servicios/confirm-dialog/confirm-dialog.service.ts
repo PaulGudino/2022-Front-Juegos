@@ -54,6 +54,7 @@ export class ConfirmDialogService {
       this.dialogResult = this.dialog.open(ResultMessageComponent, {    
         data: {
           title: options.title,
+          prize_name: options.prize_name,
           image: options.image,
           result_music: options.result_music,
         }

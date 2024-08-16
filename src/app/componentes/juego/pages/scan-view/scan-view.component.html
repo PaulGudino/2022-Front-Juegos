@@ -3,15 +3,11 @@
 	(window:beforeunload)="doSomething()">
 	<app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
 	<div class="container-menu">
-		<app-logo
-			[isBackground]="true"
-			[urlImage]="styles.get_image_logo()"
-			height="25rem"></app-logo>
-		<div class="scan-shadow"></div>
+		<div class="background-shadow"><img src="{{styles.get_image_background_kiosco()}}" alt="background"></div>
 		<div class="scan_menu-container">
 			<div class="menu-container_img-container">
 				<app-logo
-					[urlImage]="styles.get_image_logo()"
+					[urlImage]="styles.get_image_logo_kiosco()"
 					height="22rem"
 					[isHome]="false"></app-logo>
 			</div>
@@ -39,6 +35,7 @@
 			</figure>
 			<app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', '7', '8', '9','0', 'delete']"></app-keyboard>
 			<input
+				autofocus
 				placeholder="Ingrese el código"
 				(click)="changeView()"
 				class="btn menu__input ng-pristine ng-valid ng-touched"

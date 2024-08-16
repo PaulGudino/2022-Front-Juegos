@@ -30,6 +30,17 @@
                   aria-label="Archivo"
                />
             </div>
+            <p class="publicity__title white-color">Imagen Fondo: (ancho: 625 x alto: 352)</p>
+            <div class="file-select" id="src-file3">
+               <input
+                  class="file-input"
+                  #takeInputBackground
+                  (change)="capturarFileBackground($event)"
+                  type="file"
+                  name="src-file3"
+                  aria-label="Archivo"
+               />
+            </div>
             <p class="publicity__title white-color">Logos casillas: (ancho: 187 x alto: 160)</p>
             <app-button-primary
                title="Editar logos casillas"
@@ -96,6 +107,7 @@
                [isTop]="true"
                [publicityList]="dashboardPublicityService.getTopPublicityList()"
             ></app-banner-publicity>
+            
             <div class="view-menu">
                <app-logo
                   class="logo-container"
@@ -104,7 +116,7 @@
                   [isBackground]="false"
                   [urlImage]="previsulizacionLogo"
                ></app-logo>
-   
+               <div class="view-background"><img src="{{previewBackground}}" alt="background"></div>
                <div class="information-game-container">
                   <div class="info-game__text">
                      <p

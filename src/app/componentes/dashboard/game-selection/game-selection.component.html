@@ -21,7 +21,7 @@
             <h3 class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players}}</h3>
          </div>
          <div class="row mb-4">
-            <app-button-primary class="col" title="Activado"></app-button-primary>
+            <app-button-primary class="col" title="{{getState(game.id)}}" (click)="this.toogleActiveGame(game.id)"></app-button-primary>
          </div>
          <div class="row">
             <div *ngIf="game.name === 'Tragamonedas'">

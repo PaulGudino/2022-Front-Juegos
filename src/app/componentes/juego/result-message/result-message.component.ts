@@ -15,10 +15,11 @@ export class ResultMessageComponent implements OnInit {
     public dialogRef: MatDialogRef<ResultMessageComponent>,
     @Inject(MAT_DIALOG_DATA) public data:{
       title : string;
+      prize_name: string;
       image : string;
       result_music : string;
     },
-    private gameLogicService: GameLogicService
+    public gameLogicService: GameLogicService
   ) { }
 
   ngOnInit(): void {

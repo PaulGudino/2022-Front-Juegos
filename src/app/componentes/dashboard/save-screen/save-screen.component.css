@@ -25,6 +25,9 @@
    cursor: pointer;
 
 }
+.video{
+   object-fit: cover ;
+}
 .savescreen-info__video-option{
    display: flex;
    gap:1rem;

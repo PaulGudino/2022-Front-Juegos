@@ -67,7 +67,7 @@ export class JuegoComponent {
 			this.themeService.getDesignInformation().subscribe((data) => {
 				this.styles.loadData(data[0])
 				this.buttonTitle = this.styles.get_title_button_screensaver()
-				this.logoImage = this.styles.get_image_logo()
+				this.logoImage = this.styles.get_image_logo_kiosco()
 				this.videoUrl = this.styles.get_video_screensaver()
 			})
 		})
@@ -76,7 +76,7 @@ export class JuegoComponent {
 		await this.validateSlot()
 		console.log('Valor de boxes_images después de getPublicityGame:', this.boxes_images)
 		console.log('Valor de design_images después de getPublicityGame:', this.design_images)
-		if (this.boxes_images == 10 && this.design_images == 21) {
+		if (this.boxes_images == 10 && this.design_images == 22) {
 
 		//if (this.boxes_images == 10 && this.design_images == 3) {
 			this.router.navigate(["/juego/scan"])
@@ -119,7 +119,8 @@ export class JuegoComponent {
 			for (let clave of data) {
 				if (clave.image_machine_game) this.design_images += 1
 				if(clave.image_box_watch) this.design_images += 1
-				if(clave.image_logo) this.design_images += 1
+				if(clave.image_logo_kiosco) this.design_images += 1
+				if(clave.image_background_kiosco) this.design_images += 1
 				if(clave.image_winner) this.design_images += 1
 				if(clave.image_background_tragamonedas) this.design_images += 1
 				if(clave.image_background_dados) this.design_images += 1

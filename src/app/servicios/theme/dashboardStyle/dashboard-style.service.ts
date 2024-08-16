@@ -34,7 +34,8 @@ export class DashboardStyleService {
 
    // --------------- General ----------------
    imageWinnerGameFile!: File;
-   imageLogoFile!: File;
+   imageLogoKioscoFile!: File;
+   imageBackgroundKioscoFile!: File;
    videoScreensaverFile!: File;
    previewFontLetter: string = '';
 
@@ -43,7 +44,6 @@ export class DashboardStyleService {
       game_id: 1,
       color_text: '',
       font_letter: '',
-      image_logo: './assets/img/funny-logo.png',
       color_background_game: '',
 
 
@@ -74,7 +74,8 @@ export class DashboardStyleService {
       image_logo_precision: '',
 
       // --------------- General ------------------
-
+      image_logo_kiosco: '',
+      image_background_kiosco: '',
       video_screensaver: '',
       video_autoplay: true,
       video_loop: true,
@@ -102,8 +103,8 @@ export class DashboardStyleService {
       return this.style.title_button_screensaver;
    }
    getLogoUrl(): string {
-      if (this.style.image_logo != undefined) {
-         return this.style.image_logo;
+      if (this.style.image_logo_kiosco != undefined) {
+         return this.style.image_logo_kiosco;
 
       } else
          return '';
@@ -300,11 +301,17 @@ public get_is_active(){
    setImageWinnerGameFile(file: any) {
       this.imageWinnerGameFile = file
    }
-   getImageLogoFile() {
-      return this.imageLogoFile
+   getImageLogoKioscoFile() {
+      return this.imageLogoKioscoFile
    }
-   setImageLogoFile(file: any) {
-      this.imageLogoFile = file
+   setImageLogoKioscoFile(file: any) {
+      this.imageLogoKioscoFile = file
+   }
+   getImageBackgroundKioscoFile() {
+      return this.imageBackgroundKioscoFile;
+   }
+   setImageBackgroundKioscoFile(file: any) {
+      this.imageBackgroundKioscoFile = file
    }
    getVideoScreensaverFile() {
       return this.videoScreensaverFile;
@@ -489,11 +496,19 @@ public get_is_active(){
    }
 
    // --------------- General ------------------
-   public get_image_logo(){
-      return this.style.image_logo;
+   public get_image_logo_kiosco(){
+      return this.style.image_logo_kiosco;
    }
-   public set_image_logo(image: any){
-      this.style.image_logo = image;
+   public set_image_logo_kiosco(image: any){
+      this.style.image_logo_kiosco = image;
+   }
+
+   public get_image_background_kiosco(){
+      return this.style.image_background_kiosco;
+   }
+
+   public set_image_background_kiosco(image: any){
+      this.style.image_background_kiosco = image;
    }
 
    public get_color_background_game() {

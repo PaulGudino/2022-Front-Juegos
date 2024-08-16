@@ -22,17 +22,24 @@ export class DesignComponent implements OnInit {
 
    previsulizacionMachine: string = '';
    previsulizacionLogo: string = '';
+   previewBackground: string = '';
    @ViewChild('takeInput', { static: false })
    InputVarMachine!: ElementRef;
 
    @ViewChild('takeInputLogo', { static: false })
    InputVarLogo!: ElementRef;
 
+   @ViewChild('takeInputBackground', { static: false })
+   InputVarBackground!: ElementRef;
+
    fileToUploadMachine!: File | null;
    imagenMachine!: File;
 
    fileToUploadLogo!: File | null;
    imagenLogo!: File;
+
+   fileToUploadBackground!: File | null;
+   imageBackground!: File;
 
    urlLogo1: string = '';
    urlLogo2: string = '';
@@ -67,6 +74,7 @@ export class DesignComponent implements OnInit {
             this.previsulizacionMachine =
                this.dashStyle.get_image_machine_game();
             this.previsulizacionLogo = this.dashStyle.get_image_logo_tragamonedas();
+            this.previewBackground = this.dashStyle.get_image_background_tragamonedas();
             this.fontFamily = this.dashStyle.get_font_letter();
             this.colorText = this.dashStyle.get_color_text();
 
@@ -110,10 +118,24 @@ export class DesignComponent implements OnInit {
             .extraerBase64(this.fileToUploadLogo)
             .then((imagenLogo: any) => {
                this.previsulizacionLogo = imagenLogo.base;
-               this.dashStyle.setImageLogoFile(this.fileToUploadLogo);
+               this.dashStyle.setImageLogoKioscoFile(this.fileToUploadLogo);
             });
       } else {
          this.InputVarLogo.nativeElement.value = '';
+         this.snackbar.mensaje('Solo se permiten imagenes');
+      }
+   }
+
+   capturarFileBackground(event: any){
+      this.fileToUploadBackground = this.imageSrv.captureFile(event);
+      if (this.fileToUploadBackground) {
+         this.imageBackground = this.fileToUploadBackground;
+         this.imageSrv.extraerBase64(this.fileToUploadBackground).then((imagenBackground: any) => {
+            this.previewBackground = imagenBackground.base;
+            this.dashStyle.setImageBackgroundKioscoFile(this.fileToUploadBackground);
+         });
+      } else {
+         this.InputVarBackground.nativeElement.value = '';
          this.snackbar.mensaje('Solo se permiten imagenes');
       }
    }
@@ -128,22 +150,31 @@ export class DesignComponent implements OnInit {
       this.dialogService.open(options);
       this.dialogService.confirmed().subscribe((confirmed) => {
          if (confirmed) {
-            if (this.fileToUploadMachine && this.fileToUploadLogo) {
+            if (this.fileToUploadMachine && this.fileToUploadLogo && this.fileToUploadBackground) {
                let formMachine: FormData = this.updateMachineImage();
                formMachine.append(
                   'image_logo_tragamonedas',
                   this.dashStyle.getImageLogoTragamonedasFile(),
                   this.dashStyle.getImageLogoTragamonedasFile().name
                );
+               formMachine.append(
+                  'image_background_tragamonedas',
+                  this.dashStyle.getImageBackgroundTragamonedasFile(),
+                  this.dashStyle.getImageBackgroundTragamonedasFile().name,
+               );
                this.theme.updateDesign(1, formMachine);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
-            } else if (this.fileToUploadMachine) {
+            }else if (this.fileToUploadBackground) {
+               let form = this.updateBackgroundImage();
+               this.theme.updateDesign(1, form);
+               this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
+            }else if (this.fileToUploadMachine) {
                let form = this.updateMachineImage();
                this.theme.updateDesign(1, form);
                this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
             } else if (this.fileToUploadLogo) {
                this.updateLogoImage();
-            } else if (!this.fileToUploadMachine && !this.fileToUploadLogo) {
+            } else if (!this.fileToUploadMachine && !this.fileToUploadLogo && !this.fileToUploadBackground) {
                let formData: FormData = new FormData();
                formData.append('id', '1');
                formData.append('color_text', this.colorText);
@@ -178,7 +209,7 @@ export class DesignComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append('id', '1');
       formData.append(
-         'image_logo_game',
+         'image_logo_tragamonedas',
          this.dashStyle.getImageLogoTragamonedasFile(),
          this.dashStyle.getImageLogoTragamonedasFile().name
       );
@@ -190,6 +221,22 @@ export class DesignComponent implements OnInit {
 
       this.theme.updateDesign(1, formData);
       this.snackbar.mensaje('Salvapantallas Actualizado exitosamente');
+   }
+
+   private updateBackgroundImage(){
+      let formData: FormData = new FormData();
+      formData.append('id', '1');
+      formData.append(
+         'image_background_tragamonedas',
+         this.dashStyle.getImageBackgroundTragamonedasFile(),
+         this.dashStyle.getImageBackgroundTragamonedasFile().name
+      );
+      formData.append('color_text', this.colorText);
+      formData.append('font_letter', this.fontFamily);
+      formData.append('date_modified', new Date().toISOString());
+      formData.append('is_active', 'true');
+      formData.append('game_id', '1');
+      return formData;
    }
 
    previewChangeFontLetter(event: Event) {

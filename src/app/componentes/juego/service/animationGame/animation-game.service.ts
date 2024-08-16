@@ -150,7 +150,7 @@ export class AnimationGameService {
 
 						this.gameLogicService.winFirstTime = true
 
-						this.showWinMessage(this.gameLogicService.winAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 
 						clearInterval(intervalId)
 					}
@@ -212,7 +212,7 @@ export class AnimationGameService {
 						refCol3.style.filter = "blur(0px)"
 
 						this.animationCountCol1 = 5
-						this.disabledPlayButton = false
+						
 						clearInterval(intervalId)
 						if (this.gameLogicService.attempts === 0) {
 							const options = {
@@ -224,11 +224,15 @@ export class AnimationGameService {
 						} else {
 							let options = {
 								title: "./assets/img/palabras/sigue_participando.png",
+								prize_name: "",
 								image: "../../../../../assets/img/loseImage.png",
 								result_music: "../../../../../assets/audio/lose.mp3",
 							}
 							this.confirmDialog.result_game(options)
 						}
+						setTimeout(() => {
+							this.disabledPlayButton = false
+						}, 3000);
 					}
 				}, 2030)
 				// }, 2500)
@@ -285,7 +289,7 @@ export class AnimationGameService {
 						}, this.rollTime);
 						this.isRolling = false;
 						clearInterval(intervalId)
-						this.showWinMessage(this.gameLogicService.winAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 						//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
 					}, this.rollTime * 750)
 				} else {
@@ -312,6 +316,7 @@ export class AnimationGameService {
 						} else {
 							let options = {
 								title: "./assets/img/palabras/sigue_participando.png",
+								prize_name: "",
 								image: "./assets/img/loseImage.png",
 								result_music: "./assets/audio/lose.mp3",
 							}
@@ -393,7 +398,7 @@ export class AnimationGameService {
 				this.currentTime = this.targetTime;
 
 				this.gameLogicService.winFirstTime = true;
-				this.showWinMessage(this.gameLogicService.winAwardImage);
+				this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
 				this.gameLogicService.setWinnerState(false);
 
 			} else {
@@ -412,6 +417,7 @@ export class AnimationGameService {
 				} else {
 					let options = {
 						title: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/palabras/sigue_participando.png" : "./assets/img/palabras/sigue_participando.png",
+						prize_name: "",
 						image: isOneSecondApart(this.currentTime, this.targetTime) ? "./assets/img/loseImage.png" : "./assets/img/loseImage.png",
 						result_music: "./assets/audio/lose.mp3",
 					};
@@ -436,6 +442,7 @@ export class AnimationGameService {
 		this.isOpening = false;
 		this.isGameStarted = true;
 		this.isDoorSelected = false;
+		this.disabledPlayButton = true
 		this.doors.forEach(door => door.isOpen = false);  // Reset doors state
 	}
 
@@ -461,7 +468,7 @@ export class AnimationGameService {
 						}, 1000); // Esperar 1.5 segundos antes de abrir las demás puertas
 
 						setTimeout(() => {
-							this.showWinMessage(this.doors[index].prize)
+							this.showWinMessage(this.doors[index].prize,this.gameLogicService.nameAwardImage)
 						}, 2000)
 
 						setTimeout(() => {
@@ -485,6 +492,7 @@ export class AnimationGameService {
 
 						setTimeout(() => {
 							this.isGameStarted = false;
+							this.disabledPlayButton = false
 						}, 4500);
 					}, this.openTime * 1000);
 				}
@@ -498,7 +506,9 @@ export class AnimationGameService {
 	}
 
 	openRemainingDoors(selectedIndex: number): void {
-
+		this.isOpening = true;
+		this.isDoorSelected = true;
+		this.isGameStarted = false;
 		this.doors.forEach((door, i) => {
 			if (i !== selectedIndex) {
 				setTimeout(() => {
@@ -518,18 +528,16 @@ export class AnimationGameService {
 	}
 
 
-	generateTicketContent(options: any): string {
-		return `
-			<div style="text-align: center; font-size: 18px; padding: 20px;">
-            <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
-            <p style="margin: 20px 0;">¡Felicidades! Has ganado:</p>
-            <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
-            <p style="margin: 20px 0;">Gracias por jugar.</p>
-        </div>
-		`;
-	}
+	printTicket(options: any): void {
+		// Obtener la fecha actual
+		const fechaActual = new Date();
+
+		// Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
+		const dia = String(fechaActual.getDate()).padStart(2, '0');
+		const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
+		const anio = fechaActual.getFullYear();
 	
-	printTicket(content: string): void {
+		const fechaFormateada = `${dia}/${mes}/${anio}`;
 		const printWindow = window.open('', '', 'width=600,height=400');
 		if (printWindow) {
 			printWindow.document.write(`
@@ -538,7 +546,13 @@ export class AnimationGameService {
 						<title>Ticket de Premio</title>
 					</head>
 					<body onload="window.print(); window.close();">
-						${content}
+						<div style="text-align: center; font-size: 18px; padding: 20px;">
+            <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
+            <p style="margin: 20px 0;">¡Felicidades! Has ganado: ${options.prize_name}</p>
+            <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
+            <p style="margin: 20px 0;">Gracias por jugar.</p>
+			<p style="margin: 20px 0;">Ticket válido únicamente el día ${fechaFormateada}</p>
+        </div>
 					</body>
 				</html>
 			`);
@@ -549,22 +563,23 @@ export class AnimationGameService {
 		}
 	}
 	
-	showWinMessage(prize: string): void {
+	showWinMessage(prize: string, name: string): void {
 		let options = {
 			title: "./assets/img/palabras/gano.png",
+			prize_name: name,
 			image: prize,
 			result_music: "./assets/audio/win.mp3",
 		};
 		this.confirmDialog.result_game(options);
 	
 		// Lógica para imprimir ticket si ganó el juego
-		const ticketContent = this.generateTicketContent(options);
-		this.printTicket(ticketContent);
+		this.printTicket(options);
 	}
 
 	showLoseMessage(): void {
 		let options = {
 			title: this.gameLogicService.attempts === 0 ? "./assets/img/palabras/perdio.png" : "./assets/img/palabras/sigue_participando.png",
+			prize_name: "",
 			image: this.gameLogicService.attempts === 0 ? "./assets/img/gameover.png" : "./assets/img/loseImage.png",
 			result_music: "./assets/audio/lose.mp3",
 		};

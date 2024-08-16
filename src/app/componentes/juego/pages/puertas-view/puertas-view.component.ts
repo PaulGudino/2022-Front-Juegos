@@ -89,7 +89,7 @@ export class PuertasViewComponent implements OnInit {
   }
 
   music() {
-    if (this.attempts > 0) {
+    if (this.attempts > 0 && this.animation.isGameStarted) {
       this.slot_music = true;
       setTimeout(() => {
         this.slot_music = false;

@@ -56,12 +56,13 @@
                [publicityList]="dashboardPublicityService.getTopPublicityList()"
             ></app-banner-publicity>
             <div class="view-menu">
+               <div class="background-shadow"><img src="{{dashStyle.get_image_background_kiosco()}}" alt="background"></div>
                <app-logo
                   class="logo-container"
-                  height="1.5rem"
+                  height="3.5rem"
                   [isHome]="false"
                   [isBackground]="false"
-                  [urlImage]="dashStyle.get_image_logo()"
+                  [urlImage]="dashStyle.get_image_logo_kiosco()"
                ></app-logo>
                <div class="menu-info color-white">
                   <h2 class="scan_title">{{ title }}</h2>
@@ -79,7 +80,7 @@
                <input
                   class="btn menu__input"
                   type="text"
-                  placeholder="Ingresar codigo..."
+                  placeholder="Ingresar código..."
                   disabled
                />
                <app-button-game

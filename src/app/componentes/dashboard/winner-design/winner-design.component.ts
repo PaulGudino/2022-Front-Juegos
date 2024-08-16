@@ -14,7 +14,7 @@ import { GameSelectionService } from 'src/app/servicios/game-selection/game-sele
    styleUrls: ['./winner-design.component.css'],
 })
 export class WinnerDesignComponent implements OnInit {
-   availableSpin: string = 'HAZ GANADO!!!';
+   availableSpin: string = 'HAS GANADO!!!';
 
    previsualizacion: string = '';
    @ViewChild('takeInput', { static: false })
@@ -95,7 +95,7 @@ export class WinnerDesignComponent implements OnInit {
             this.theme.updateDesign(1, formData);
             //this.router.navigate(['/dashboard/juego/fecha']);
             this.snackbar.mensaje(
-               'Informacion Diseño Ganadores Actualizada Exitosamente'
+               'Información Diseño Ganadores Actualizada Exitosamente'
             );
          }
       });
