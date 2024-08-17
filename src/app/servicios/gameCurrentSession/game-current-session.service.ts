@@ -49,7 +49,7 @@ export class GameCurrentSessionService {
         kiosko_numero: kioskoNumero,
         game_id: gameId
     };
-    return this.http.patch<any>('http://localhost:8000/api/gamecurrentsession/update_game_id/', data);
+    return this.http.patch<any>(this.url + 'api/gamecurrentsession/update_game_id/', data);
   }
   
   

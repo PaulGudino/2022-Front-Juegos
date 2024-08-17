@@ -3,7 +3,8 @@
 	[style.fontSize]="fontSize"
 	[style.padding]="styledPadding"
 	[style.color]="color"
-	[style.background]="color_background"
-	class="generic-btn">
+	[style.background]="isClicked ? '#2980b9' : (disabled ? 'grey' : color_background)"
+	class="generic-btn"
+	(click)="handleClick()">
 	{{ title }}
 </button>

@@ -40,13 +40,5 @@ video{
    top: 0;
 }
 
-.home-btn_container {
-   width: 100%;
-   position: absolute;
-   display: flex;
-   justify-content: center;
-   bottom: calc(10% + 10px);
-
-}
 
 

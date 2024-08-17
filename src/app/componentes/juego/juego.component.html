@@ -6,15 +6,8 @@
 			[autoplay]="true"
 			[loop]="true"
 			[volume]="0.05"
-			[src]="videoUrl"></video>
-		<div class="home-btn_container">
-			<app-generic-button
-				class="home_btn"
-				(click)="goScan()"
-				[title]="buttonTitle"
-				[fontSize]="'2.8rem'"
-				[styledPadding]="'3.4rem 6.6rem'"></app-generic-button>
-		</div>
+			[src]="videoUrl"
+			(click)="goScan()"></video>
 	</div>
 	<app-publicity
 		[publicityList]="dashPublicity.getBottomPublicityList()"

@@ -2,6 +2,7 @@ import { MatchService } from 'src/app/servicios/match/match.service';
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
+import { GameCurrentSessionService } from 'src/app/servicios/gameCurrentSession/game-current-session.service';
 
 @Component({
   selector: 'app-game-summary',
@@ -10,33 +11,38 @@ import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/pu
 })
 export class GameSummaryComponent implements OnInit {
 
-  total_tickets : number = 0;
-  total_winners : number = 0;
-  total_losers : number = 0;
+  total_tickets: number = 0;
+  total_winners: number = 0;
+  total_losers: number = 0;
 
   constructor(
     private staticData: PuenteDatosService,
-    private ticketSrv: TicketService,
-    private matchSrv : MatchService,
+    private gameCurrentSession: GameCurrentSessionService,
   ) { }
 
   ngOnInit(): void {
     this.staticData.setMenu('Tragamonedas');
-    this.ticketSrv.getAll().subscribe(
-      data =>{
-        this.total_tickets = data.length
+
+    this.gameCurrentSession.getFilter('?id=&game_id=1').subscribe(
+      (data: any) => {
+        this.total_tickets = Object.keys(data).length;
+
       }
     )
-    this.matchSrv.getMatchFilter('?win_match=true').subscribe(
-      (res) => {
-         this.total_winners = Object.keys(res).length;
+
+    this.gameCurrentSession.getFilter('?id=&game_id=1&gano=true').subscribe(
+      (data: any) => {
+        this.total_winners = Object.keys(data).length;
+
       }
     )
-    this.matchSrv.getMatchFilter('?win_match=false').subscribe(
-      res =>{
-        this.total_losers = Object.keys(res).length;
+    this.gameCurrentSession.getFilter('?id=&game_id=1&gano=false').subscribe(
+      (data: any) => {
+        this.total_losers = Object.keys(data).length;
+
       }
     )
+
   }
 
 }

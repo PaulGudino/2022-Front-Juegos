@@ -28,6 +28,15 @@ function autocompleteObjectValidator(): ValidatorFn {
 })
 export class CreateTicketComponent implements OnInit {
 
+  fechaActual = new Date();
+
+  // Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
+  dia = String(this.fechaActual.getDate()).padStart(2, '0');
+  mes = String(this.fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
+  anio = this.fechaActual.getFullYear();
+
+  fechaFormateada = `${this.dia}/${this.mes}/${this.anio}`;
+
   singularName: string = 'Ticket'
   pluralName: string = 'Tickets'
   actionName: string = 'Crear'
@@ -218,15 +227,7 @@ export class CreateTicketComponent implements OnInit {
   printTicket() {
     this.generateQRCode();
     const printWindow = window.open('', '', 'width=600,height=400');
-    // Obtener la fecha actual
-    const fechaActual = new Date();
-
-    // Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
-    const dia = String(fechaActual.getDate()).padStart(2, '0');
-    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
-    const anio = fechaActual.getFullYear();
-
-    const fechaFormateada = `${dia}/${mes}/${anio}`;
+    
     if (printWindow) {
       printWindow.document.write(`
         <html>
@@ -302,7 +303,7 @@ export class CreateTicketComponent implements OnInit {
                 </div>
                 <div class="text_default">
                   <p>
-                    Promoción válida únicamente el ${fechaFormateada}
+                    Promoción válida únicamente el ${this.fechaFormateada}
                   </p>
                   <p>
                     Gana premios jugando

@@ -67,6 +67,7 @@ export class AnimationGameService {
 
 	startGameTragamonedas(refCol1: any, refCol2: any, refCol3: any) {
 		this.gameLogicService.winFirstTime = false
+		this.isGameStarted = true;
 
 		if (this.gameLogicService.attempts > 0) {
 			//Logic return true if win
@@ -150,7 +151,7 @@ export class AnimationGameService {
 
 						this.gameLogicService.winFirstTime = true
 
-						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage, this.gameLogicService.nameAwardImage);
 
 						clearInterval(intervalId)
 					}
@@ -212,7 +213,7 @@ export class AnimationGameService {
 						refCol3.style.filter = "blur(0px)"
 
 						this.animationCountCol1 = 5
-						
+
 						clearInterval(intervalId)
 						if (this.gameLogicService.attempts === 0) {
 							const options = {
@@ -258,6 +259,7 @@ export class AnimationGameService {
 
 	startGameRolldice() {
 		this.gameLogicService.winFirstTime = false
+		this.isGameStarted = true;
 		console.log(this.gameLogicService.winner);
 		if (this.keyController.getCode().length === 0) {
 			let game_message = [
@@ -289,7 +291,7 @@ export class AnimationGameService {
 						}, this.rollTime);
 						this.isRolling = false;
 						clearInterval(intervalId)
-						this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
+						this.showWinMessage(this.gameLogicService.winAwardImage, this.gameLogicService.nameAwardImage);
 						//imprimir ticket si ganó el juego (LOGICA IMPRESORA)
 					}, this.rollTime * 750)
 				} else {
@@ -355,7 +357,12 @@ export class AnimationGameService {
 	}
 
 	generateRandomTime(): string {
-		const randomMinutes = Math.floor(Math.random() * (24 * 60));
+		// Minutos desde las 00:00 hasta las 15:00
+		const startMinutes = 15 * 60; // 15:00 en minutos
+		// Minutos desde las 00:00 hasta las 21:00
+		const endMinutes = 21 * 60 - 1; // 20:59 en minutos
+		// Generar un número aleatorio entre startMinutes y endMinutes
+		const randomMinutes = Math.floor(Math.random() * (endMinutes - startMinutes + 1)) + startMinutes;
 		return this.formatTime(randomMinutes);
 	}
 
@@ -369,6 +376,7 @@ export class AnimationGameService {
 	startClock(): void {
 		this.currentMinutes = 0;
 		this.clockRunning = true;
+		this.isGameStarted = true;
 		this.currentTime = this.formatTime(this.currentMinutes);
 		this.intervalId = setInterval(() => {
 			this.currentMinutes = (this.currentMinutes + 1) % (24 * 60);
@@ -379,6 +387,7 @@ export class AnimationGameService {
 
 	stopClock(): void {
 		this.gameLogicService.winFirstTime = false;
+
 		console.log("hora actual: ", this.currentTime, "hora objetivo: ", this.targetTime);
 		clearInterval(this.intervalId);
 
@@ -398,7 +407,7 @@ export class AnimationGameService {
 				this.currentTime = this.targetTime;
 
 				this.gameLogicService.winFirstTime = true;
-				this.showWinMessage(this.gameLogicService.winAwardImage,this.gameLogicService.nameAwardImage);
+				this.showWinMessage(this.gameLogicService.winAwardImage, this.gameLogicService.nameAwardImage);
 				this.gameLogicService.setWinnerState(false);
 
 			} else {
@@ -424,9 +433,11 @@ export class AnimationGameService {
 					this.confirmDialog.result_game(options);
 				}
 			}
+			setTimeout(() => {
+				this.isGameStarted = false;
+			}, 3000);
 
 			this.clockRunning = false;
-
 
 			this.gameLogicService.decreaseAttemptCount();
 		}
@@ -468,7 +479,7 @@ export class AnimationGameService {
 						}, 1000); // Esperar 1.5 segundos antes de abrir las demás puertas
 
 						setTimeout(() => {
-							this.showWinMessage(this.doors[index].prize,this.gameLogicService.nameAwardImage)
+							this.showWinMessage(this.doors[index].prize, this.gameLogicService.nameAwardImage)
 						}, 2000)
 
 						setTimeout(() => {
@@ -536,7 +547,7 @@ export class AnimationGameService {
 		const dia = String(fechaActual.getDate()).padStart(2, '0');
 		const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
 		const anio = fechaActual.getFullYear();
-	
+
 		const fechaFormateada = `${dia}/${mes}/${anio}`;
 		const printWindow = window.open('', '', 'width=600,height=400');
 		if (printWindow) {
@@ -562,7 +573,7 @@ export class AnimationGameService {
 			console.error('No se pudo abrir la ventana de impresión.');
 		}
 	}
-	
+
 	showWinMessage(prize: string, name: string): void {
 		let options = {
 			title: "./assets/img/palabras/gano.png",
@@ -571,7 +582,7 @@ export class AnimationGameService {
 			result_music: "./assets/audio/win.mp3",
 		};
 		this.confirmDialog.result_game(options);
-	
+
 		// Lógica para imprimir ticket si ganó el juego
 		this.printTicket(options);
 	}

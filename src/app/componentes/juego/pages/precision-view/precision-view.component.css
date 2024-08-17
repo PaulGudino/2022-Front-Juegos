@@ -155,12 +155,4 @@ p {
     color: white;
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Espacio entre los botones */
-    margin-top: 20px; /* Espacio adicional en la parte superior */
-}
-
 

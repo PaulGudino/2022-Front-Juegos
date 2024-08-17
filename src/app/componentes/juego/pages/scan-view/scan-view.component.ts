@@ -19,6 +19,8 @@ export class ScanViewComponent implements OnInit {
 	explication: String = "Puedes escanear el código QR de tu ticket"
 	code: string = this.keyController.getCode()
 	image_background?: string = "";
+
+	intents = 0;
 	constructor(
 		private router: Router,
 		public publicity: DashboardPublicityService,
@@ -43,23 +45,43 @@ export class ScanViewComponent implements OnInit {
 	}
 
 	async continueToGame() {
+		
 		const qrCodeDigits = this.keyController.getCode();
+
+		if (qrCodeDigits != "" && !this.scanState) {
+			this.intents++;
+		}
+
+		console.log("Intentos: ", this.intents)
+
     
 		// Obtener el ticketId desde GameLogicService		
-		if (this.keyController.getCode() != "") {
-			let validateTicket = this.gameLogic.verifyTicket(this.keyController.getCode())
-			if (await validateTicket) {
-				this.gameLogic.playGame()
-				sessionStorage.setItem("selection_game", "selection_game")
-				this.router.navigate(["/juego/selection"])
-			} else {
+		if (qrCodeDigits != "") {
+			let validateTicket = this.gameLogic.verifyTicket(qrCodeDigits)
+			if(this.intents > 8 ){
 				let game_message = [
-					"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
-					"Ó",
-					"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
+					"Ha superado el número de intentos permitidos, por favor contacte a soporte técnico",
 				]
 				this.confirmDialog.error(game_message)
+					this.scanState = true;
+				setInterval(() => {
+					window.location.replace("#/login")
+				}, 5000);
+			}else{
+				if (await validateTicket) {
+					this.gameLogic.playGame()
+					sessionStorage.setItem("selection_game", "selection_game")
+					this.router.navigate(["/juego/selection"])
+				} else {
+					let game_message = [
+						"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",
+						"Ó",
+						"La fecha disponible del ticket está fuera del rango de disponibilidad del juego",
+					]
+					this.confirmDialog.error(game_message)
+				}
 			}
+			
 		}else{
 			let game_message = [
 				"El ticket que ingresó no existe o ya fué reclamado, revise si la informacion ingresada es correcta",

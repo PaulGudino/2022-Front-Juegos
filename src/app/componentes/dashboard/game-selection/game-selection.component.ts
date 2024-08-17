@@ -8,7 +8,9 @@ import { SnackbarService } from 'src/app/servicios/snackbar/snackbar.service';
 import { GameSelectionService } from 'src/app/servicios/game-selection/game-selection.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
 import { ThemeService } from 'src/app/servicios/theme/theme.service';
-
+import { GameCurrentSessionService } from 'src/app/servicios/gameCurrentSession/game-current-session.service';
+import { PermisosService } from 'src/app/servicios/permisos/permisos.service';
+import { lastValueFrom } from 'rxjs';
 @Component({
    selector: 'app-game-selection',
    styleUrls: ['./game-selection.component.css'],
@@ -20,16 +22,18 @@ export class GameSelectionComponent implements OnInit {
    actionName: string = 'Seleccionar';
    allGames: Game[] = [];
    state: string = '';
-   total_players = 0
+   permisos:any = [];
+   total_players_tragamonedas = 0
    total_players_precision = 0
    total_players_puertas = 0
    total_players_dados = 0
    constructor(
+      private permisos_api : PermisosService,
       private GameAPI: GameService,
       private staticData: PuenteDatosService,
       private router: Router,
       private snackbar: SnackbarService,
-      private matchSrv: MatchService,
+      private gameCurrentSession: GameCurrentSessionService,
       private gameSelectionService: GameSelectionService,
       public dashStyle: DashboardStyleService,
       private theme: ThemeService,
@@ -54,14 +58,34 @@ export class GameSelectionComponent implements OnInit {
    ngOnInit(): void {
       // this.loadGames();
       this.staticData.setMenuGeneral();
-      this.matchSrv.getAllMatch().subscribe(
+      this.gameCurrentSession.getFilter('?id=&game_id=1').subscribe(
          (data: any) => {
-            this.total_players = Object.keys(data).length;
+            this.total_players_tragamonedas = Object.keys(data).length;
+
+         }
+      )
+      this.gameCurrentSession.getFilter('?id=&game_id=2').subscribe(
+         (data: any) => {
+            this.total_players_precision = Object.keys(data).length;
+
+         }
+      )
+      this.gameCurrentSession.getFilter('?id=&game_id=3').subscribe(
+         (data: any) => {
+            this.total_players_dados = Object.keys(data).length;
+
+         }
+      )
+
+      this.gameCurrentSession.getFilter('?id=&game_id=4').subscribe(
+         (data: any) => {
+            this.total_players_puertas = Object.keys(data).length;
 
          }
       )
 
       this.theme.getDesignInformation().subscribe((designData) => {
+
          this.dashStyle.loadData(designData[0]);
       })
    }
@@ -81,33 +105,52 @@ export class GameSelectionComponent implements OnInit {
    }
 
 
-   toogleActiveGame(gameId: number) {
-      let game: Game[] = this.allGames.filter(
-         (game: Game) => game.id == String(gameId)
-      );
-      console.log(game[0])
-      let state = game[0].state;
-      console.log(state)
-      let newState;
-      if (state == 'Activado') {
-         newState = 'Desactivado';
-      } else {
-         newState = 'Activado';
-      }
+   async toogleActiveGame(gameId: number) {
+      await this.permisoActivar();
+      if (this.permisos.length > 0) {
+         const options = {
+         title: 'ACTIVAR/DESACTIVAR JUEGO',
+         message: '¿ESTÁ SEGURO QUE DESEA ACTIVAR/DESACTIVAR EL JUEGO?',
+         cancelText: 'CANCELAR',
+         confirmText: 'CONFIRMAR'
+         };
+         let game: Game[] = this.allGames.filter(
+            (game: Game) => game.id == String(gameId)
+         );
+         console.log(game[0])
+         let state = game[0].state;
+         console.log(state)
+         let newState;
+         if (state == 'Activado') {
+            newState = 'Desactivado';
+         } else {
+            newState = 'Activado';
+         }
 
-      let gamePut: any = {
-         id: String(gameId),
-         modification_date: new Date().toISOString(),
-         state: newState,
-         is_active: 'true',
-      };
-      this.GameAPI.putGame(gameId, gamePut).subscribe((res) => {
-         console.log(res);
-      });
-      
-      this.snackbar.mensaje('Se a actualizado el estado del juego');
+         let gamePut: any = {
+            id: String(gameId),
+            modification_date: new Date().toISOString(),
+            state: newState,
+            is_active: 'true',
+         };
+         this.GameAPI.putGame(gameId, gamePut).subscribe((res) => {
+            console.log(res);
+         });
+         
+         this.snackbar.mensaje('Se a actualizado el estado del juego');
 
-      window.location.reload();
+         window.location.reload();
+      }else {
+         this.snackbar.mensaje('No tienes permisos para Activar/Desactivar Juegos');
+       }
 
    }
+   
+   async permisoActivar(){
+      let rolId = Number(sessionStorage.getItem('rol_id'));
+      let permiso = await lastValueFrom(this.permisos_api.getPermisosbyName('Activar/Desactivar Juego'));
+      let permissionId = Number(permiso[0].id);
+      const promise = await lastValueFrom(this.permisos_api.getPermisosbyRolandPermission(rolId, permissionId));
+      this.permisos = promise;
+    }
 }

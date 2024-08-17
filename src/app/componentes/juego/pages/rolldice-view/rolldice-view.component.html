@@ -48,7 +48,7 @@
             </div>
             <input class="btn menu__input" type="text" #codeInput="ngModel" [(ngModel)]="keyController.code"
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                placeholder="Ingresa el número a adivinar" pattern="[0-9]{1}" maxlength="1" />
+                placeholder="Ingresa el número a adivinar" pattern="[1-6]{1}" maxlength="1" />
             <app-keyboard *ngIf="!scanState" [keys]="['1', '2', '3', '4', '5', '6', 'delete']"></app-keyboard>
             <audio autoplay [volume]="0.02" loop controls="None" hidden src="./assets/audio/playing_music.mp3"></audio>
         </div>
