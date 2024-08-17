@@ -358,6 +358,7 @@ export class DashboardStyleService {
    }
 
    public get_image_logo_puertas() {
+      return this.style.image_logo_puertas;
    }
    public set_image_logo_puertas(image: any) {
       this.style.image_logo_puertas = image;
