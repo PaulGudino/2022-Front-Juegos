@@ -63,6 +63,20 @@ import { DesignRolldiceComponent } from './design-rolldice/design-rolldice.compo
 import { DesignDoorsComponent } from './design-doors/design-doors.component';
 import { DesignPrecisionComponent } from './design-precision/design-precision.component';
 
+//Modulos para Test
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+//Modulos para Test
+
+
+
 @NgModule({
    declarations: [
       DashboardComponent,
@@ -132,7 +146,16 @@ import { DesignPrecisionComponent } from './design-precision/design-precision.co
       SharedModule,
       CommonModule,
       DashboardRoutingModule,
-      ComponentesCompartidosModule,
+      ComponentesCompartidosModule, 
+      MatSelectModule, ////Desde aqui comienza modulo para test
+      ReactiveFormsModule, 
+      MatAutocompleteModule, 
+      MatFormFieldModule, 
+      MatInputModule, 
+      MatSnackBarModule, 
+      MatDialogModule, 
+      MatDatepickerModule, 
+      MatNativeDateModule
    ],
 })
 export class DashboardModule {}

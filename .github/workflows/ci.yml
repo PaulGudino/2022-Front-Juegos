@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - local_testing
+      - continuous_integration_dev
   pull_request:
     branches:
-      - local_testing
+      - continuous_integration_dev
 
 jobs:
   build:
@@ -24,8 +24,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Build application
+      run: npm run build -- --configuration production
+      
     - name: Run tests
       run: npm test
-
-    - name: Build application
-      run: npm run build -- --prod

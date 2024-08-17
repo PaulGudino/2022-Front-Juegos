@@ -358,14 +358,10 @@ export class DashboardStyleService {
    }
 
    public get_image_logo_puertas() {
-      return this.style.image_logo_puertas;
    }
    public set_image_logo_puertas(image: any) {
       this.style.image_logo_puertas = image;
    }
-
-   // --------------- Dados ------------------
-
    public get_image_dice_face_one() {
       return this.style.image_dice_face_one;
    }

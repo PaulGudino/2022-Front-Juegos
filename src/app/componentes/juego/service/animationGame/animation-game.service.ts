@@ -213,7 +213,6 @@ export class AnimationGameService {
 						refCol3.style.filter = "blur(0px)"
 
 						this.animationCountCol1 = 5
-
 						clearInterval(intervalId)
 						if (this.gameLogicService.attempts === 0) {
 							const options = {
@@ -547,7 +546,6 @@ export class AnimationGameService {
 		const dia = String(fechaActual.getDate()).padStart(2, '0');
 		const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
 		const anio = fechaActual.getFullYear();
-
 		const fechaFormateada = `${dia}/${mes}/${anio}`;
 		const printWindow = window.open('', '', 'width=600,height=400');
 		if (printWindow) {
@@ -573,7 +571,6 @@ export class AnimationGameService {
 			console.error('No se pudo abrir la ventana de impresión.');
 		}
 	}
-
 	showWinMessage(prize: string, name: string): void {
 		let options = {
 			title: "./assets/img/palabras/gano.png",
@@ -582,7 +579,6 @@ export class AnimationGameService {
 			result_music: "./assets/audio/win.mp3",
 		};
 		this.confirmDialog.result_game(options);
-
 		// Lógica para imprimir ticket si ganó el juego
 		this.printTicket(options);
 	}

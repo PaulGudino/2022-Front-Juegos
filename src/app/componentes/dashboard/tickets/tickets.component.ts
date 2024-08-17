@@ -225,11 +225,6 @@ export class TicketsComponent implements OnInit {
                 </div>
             </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
-            <script>
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: '${data.qr_code_digits}',
                     width: 200,  // Ancho del QR ajustado
                     height: 200, // Altura del QR ajustada
                     colorDark: "#000000", // Color oscuro (negro)

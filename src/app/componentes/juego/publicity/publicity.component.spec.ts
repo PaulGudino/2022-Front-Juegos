@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 
 import { PublicityComponent } from './publicity.component';
+import { PublicityService } from 'src/app/servicios/publicity/publicity.service'; // Asegúrate de importar tus servicios si es necesario
 
 describe('PublicityComponent', () => {
   let component: PublicityComponent;
@@ -8,7 +10,13 @@ describe('PublicityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PublicityComponent ]
+      declarations: [ PublicityComponent ],
+      imports: [
+        HttpClientModule // Agrega HttpClientModule
+      ],
+      providers: [
+        PublicityService // Agrega el servicio si es necesario para las pruebas
+      ]
     })
     .compileComponents();
 

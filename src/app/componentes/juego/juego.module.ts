@@ -19,6 +19,7 @@ import { SelectiongameViewComponent } from './pages/selectiongame-view/selection
 import { PrecisionViewComponent } from './pages/precision-view/precision-view.component';
 import { PuertasViewComponent } from './pages/puertas-view/puertas-view.component';
 import { BackArrowComponent } from './back-arrow/back-arrow.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { BackArrowComponent } from './back-arrow/back-arrow.component';
     SharedModule,
     HttpClientModule,
     FormsModule,
+    MatDialogModule
   ]
 })
 export class JuegoModule { }

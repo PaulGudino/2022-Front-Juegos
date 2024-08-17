@@ -22,7 +22,6 @@
             <h3 *ngIf="game.name === 'Precision'" class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players_precision}}</h3>
             <h3 *ngIf="game.name === 'Dados'" class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players_dados}}</h3>
             <h3 *ngIf="game.name === 'Puertas'" class="color-white jugadores-text">Cantidad de jugadas hasta el momento: {{total_players_puertas}}</h3>
-            
          </div>
          <div class="row mb-4">
             <app-button-primary class="col" title="{{getState(game.id)}}" (click)="this.toogleActiveGame(game.id)"></app-button-primary>

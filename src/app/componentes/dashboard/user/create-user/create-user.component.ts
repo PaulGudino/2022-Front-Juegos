@@ -1,3 +1,4 @@
+import { Usuarios } from '../../../../interfaces/usuarios/usuarios';
 import { map, Observable, startWith } from 'rxjs';
 import { PuenteDatosService } from './../../../../servicios/comunicacio_componentes/puente-datos.service';
 import { SnackbarService } from '../../../../servicios/snackbar/snackbar.service';
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Roles } from 'src/app/interfaces/roles/roles';
 import { Router } from '@angular/router';
 import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-dialog.service';
+
 
 function autocompleteObjectValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
