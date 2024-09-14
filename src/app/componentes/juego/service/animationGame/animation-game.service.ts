@@ -557,7 +557,7 @@ export class AnimationGameService {
 					<body onload="window.print(); window.close();">
 						<div style="text-align: center; font-size: 18px; padding: 20px;">
             <img src="${options.title}" alt="Ganaste!" style="width: 100%; max-width: 300px;">
-            <p style="margin: 20px 0;">¡Felicidades! Has ganado: ${options.prize_name}</p>
+            <p style="margin: 20px 0; font-size: 20px">¡Felicidades! Has ganado: <br>${options.prize_name}</p>
             <img src="${options.image}" alt="Premio" style="width: 100%; max-width: 3000px;">
             <p style="margin: 20px 0;">Gracias por jugar.</p>
 			<p style="margin: 20px 0;">Ticket válido únicamente el día ${fechaFormateada}</p>
@@ -566,7 +566,6 @@ export class AnimationGameService {
 				</html>
 			`);
 			printWindow.document.close();
-			printWindow.focus();
 		} else {
 			console.error('No se pudo abrir la ventana de impresión.');
 		}

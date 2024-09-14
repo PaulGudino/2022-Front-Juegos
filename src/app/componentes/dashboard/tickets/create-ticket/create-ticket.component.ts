@@ -279,6 +279,9 @@ export class CreateTicketComponent implements OnInit {
                     font-size: 25px;
                     margin: 10px 0;
                 }
+                .text_default {
+                font-size: 25px;
+                }
 
                 @media print {
                     body {
@@ -303,7 +306,7 @@ export class CreateTicketComponent implements OnInit {
                 </div>
                 <div class="text_default">
                   <p>
-                    Promoción válida únicamente el ${this.fechaFormateada}
+                    Promoción válida únicamente el <br>${this.fechaFormateada}
                   </p>
                   <p>
                     Gana premios jugando

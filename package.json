@@ -26,6 +26,7 @@
     "angularx-qrcode": "^14.0.0",
     "bootstrap": "^5.2.2",
     "moment": "^2.29.4",
+    "qrcodejs": "^1.0.0",
     "rxjs": "~7.5.0",
     "zone.js": "~0.11.4"
   },
@@ -35,6 +36,7 @@
     "@angular/compiler-cli": "^14.2.6",
     "@angular/localize": "^14.2.6",
     "@types/jasmine": "~4.0.0",
+    "@types/qrcodejs": "^1.0.4",
     "jasmine-core": "~4.1.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
