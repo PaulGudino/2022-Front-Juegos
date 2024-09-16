@@ -4,6 +4,7 @@
 	<app-publicity [publicityList]="publicity.getTopPublicityList()"></app-publicity>
 	<div class="container-menu">
 		<div class="background-shadow"><img src="{{styles.get_image_background_kiosco()}}" alt="background"></div>
+		<app-back-arrow id="back-arrow" [enabled]="true"></app-back-arrow>
 		<div class="scan_menu-container">
 			<div class="menu-container_img-container">
 				<app-logo

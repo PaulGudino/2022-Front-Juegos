@@ -22,7 +22,7 @@ mat-label{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 25px;
+    gap: 25px;
 }
 .container_card{
     display: flex;
@@ -37,11 +37,12 @@ mat-label{
     flex-direction: row;
     margin: 20px;
 }
-.container_img{
+.QR_container{
     width: 500px;
     height: 350px;
+    margin-left: 100px;
 }
-.container_img img{
+.QR_container img{
     width: 100%;
     height: 100%;
     border-radius: 10px;

@@ -25,7 +25,7 @@
                             <br>
                             <mat-list-item role="listitem">{{ticket.game_name}}</mat-list-item>
                         </div>
-                        <div class="datos">
+                        <div id="cod" class="datos">
                             <mat-label>Código del Ticket</mat-label>
                             <br>
                             <mat-list-item role="listitem">{{ticket.qr_code_digits}}</mat-list-item>
@@ -73,14 +73,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="container_img">
-                    <qrcode colorDark="#fff" colorLight="#000" [width]="350" [qrdata]="QRdata"></qrcode>
+                <div id="qrcode" class="container_img">
+                    <qrcode colorDark="#000" margin="0.5" colorLight="#fff" [width]="350" [qrdata]="QRdata" allowEmptyString="true"></qrcode>
                 </div>
             </div>
     
             <div class="container_botones">
                 <app-button-primary (click)="toList()"
                 title="Salir"
+                ></app-button-primary>
+                
+                <app-button-primary (click)="printTicket()"
+                title="Imprimir"
                 ></app-button-primary>
             </div>
         </mat-card>

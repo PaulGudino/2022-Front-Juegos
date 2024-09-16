@@ -6,6 +6,7 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { TicketService } from 'src/app/servicios/ticket/ticket.service';
 import { Ticket } from 'src/app/interfaces/ticket/Ticket';
 import { PuenteDatosService } from 'src/app/servicios/comunicacio_componentes/puente-datos.service';
+import { firstValueFrom, Observable } from 'rxjs';
 
 
 @Component({
@@ -37,11 +38,22 @@ export class ViewTicketComponent implements OnInit {
     game_end : ''
   };
 
+  fechaActual = new Date();
+
+  // Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
+  dia = String(this.fechaActual.getDate()).padStart(2, '0');
+  mes = String(this.fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
+  anio = this.fechaActual.getFullYear();
+
+  fechaFormateada = `${this.dia}/${this.mes}/${this.anio}`;
+
+
   constructor(
     private router : Router,
     private activedRoute : ActivatedRoute,
     private ticketAPI : TicketService,
     private staticData: PuenteDatosService,
+    private snackBar : SnackbarService,
   ) {}
 
   toList(): void {
@@ -59,6 +71,113 @@ export class ViewTicketComponent implements OnInit {
       }
     })
     
+
   }
+
+  printTicket(){
+    const qrCanvas = document.querySelector('#qrcode canvas') as HTMLCanvasElement; // Selecciona el canvas del QR generado
+
+    if (qrCanvas) {
+        const qrImageBase64 = qrCanvas.toDataURL('image/png');  // Convierte el QR a base64
+        const printWindow = window.open('', '', 'width=600,height=400');
+
+        if (printWindow) {
+            printWindow.document.write(`
+              <html>
+              <head>
+                  <title>Ticket de Promoción</title>
+                  <style>
+                      .ticket_container {
+                          width: 100%;
+                          max-width: 600px;
+                          margin: 0 auto;
+                          padding: 15px;
+                          background: #fff;
+                          text-align: center;
+                          page-break-inside: avoid;
+                      }
+
+                      .logo_container {
+                          margin-bottom: 10px;
+                          width: 100%;
+                          height: auto;
+                      }
+
+                      .logo_container img {
+                          width: 150px;
+                          height: auto;
+                          border-radius: 10px;
+                          object-fit: contain;
+                      }
+
+                      .container_img {
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-top: 10px;
+                      }
+
+                      .qrcode img {
+                          width: 300px;
+                          height: 300px;
+                      }
+
+                      .title_container {
+                          width: 100%;
+                          margin-bottom: 10px;
+                      }
+
+                      h2 {
+                          font-size: 25px;
+                          margin: 10px 0;
+                      }
+
+                      .text_default {
+                          font-size: 25px;
+                      }
+
+                      @media print {
+                          body {
+                              margin: 0;
+                              padding: 0;
+                              box-shadow: none;
+                          }
+                      }
+                  </style>
+              </head>
+              <body onload="window.print(); window.close();">
+                  <div class="ticket_container">
+                      <div class="logo_container">
+                          <img src="../../../../assets/img/funny-logo.png" alt="logo">
+                      </div>
+                      <div class="title_container">
+                          <h2>Código Qr:&nbsp;&nbsp; ${this.ticket.qr_code_digits}</h2>
+                      </div>
+                      <div class="container_img">
+                          <div class="qrcode">
+                              <img src="${qrImageBase64}" alt="QR Code">
+                          </div>
+                      </div>
+                      <div class="text_default">
+                        <p>
+                          Promoción válida únicamente el <br>${this.fechaFormateada}
+                        </p>
+                        <p>
+                          Gana premios jugando
+                        </p>
+                      </div>
+                  </div>
+              </body>
+              </html>
+            `);
+            printWindow.document.close();
+        } else {
+          console.log('No se pudo abrir la ventana de impresión.');
+        }
+    } else {
+      this.snackBar.mensaje('No se encontró el código QR.');
+    }
+}
+
 }
 

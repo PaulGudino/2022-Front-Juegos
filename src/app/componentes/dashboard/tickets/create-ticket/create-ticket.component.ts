@@ -192,7 +192,7 @@ export class CreateTicketComponent implements OnInit {
     this.staticData.setMenuGeneral();
   }
 
-  generateQRCode() {
+  async generateQRCode() {
 
     let check_qr_code_digits = this.qr_code_digits == ''
 
@@ -224,118 +224,113 @@ export class CreateTicketComponent implements OnInit {
     window.location.reload();
   }
 
-  printTicket() {
-    this.generateQRCode();
-    const printWindow = window.open('', '', 'width=600,height=400');
-    
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
+  async printTicket() {
+    await this.generateQRCode();  // Asegúrate de que el QR se genera antes
+    const qrCanvas = document.querySelector('#qrcode canvas') as HTMLCanvasElement; // Selecciona el canvas del QR generado
 
-        <head>
-            <title>Ticket de Promoción</title>
-            <style>
-                .ticket_container {
-                    width: 100%;
-                    max-width: 600px; /* Ajustar el ancho máximo del contenedor */
-                    margin: 0 auto; /* Centrar el contenedor en la página */
-                    padding: 15px;
-                    background: #fff;
-                    text-align: center;
-                    page-break-inside: avoid; /* Evitar saltos de página dentro del contenedor */
-                }
+    if (qrCanvas) {
+        const qrImageBase64 = qrCanvas.toDataURL('image/png');  // Convierte el QR a base64
+        const printWindow = window.open('', '', 'width=600,height=400');
 
-                .logo_container {
-                    margin-bottom: 10px;
-                    width: 100%;
-                    height: auto;
-                }
+        if (printWindow) {
+            printWindow.document.write(`
+              <html>
+              <head>
+                  <title>Ticket de Promoción</title>
+                  <style>
+                      .ticket_container {
+                          width: 100%;
+                          max-width: 600px;
+                          margin: 0 auto;
+                          padding: 15px;
+                          background: #fff;
+                          text-align: center;
+                          page-break-inside: avoid;
+                      }
 
-                .logo_container img {
-                    width: 150px;
-                    height: auto; /* Mantener la proporción de la imagen */
-                    border-radius: 10px;
-                    object-fit: contain;
-                }
+                      .logo_container {
+                          margin-bottom: 10px;
+                          width: 100%;
+                          height: auto;
+                      }
 
-                .container_img {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-top: 10px;
-                }
+                      .logo_container img {
+                          width: 150px;
+                          height: auto;
+                          border-radius: 10px;
+                          object-fit: contain;
+                      }
 
-                #qrcode img {
-                    width: 200px;
-                    height: 200px;
-                }
+                      .container_img {
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          margin-top: 10px;
+                      }
 
-                .title_container {
-                    width: 100%;
-                    margin-bottom: 10px;
-                }
+                      .qrcode img {
+                          width: 300px;
+                          height: 300px;
+                      }
 
-                h2 {
-                    font-size: 25px;
-                    margin: 10px 0;
-                }
-                .text_default {
-                font-size: 25px;
-                }
+                      .title_container {
+                          width: 100%;
+                          margin-bottom: 10px;
+                      }
 
-                @media print {
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        box-shadow: none;
-                    }
-                }
-            </style>
-        </head>
+                      h2 {
+                          font-size: 25px;
+                          margin: 10px 0;
+                      }
 
-        <body onload="window.print(); window.close();">
-            <div class="ticket_container">
-                <div class="logo_container">
-                    <img src="${this.style.get_image_logo_kiosco()}" alt="logo">
-                </div>
-                <div class="title_container">
-                    <h2>Código Qr:&nbsp;&nbsp; ${this.qr_code_digits}</h2>
-                </div>
-                <div class="container_img">
-                    <div id="qrcode"></div>
-                </div>
-                <div class="text_default">
-                  <p>
-                    Promoción válida únicamente el <br>${this.fechaFormateada}
-                  </p>
-                  <p>
-                    Gana premios jugando
-                  </p>
-                </div>
-            </div>
+                      .text_default {
+                          font-size: 25px;
+                      }
 
-            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
-            <script>
-                var qrcode = new QRCode(document.getElementById("qrcode"), {
-                    text: '${this.qr_code_digits}',
-                    width: 200,  // Ancho del QR ajustado
-                    height: 200, // Altura del QR ajustada
-                    colorDark: "#000000", // Color oscuro (negro)
-                    colorLight: "#ffffff", // Fondo (blanco)
-                    correctLevel: QRCode.CorrectLevel.H // Nivel de corrección de errores
-                });
-            </script>
-        </body>
-
-        </html>
-        `);
-      printWindow.document.close();
-      printWindow.focus();
+                      @media print {
+                          body {
+                              margin: 0;
+                              padding: 0;
+                              box-shadow: none;
+                          }
+                      }
+                  </style>
+              </head>
+              <body onload="window.print(); window.close();">
+                  <div class="ticket_container">
+                      <div class="logo_container">
+                          <img src="../../../../assets/img/funny-logo.png" alt="logo">
+                      </div>
+                      <div class="title_container">
+                          <h2>Código Qr:&nbsp;&nbsp; ${this.qr_code_digits}</h2>
+                      </div>
+                      <div class="container_img">
+                          <div class="qrcode">
+                              <img src="${qrImageBase64}" alt="QR Code">
+                          </div>
+                      </div>
+                      <div class="text_default">
+                        <p>
+                          Promoción válida únicamente el <br>${this.fechaFormateada}
+                        </p>
+                        <p>
+                          Gana premios jugando
+                        </p>
+                      </div>
+                  </div>
+              </body>
+              </html>
+            `);
+            printWindow.document.close();
+        } else {
+            console.error('No se pudo abrir la ventana de impresión.');
+        }
     } else {
-      console.error('No se pudo abrir la ventana de impresión.');
+        this.snackBar.mensaje('No se encontró el código QR.');
     }
-  }
+}
+
+
 
   async dateGame() {
     this.GameAPI.getById(1).subscribe(

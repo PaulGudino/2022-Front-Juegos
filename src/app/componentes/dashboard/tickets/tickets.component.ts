@@ -13,7 +13,7 @@ import { ConfirmDialogService } from 'src/app/servicios/confirm-dialog/confirm-d
 import { FormGroup, FormControl } from '@angular/forms';
 import { GameDateService } from 'src/app/servicios/game-date/game-date.service';
 import { DashboardStyleService } from 'src/app/servicios/theme/dashboardStyle/dashboard-style.service';
-
+import { ViewTicketComponent } from './view-ticket/view-ticket.component';
 @Component({
   selector: 'app-tickets',
   styleUrls: ['./tickets.component.css'],
@@ -33,15 +33,7 @@ export class TicketsComponent implements OnInit {
     { id: '?ordering=date_created', name: 'Primeros Tickets Creados' },
   ]
 
-  fechaActual = new Date();
-
-  // Formatear la fecha en un formato legible (por ejemplo, "DD/MM/YYYY")
-  dia = String(this.fechaActual.getDate()).padStart(2, '0');
-  mes = String(this.fechaActual.getMonth() + 1).padStart(2, '0'); // Los meses comienzan desde 0
-  anio = this.fechaActual.getFullYear();
-
-  fechaFormateada = `${this.dia}/${this.mes}/${this.anio}`;
-
+  
   filter_default = '?ordering=-date_created'
 
   singularName: string = 'ticket';
@@ -65,6 +57,7 @@ export class TicketsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  @ViewChild(ViewTicketComponent) viewTicket !: ViewTicketComponent;
 
   constructor(
     // Atributes of the user component
@@ -82,6 +75,7 @@ export class TicketsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll(this.filter_default);
+    
   }
 
   loadAll(filter: string) {
@@ -138,118 +132,13 @@ export class TicketsComponent implements OnInit {
 
  
 
-  async printTicket(ticket: Observable<Ticket>): Promise<void> {
-    const printWindow = window.open('', '', 'width=600,height=400');
-    const data = await firstValueFrom(ticket);
-    
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
+  
 
-        <head>
-            <title>Ticket de Promoción</title>
-            <style>
-                .ticket_container {
-                    width: 100%;
-                    max-width: 600px; /* Ajustar el ancho máximo del contenedor */
-                    margin: 0 auto; /* Centrar el contenedor en la página */
-                    padding: 15px;
-                    background: #fff;
-                    text-align: center;
-                    page-break-inside: avoid; /* Evitar saltos de página dentro del contenedor */
-                }
 
-                .logo_container {
-                    margin-bottom: 10px;
-                    width: 100%;
-                    height: auto;
-                }
-
-                .logo_container img {
-                    width: 150px;
-                    height: auto; /* Mantener la proporción de la imagen */
-                    border-radius: 10px;
-                    object-fit: contain;
-                }
-
-                .container_img {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-top: 10px;
-                }
-
-                #qrcode img {
-                    width: 200px;
-                    height: 200px;
-                }
-
-                .title_container {
-                    width: 100%;
-                    margin-bottom: 10px;
-                }
-
-                h2 {
-                    font-size: 25px;
-                    margin: 10px 0;
-                }
-                .text_default {
-                font-size: 25px;
-                }
-
-                @media print {
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        box-shadow: none;
-                    }
-                }
-            </style>
-        </head>
-
-        <body onload="window.print(); window.close();">
-            <div class="ticket_container">
-                <div class="logo_container">
-                    <img src="${this.style.get_image_logo_kiosco()}" alt="logo">
-                </div>
-                <div class="title_container">
-                    <h2>Código Qr:&nbsp;&nbsp; ${data.qr_code_digits}</h2>
-                </div>
-                <div class="container_img">
-                    <div id="qrcode"></div>
-                </div>
-                <div class="text_default">
-                  <p>
-                    Promoción válida únicamente el <br>${this.fechaFormateada}
-                  </p>
-                  <p>
-                    Gana premios jugando
-                  </p>
-                </div>
-            </div>
-
-                    width: 200,  // Ancho del QR ajustado
-                    height: 200, // Altura del QR ajustada
-                    colorDark: "#000000", // Color oscuro (negro)
-                    colorLight: "#ffffff", // Fondo (blanco)
-                    correctLevel: QRCode.CorrectLevel.H // Nivel de corrección de errores
-                });
-            </script>
-        </body>
-
-        </html>
-        `);
-      printWindow.document.close();
-      printWindow.focus();
-    } else {
-      console.error('No se pudo abrir la ventana de impresión.');
-    }
-  }
-
-  async print(id: string) {
+  async print(id: number) {
     let promise = await this.Permisos('Imprimir Ticket')
     if (promise.length > 0) {
-      this.printTicket(this.ticketAPI.getById(Number(id)));
+      this.viewTicket.printTicket();
     } else {
       this.snackBar.mensaje('No tienes permisos para Imprimir Ticket');
     }

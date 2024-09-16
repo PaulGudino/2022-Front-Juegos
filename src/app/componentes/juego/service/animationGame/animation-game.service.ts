@@ -453,7 +453,6 @@ export class AnimationGameService {
 		this.isGameStarted = true;
 		this.isDoorSelected = false;
 		this.disabledPlayButton = true
-		this.doors.forEach(door => door.isOpen = false);  // Reset doors state
 	}
 
 	openDoor(index: number): void {
@@ -503,6 +502,7 @@ export class AnimationGameService {
 						setTimeout(() => {
 							this.isGameStarted = false;
 							this.disabledPlayButton = false
+							this.closeDoors()
 						}, 4500);
 					}, this.openTime * 1000);
 				}

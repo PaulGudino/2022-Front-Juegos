@@ -13,6 +13,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@cordobo/qrcode",
+              "qrcodejs"
+            ],
             "outputPath": "dist/frontend-juegos-2022",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -69,10 +74,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Frontend-Juegos-2022:build:production"
+              "browserTarget": "Frontend-Juegos-2022:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
-              "browserTarget": "Frontend-Juegos-2022:build:development"
+              "browserTarget": "Frontend-Juegos-2022:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -101,7 +108,7 @@
             "scripts": []
           }
         }
-      } 
+      }
     }
   },
   "cli": {
