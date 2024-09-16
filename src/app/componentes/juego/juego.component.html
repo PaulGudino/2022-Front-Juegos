@@ -1,5 +1,15 @@
 <div>
 	<app-publicity [publicityList]="dashPublicity.getTopPublicityList()"></app-publicity>
+	<div *ngIf=buttonRecharge>
+		<button
+			mat-icon-button
+			color="warn"
+			matTooltip="Recargar"
+			(click)="recargar()"
+		>
+			<mat-icon class="green-primary"> reload </mat-icon>
+		</button>
+	</div>
 	<div class="container-fluid home_container p-0 m-0">
 		<video
 			class="home-image_container"

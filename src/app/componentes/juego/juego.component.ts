@@ -34,6 +34,8 @@ export class JuegoComponent {
 	audio = new Audio()
 	audioArray: Audio[] = []
 
+	buttonRecharge = false
+
 	constructor(
 		public dashPublicity: DashboardPublicityService,
 		private themeService: ThemeService,
@@ -93,6 +95,9 @@ export class JuegoComponent {
 				"Revise que esté la imagen al ganar",
 			]
 			this.confirmDialog.error(game_message)
+
+			this.buttonRecharge = true
+
 		}
 	}
 	async auth() {
@@ -141,6 +146,10 @@ export class JuegoComponent {
 				if(clave.image_door_right) this.design_images += 1
 			}
 		})
+	}
+
+	recargar(){
+		window.location.reload();
 	}
 
 }
